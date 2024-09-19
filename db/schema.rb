@@ -10,9 +10,57 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_19_135028) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_19_152010) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "categories_products", id: false, force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "index_categories_products_on_category_id"
+    t.index ["product_id"], name: "index_categories_products_on_product_id"
+  end
+
+  create_table "colors", force: :cascade do |t|
+    t.string "name"
+    t.string "hex_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "colors_products", id: false, force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "color_id", null: false
+    t.index ["color_id"], name: "index_colors_products_on_color_id"
+    t.index ["product_id"], name: "index_colors_products_on_product_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.decimal "price"
+    t.text "description"
+    t.text "care_instructions"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "products_sizes", id: false, force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "size_id", null: false
+    t.index ["product_id"], name: "index_products_sizes_on_product_id"
+    t.index ["size_id"], name: "index_products_sizes_on_size_id"
+  end
+
+  create_table "sizes", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
