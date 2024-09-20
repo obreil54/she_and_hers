@@ -1,0 +1,16 @@
+<nav>
+  <%= link_to root_path do %>
+    <%= image_tag('text-logo.png', alt: 'Text Logo') %>
+  <% end %>
+  <div id="navbar-links">
+    <%= link_to 'HOME', root_path %>
+    <a href="#">SHOP</a>
+    <a href="#">EXPLORE</a>
+    <a href="#">CART</a>
+    <% if user_signed_in? %>
+      <a href="#">PROFILE</a>
+    <% else %>
+      <a href="#">LOGIN</a>
+    <% end %>
+  </div>
+</nav>

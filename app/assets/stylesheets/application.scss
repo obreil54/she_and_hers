@@ -10,3 +10,8 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+
+.notice:empty,
+.alert:empty {
+  display: none;
+}
