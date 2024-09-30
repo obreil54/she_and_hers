@@ -1,0 +1,57 @@
+#faq-hero {
+  background-image: url('faq-hero.jpg');
+  background-size: cover;
+  background-position: 50% 22%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45vh;
+
+  h1 {
+    color: white;
+    font-weight: bolder;
+    font-size: 3.5em;
+  }
+}
+
+#faq-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 64px;
+}
+
+.faq-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 30%;
+  text-align: center;
+
+  img{
+    width: 75px;
+    height: 75px;
+  }
+
+  #tailor-icon {
+    width: 60px;
+    height: 60px;
+    margin-top: 12px;
+    margin-bottom: 8px;
+  }
+
+  h3{
+    margin: 0;
+    font-weight: bolder;
+  }
+
+  #size-header{
+    margin-top: 4px;
+  }
+
+  #latex-icon{
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+}
