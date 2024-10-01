@@ -17,8 +17,7 @@
 #faq-info {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 32px 64px;
+  padding: 64px;
 }
 
 .faq-card {
@@ -32,26 +31,18 @@
   img{
     width: 75px;
     height: 75px;
+    margin-bottom: 16px;
+    margin-top: 8px;
   }
 
-  #tailor-icon {
-    width: 60px;
-    height: 60px;
-    margin-top: 12px;
-    margin-bottom: 8px;
+  #size-icon {
+    width: 75px;
+    height: 50px;
+    margin-top: 20.5px;
+    margin-bottom: 28.5px;
   }
 
   h3{
-    margin: 0;
     font-weight: bolder;
-  }
-
-  #size-header{
-    margin-top: 4px;
-  }
-
-  #latex-icon{
-    margin-top: 0;
-    margin-bottom: 8px;
   }
 }
