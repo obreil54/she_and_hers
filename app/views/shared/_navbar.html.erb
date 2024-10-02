@@ -10,7 +10,7 @@
     <% if user_signed_in? %>
       <a href="#">PROFILE</a>
     <% else %>
-      <a href="#">LOGIN</a>
+      <%= link_to 'LOGIN', new_user_session_path %>
     <% end %>
   </div>
 </nav>
