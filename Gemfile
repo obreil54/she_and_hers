@@ -51,6 +51,7 @@ gem "simple_form", github: "heartcombo/simple_form"
 gem "sassc-rails"
 
 gem "devise"
+gem 'country_select', '~> 8.0'
 
 group :development, :test do
   gem "dotenv-rails"
