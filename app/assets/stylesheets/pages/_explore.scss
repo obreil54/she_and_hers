@@ -1,0 +1,42 @@
+#explore-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  a {
+    color: white;
+    height: 85vh;
+    text-decoration: none;
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    &:hover {
+      font-weight: bolder;
+    }
+  }
+
+  #artefacts-link {
+    background-image: image-url('artefacts.png');
+    background-size: cover;
+    background-position: center;
+    width: 27.5%
+  }
+
+  #collaborations-link {
+    background-image: image-url('collaborations.JPG');
+    background-size: cover;
+    background-position: center;
+    margin: 0 16px;
+    width: 35%
+  }
+
+  #archive-link {
+    background-image: image-url('archive.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 27.5%
+  }
+}
