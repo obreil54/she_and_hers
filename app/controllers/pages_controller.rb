@@ -13,4 +13,10 @@ class PagesController < ApplicationController
 
   def explore
   end
+
+  def privacy
+  end
+
+  def terms
+  end
 end
