@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get 'contact', to: 'pages#contact'
   get 'faq', to: 'pages#faq'
   get 'explore', to: 'pages#explore'
+  get 'privacy', to: 'pages#privacy'
+  get 'terms', to: 'pages#terms'
 
   # Defines the root path route ("/")
   # root "posts#index"
