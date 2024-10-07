@@ -1,0 +1,29 @@
+<h1>New Product</h1>
+
+<%= form_with model: @product, local: true do |form| %>
+
+  <div class="field">
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :price %><br>
+    <%= form.number_field :price, step: 0.01 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %><br>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :care_instructions %><br>
+    <%= form.text_area :care_instructions %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Create Product" %>
+  </div>
+
+<% end %>
