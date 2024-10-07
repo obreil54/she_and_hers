@@ -4,7 +4,7 @@
   <% end %>
   <div id="navbar-links">
     <%= link_to 'HOME', root_path %>
-    <a href="#">SHOP</a>
+    <%= link_to 'SHOP', products_path %>
     <%= link_to 'EXPLORE', explore_path %>
     <a href="#">CART</a>
     <% if user_signed_in? %>

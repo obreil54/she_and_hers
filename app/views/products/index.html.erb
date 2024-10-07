@@ -1,0 +1,6 @@
+<%= link_to "Add a New Product", new_product_path %>
+<ul>
+  <% @products.each do |product| %>
+    <li><%= product.name %></li>
+  <% end %>
+</ul>
