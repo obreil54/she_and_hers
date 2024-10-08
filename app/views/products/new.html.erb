@@ -1,6 +1,6 @@
 <h1>New Product</h1>
 
-<%= form_with model: @product, local: true do |form| %>
+<%= form_with model: @product, local: true, multipart: true do |form| %>
 
   <div class="field">
     <%= form.label :name %><br>
@@ -20,6 +20,26 @@
   <div class="field">
     <%= form.label :care_instructions %><br>
     <%= form.text_area :care_instructions %>
+  </div>
+
+  <div class="field">
+    <%= form.label :primary_photo %><br>
+    <%= form.file_field :primary_photo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :secondary_photo %><br>
+    <%= form.file_field :secondary_photo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tertiary_photo %><br>
+    <%= form.file_field :tertiary_photo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :other_photos, "Additional Photos" %><br>
+    <%= form.file_field :other_photos, multiple: true %>
   </div>
 
   <div class="actions">
