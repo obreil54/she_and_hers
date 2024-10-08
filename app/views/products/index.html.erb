@@ -1,6 +1,16 @@
-<%= link_to "Add a New Product", new_product_path %>
-<ul>
-  <% @products.each do |product| %>
-    <li><%= product.name %></li>
+<div id="products-page">
+  <% if current_user.admin? %>
+    <%= link_to new_product_path, class: "centered-link" do %>
+      <i class="fa-solid fa-plus"></i>
+    <% end %>
   <% end %>
-</ul>
+  <div class="product-grid">
+    <% @products.each do |product| %>
+      <div class="product-card">
+        <%= image_tag product.primary_photo %>
+        <%= product.name.upcase %><br>
+        <%= product.price %>
+      </div>
+    <% end %>
+  </div>
+</div>

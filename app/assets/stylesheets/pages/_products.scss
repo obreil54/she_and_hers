@@ -1,0 +1,36 @@
+.centered-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  text-decoration: none;
+
+  i{
+    color: black;
+    font-size: 2em;
+  }
+
+  &:hover {
+    background-color: #e0e0e0;
+  }
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  padding: 32px;
+}
+
+.product-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  img {
+    width: 100%;
+    object-fit: cover;
+  }
+}

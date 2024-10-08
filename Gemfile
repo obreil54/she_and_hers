@@ -52,6 +52,7 @@ gem "sassc-rails"
 
 gem "devise"
 gem 'country_select', '~> 8.0'
+gem "cloudinary"
 
 group :development, :test do
   gem "dotenv-rails"
