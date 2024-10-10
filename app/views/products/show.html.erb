@@ -1,1 +1,113 @@
-<h2><%= @product.name %></h2>
+<div id="product-page" data-controller="product-carousel">
+  <div class="product-full">
+    <div class="product-image"
+     data-product-carousel-images-value='[
+       "<%= @product.primary_photo.url if @product.primary_photo.present? %>",
+       "<%= @product.secondary_photo.url if @product.secondary_photo.present? %>",
+       "<%= @product.tertiary_photo.url if @product.tertiary_photo.present? %>"<%= ',' if @product.other_photos.present? %>
+        <% @product.other_photos.each_with_index do |photo, index| %>
+          "<%= photo.url %>"<%= ',' unless index == @product.other_photos.size - 1 %>
+        <% end %>
+       ]'
+      data-product-carousel-interval-value="5000"
+      data-product-carousel-target="image">
+    </div>
+    <div class="product-main-info" style="background-image: url('<%= @product.secondary_photo.url %>')">
+      <h3><b><%= @product.name.upcase %></b></h3>
+      <h4><%= number_to_currency(@product.price, unit: "£") %></h4>
+      <div class="product-sizes">
+        <select id="size-select" name="size">
+          <option value="" disabled selected>SELECT SIZE</option>
+          <option value="2XS">2XS</option>
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+          <option value="2XL">2XL</option>
+        </select>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <button type="button">ADD TO CART</button>
+      <p><%= @product.description.upcase %></p>
+    </div>
+    <div class="product-secondary-info" style="background-image: url('<%= @product.tertiary_photo.url %>')" data-controller="product-secondary-info">
+      <h3 data-action="click->product-secondary-info#toggle" data-target-id="how-to-care-content">
+        HOW TO CARE <i class="fa-solid fa-chevron-down"></i>
+      </h3>
+      <div id="how-to-care-content" data-product-secondary-info-target="content" class="d-none">
+        <p><%= @product.care_instructions.upcase %></p>
+      </div>
+      <h3 data-action="click->product-secondary-info#toggle" data-target-id="size-guide-content">
+        SIZE GUIDE <i class="fa-solid fa-chevron-down"></i>
+      </h3>
+      <div id="size-guide-content" data-product-secondary-info-target="content" class="d-none">
+        <table class="size-guide-table">
+          <thead>
+            <tr>
+              <th>SIZE</th>
+              <th>CHEST</th>
+              <th>WAIST</th>
+              <th>HIPS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2XS</td>
+              <td>80</td>
+              <td>64</td>
+              <td>88</td>
+            </tr>
+            <tr>
+              <td>XS</td>
+              <td>84</td>
+              <td>68</td>
+              <td>92</td>
+            </tr>
+            <tr>
+              <td>S</td>
+              <td>88</td>
+              <td>72</td>
+              <td>96</td>
+            </tr>
+            <tr>
+              <td>M</td>
+              <td>92</td>
+              <td>76</td>
+              <td>100</td>
+            </tr>
+            <tr>
+              <td>L</td>
+              <td>96</td>
+              <td>80</td>
+              <td>104</td>
+            </tr>
+            <tr>
+              <td>XL</td>
+              <td>100</td>
+              <td>84</td>
+              <td>108</td>
+            </tr>
+            <tr>
+              <td>2XL</td>
+              <td>104</td>
+              <td>88</td>
+              <td>112</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 data-action="click->product-secondary-info#toggle" data-target-id="made-to-order-content">
+        MADE TO ORDER <i class="fa-solid fa-chevron-down"></i>
+      </h3>
+      <div id="made-to-order-content" data-product-secondary-info-target="content" class="d-none">
+        <p>MOST SHERS STUDIOS PIECES ARE MADE-TO-ORDER, THEREFORE WAITING TIME MAY VARY FROM 7 TO 35 WORKING DAYS.</p>
+        <p>ONCE THE PIECE IS COMPLETE AND SHIPPED YOU WILL RECEIVE AN UPDATE EMAIL WITH AN ESTIMATED ARRIVAL TIME.</p>
+        <p>FOR CUSTOM SIZE/COLOUR/DESIGN PLEASE EMAIL <a href="mailto:shers.studios@outlook.com">SHERS.STUDIOS@OUTLOOK.COM</a></p>
+        <p>ALL CUSTOM ORDERS WILL INCUR A FEE OF 20%.</p>
+      </div>
+    </div>
+  </div>
+  <div class="carousel-circles" data-product-carousel-target="indicators">
+  </div>
+</div>
