@@ -6,11 +6,13 @@
   <% end %>
   <div class="product-grid">
     <% @products.each do |product| %>
-      <div class="product-card">
-        <%= image_tag product.primary_photo %>
-        <%= product.name.upcase %><br>
-        <%= product.price %>
-      </div>
+      <%= link_to product_path(product), class: "product-card-link" do %>
+        <div class="product-card">
+          <%= image_tag product.primary_photo %>
+          <%= product.name.upcase %><br>
+          <%= product.price %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
