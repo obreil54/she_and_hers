@@ -1,5 +1,5 @@
 <div id="products-page">
-  <% if current_user.admin? %>
+  <% if current_user&.admin? %>
     <%= link_to new_product_path, class: "centered-link" do %>
       <i class="fa-solid fa-plus"></i>
     <% end %>

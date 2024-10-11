@@ -37,9 +37,14 @@
   justify-content: flex-start;
   align-items: flex-start;
   color: black;
+  transition: transform 0.3s ease-in-out;
 
   img {
     width: 100%;
     object-fit: cover;
+  }
+
+  &:hover {
+    transform: scale(1.05);
   }
 }
