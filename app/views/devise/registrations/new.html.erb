@@ -1,28 +1,38 @@
-<h2>Sign up</h2>
-
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-
-    <%= f.input :first_name, required: true, input_html: { autocomplete: "first_name" } %>
-    <%= f.input :last_name, required: true, input_html: { autocomplete: "first_name" } %>
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" }%>
-    <%= f.input :password,
-                required: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: true,
-                input_html: { autocomplete: "new-password" } %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+<% content_for :body_class, "sign-up-page" %>
+<div id="sign-up-page">
+  <p>SIGN UP</p>
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= f.error_notification %>
+    <div class="form-inputs">
+      <%= f.input :first_name, required: true, autofocus: true, label: false, placeholder: "FIRST NAME", input_html: { autocomplete: "first_name" } %>
+      <%= f.input :last_name, required: true, label: false, placeholder: "LAST NAME", input_html: { autocomplete: "first_name" } %>
+      <%= f.input :email,
+                  required: true,
+                  label: false,
+                  placeholder: "EMAIL",
+                  input_html: { autocomplete: "email" }%>
+      <%= f.input :password,
+                  required: true,
+                  label: false,
+                  placeholder: "PASSWORD",
+                  input_html: { autocomplete: "new-password" } %>
+      <%= f.input :password_confirmation,
+                  required: true,
+                  label: false,
+                  placeholder: "CONFIRM PASSWORD",
+                  input_html: { autocomplete: "new-password" } %>
+      <div class="terms-conditions">
+        <%= f.input :terms_of_service, required: true, label: false %>
+        <label for="terms_of_service">
+          I AGREE TO THE
+          <%= link_to 'T&C', terms_path, target: "_blank" %> AND
+          <%= link_to 'PRIVACY POLICY', privacy_path, target: "_blank" %>
+        </label>
+      </div>
+    </div>
+    <div class="form-actions">
+      <%= f.button :submit, "SIGN UP" %>
+    </div>
+  <% end %>
+  <p class="log-in-link">ALREADY HAVE AN ACCOUNT? <%= link_to 'LOG IN', new_user_session_path %></p>
+</div>

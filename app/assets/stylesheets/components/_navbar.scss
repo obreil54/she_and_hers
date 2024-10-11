@@ -5,6 +5,9 @@ nav {
   align-items: center;
   height: 15vh;
   padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 
   img{
     width: 60%;
@@ -27,34 +30,5 @@ nav {
         font-weight: bolder;
       }
     }
-  }
-
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    z-index: 1;
-
-    button {
-      white-space: nowrap;
-      background: none;
-      border: none;
-      font-size: 1.25em;
-      transition: font-weight 0.3s ease-in-out;
-      margin-left: 32px;
-      padding: 0;
-
-      &:hover {
-        font-weight: bolder;
-      }
-    }
-  }
-
-  .dropdown:hover .dropdown-content {
-    display: block;
   }
 }

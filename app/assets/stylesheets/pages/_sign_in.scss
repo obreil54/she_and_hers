@@ -1,0 +1,88 @@
+.sign-in-page {
+  background-image: image-url('sign-in-background.JPG');
+  background-size: cover;
+  background-position: center;
+}
+
+#log-in-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 125px;
+  min-height: 79vh;
+
+  p, form {
+    width: 25%;
+    font-size: 1.2em;
+
+    .password-log-in {
+      display: flex;
+      justify-content: space-between;
+      height: 29.6px;
+      border-bottom: 1px solid black;
+      margin-bottom: 16px;
+
+      a {
+        color: black;
+        text-decoration: none;
+        transition: font-weight 0.3s ease-in-out;
+
+        &:hover {
+          font-weight: bolder;
+        }
+      }
+    }
+  }
+
+  input {
+    background: none;
+    border: none;
+    border-bottom: 1px solid black;
+    font-size: 1em;
+    padding: 0;
+    color: #75939d;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  input::placeholder {
+    color: #75939d;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: center;
+  }
+
+  .btn {
+    background: none;
+    border: 1px solid black;
+    padding: 0 32px;
+    font-size: 1em;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    color: black;
+    width: 100%;
+
+    &:hover {
+      background-color: black;
+      color: white;
+    }
+  }
+
+  .sign-up-link {
+    text-align: center;
+    margin-top: 8px;
+
+    a {
+      color: black;
+
+      &:hover {
+        font-weight: bolder;
+      }
+    }
+  }
+}

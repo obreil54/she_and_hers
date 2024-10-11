@@ -1,0 +1,108 @@
+.sign-up-page {
+  background-image: image-url('sign-up-background.JPG');
+  background-size: cover;
+  background-position: center;
+}
+
+#sign-up-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 85vh;
+
+  p, form {
+    width: 29%;
+    font-size: 1.2em;
+
+    input {
+      background: none;
+      border: none;
+      border-bottom: 1px solid black;
+      font-size: 1em;
+      padding: 0;
+      color: white;
+
+      &:focus {
+        outline: none;
+        box-shadow: none;
+      }
+    }
+
+    input::placeholder {
+      color: white;
+    }
+
+    .terms-conditions {
+      display: flex;
+
+      a {
+        color: black;
+
+        &:hover {
+          font-weight: bolder;
+        }
+      }
+
+      input {
+        border: 1px solid black;
+      }
+    }
+
+    input[type="checkbox"] {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid black;
+      position: relative;
+      cursor: pointer;
+    }
+
+    input[type="checkbox"]:checked {
+      background-color: black;
+      border-color: black;
+    }
+
+    input[type="checkbox"]:checked::after {
+      content: "\2713";
+      color: white;
+      font-size: 16px;
+      position: absolute;
+      top: -2px;
+      left: 2px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn {
+      background: none;
+      border: 1px solid black;
+      padding: 0 32px;
+      font-size: 1em;
+      transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+      color: black;
+      width: 75%;
+
+      &:hover {
+        background-color: black;
+        color: white;
+      }
+    }
+  }
+
+  .log-in-link {
+    text-align: center;
+    margin-top: 16px;
+
+    a {
+      color: black;
+
+      &:hover {
+        font-weight: bolder;
+      }
+    }
+  }
+}
