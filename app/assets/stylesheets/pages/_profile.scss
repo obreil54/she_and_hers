@@ -1,0 +1,83 @@
+.profile-page {
+  background-image: image-url('profile-background.JPG');
+  background-size: cover;
+  background-position: center;
+}
+
+#profile-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 85vh;
+  color: white;
+  padding: 32px;
+
+  h1 {
+    font-size: 2.3em;
+
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  #profile-links {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    align-items: center;
+
+    button {
+      background: none;
+      font-size: 2.3em;
+      color: white;
+      border: none;
+      padding: 0;
+      margin-bottom: 8px;
+      height: 44.15px;
+      line-height: normal;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  #profile-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 32px;
+
+    h1 {
+      margin-bottom: 16px;
+    }
+
+    #personal-info, #payment-methods, #address-book {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      width: 33.33%;
+      text-align: center;
+
+      p {
+        font-size: 1.3em;
+        margin-bottom: 8px;
+        width: 80%;
+      };
+
+      a {
+        font-size: 1.3em;
+        width: 80%;
+        color: white;
+        margin-top: 16px;
+
+        &:hover {
+          font-weight: bolder;
+        }
+      }
+    }
+  }
+}

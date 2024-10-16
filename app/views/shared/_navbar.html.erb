@@ -8,7 +8,7 @@
     <%= link_to 'EXPLORE', explore_path %>
     <a href="#">CART</a>
     <% if user_signed_in? %>
-      <%= link_to 'PROFILE', edit_user_registration_path %>
+      <%= link_to 'PROFILE', user_path(current_user) %>
     <% else %>
       <%= link_to 'LOGIN', new_user_session_path %>
     <% end %>

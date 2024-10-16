@@ -1,0 +1,29 @@
+<% content_for :body_class, "profile-page" %>
+<div id="profile-page">
+  <div id="profile-links">
+    <h1>PROFILE</h1>
+    <h1>ORDERS</h1>
+    <%= button_to 'LOG OUT', destroy_user_session_path, method: :delete %>
+  </div>
+  <div id="profile-info">
+    <div id="personal-info">
+      <h1>PERSONAL INFO</h1>
+      <p><b>FIRST NAME</b></p>
+      <p><%= @user.first_name.upcase %></p>
+      <p><b>LAST NAME</b></p>
+      <p><%= @user.last_name.upcase %></p>
+      <p><b>EMAIL</b></p>
+      <p><%= @user.email.upcase %></p>
+      <p><b>PASSWORD</b></p>
+      <p>********</p>
+      <%= link_to 'EDIT PROFILE', edit_user_registration_path %>
+    </div>
+    <div id="payment-methods">
+    <h1>PAYMENT METHODS</h1>
+    <p>YOU CAN ADD YOUR PAYMENT METHOD DURING THE CHECKOUT PROCESS</p>
+    </div>
+    <div id="address-book">
+    <h1>ADDRESS BOOK</h1>
+    </div>
+  </div>
+</div>
