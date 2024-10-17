@@ -14,7 +14,7 @@
     </div>
     <div class="product-main-info" style="background-image: url('<%= @product.secondary_photo.url %>')">
       <h3><b><%= @product.name.upcase %></b></h3>
-      <h4><%= number_to_currency(@product.price, unit: "£") %></h4>
+      <h4><%= humanized_money_with_symbol(@product.price) %></h4>
       <div class="product-sizes">
         <select id="size-select" name="size">
           <option value="" disabled selected>SELECT SIZE</option>

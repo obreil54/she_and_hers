@@ -10,7 +10,7 @@
         <div class="product-card">
           <%= image_tag product.primary_photo %>
           <%= product.name.upcase %><br>
-          <%= product.price %>
+          <%= humanized_money_with_symbol(product.price) %>
         </div>
       <% end %>
     <% end %>
