@@ -15,20 +15,23 @@
     <div class="product-main-info" style="background-image: url('<%= @product.secondary_photo.url %>')">
       <h3><b><%= @product.name.upcase %></b></h3>
       <h4><%= humanized_money_with_symbol(@product.price) %></h4>
-      <div class="product-sizes">
-        <select id="size-select" name="size">
-          <option value="" disabled selected>SELECT SIZE</option>
-          <option value="2XS">2XS</option>
-          <option value="XS">XS</option>
-          <option value="S">S</option>
-          <option value="M">M</option>
-          <option value="L">L</option>
-          <option value="XL">XL</option>
-          <option value="2XL">2XL</option>
-        </select>
-        <i class="fa-solid fa-chevron-down"></i>
-      </div>
-      <button type="button">ADD TO CART</button>
+      <%= form_with url: add_item_cart_path(@cart), method: :post, data: { action: "submit->cart#addItem" }, local: false do %>
+        <div class="product-sizes">
+          <select id="size-select" name="size" required>
+            <option value="" disabled selected>SELECT SIZE</option>
+            <option value="2XS">2XS</option>
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="2XL">2XL</option>
+          </select>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <%= hidden_field_tag :product_id, @product.id %>
+        <button type="submit">ADD TO CART</button>
+      <% end %>
       <p><%= @product.description.upcase %></p>
     </div>
     <div class="product-secondary-info" style="background-image: url('<%= @product.tertiary_photo.url %>')" data-controller="product-secondary-info">

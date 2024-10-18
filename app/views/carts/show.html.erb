@@ -1,0 +1,32 @@
+<h1>Your Cart</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @cart.cart_items.each do |item| %>
+      <tr>
+        <td><%= item.product.name %></td>
+        <td>
+          <%= form_with url: update_item_quantity_cart_path(@cart), method: :patch do %>
+            <%= number_field_tag :quantity, item.quantity, min: 1 %>
+            <%= hidden_field_tag :product_id, item.product.id %>
+            <%= submit_tag 'Update' %>
+          <% end %>
+        </td>
+        <td><%= humanized_money_with_symbol(item.product.price * item.quantity) %></td>
+        <td>
+          <%= button_to 'Remove', remove_item_cart_path(@cart, product_id: item.product.id), method: :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Continue Shopping', products_path %>

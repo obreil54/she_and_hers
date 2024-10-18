@@ -11,13 +11,16 @@ Rails.application.routes.draw do
 
   resources :products, only: [:index, :show, :new, :create]
 
+  resources :carts, only: [:show] do
+    patch :update_item_quantity, on: :member
+    delete :remove_item, on: :member
+    post :add_item, on: :member
+  end
+
   get 'about', to: 'pages#about'
   get 'contact', to: 'pages#contact'
   get 'faq', to: 'pages#faq'
   get 'explore', to: 'pages#explore'
   get 'privacy', to: 'pages#privacy'
   get 'terms', to: 'pages#terms'
-
-  # Defines the root path route ("/")
-  # root "posts#index"
 end

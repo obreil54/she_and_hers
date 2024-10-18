@@ -54,6 +54,7 @@ gem "devise"
 gem 'country_select', '~> 8.0'
 gem "cloudinary"
 gem "money-rails"
+gem "stripe"
 
 group :development, :test do
   gem "dotenv-rails"
