@@ -6,7 +6,9 @@
     <%= link_to 'HOME', root_path %>
     <%= link_to 'SHOP', products_path %>
     <%= link_to 'EXPLORE', explore_path %>
-    <a href="#">CART</a>
+    <%= link_to "CART (<span data-cart-target='count'>#{@cart.cart_items.sum(:quantity)}</span>)".html_safe, cart_path(@cart) %>
+
+
     <% if user_signed_in? %>
       <%= link_to 'PROFILE', user_path(current_user) %>
     <% else %>
