@@ -12,10 +12,10 @@
       data-product-carousel-interval-value="5000"
       data-product-carousel-target="image">
     </div>
-    <div class="product-main-info" style="background-image: url('<%= @product.secondary_photo.url %>')">
+    <div class="product-main-info" style="background-image: url('<%= @product.secondary_photo.url %>')" data-controller="cart">
       <h3><b><%= @product.name.upcase %></b></h3>
       <h4><%= humanized_money_with_symbol(@product.price) %></h4>
-      <%= form_with url: add_item_cart_path(@cart), method: :post, data: { action: "submit->cart#addItem" }, local: false do %>
+      <%= form_with url: add_item_cart_path(@cart), method: :post, data: { action: "submit->cart#addItem" } do %>
         <div class="product-sizes">
           <select id="size-select" name="size" required>
             <option value="" disabled selected>SELECT SIZE</option>

@@ -1,0 +1,16 @@
+<div id="cart-overlay" class="cart-overlay" data-cart-overlay-target="overlay">
+  <div class="cart-content">
+    <div id="cart-modal-top">
+      <button id="close-cart-overlay" class="close-btn" data-action="click->cart-overlay#hide"><i class="fa-solid fa-chevron-right"></i></button>
+      <h2>CART</h2>
+    </div>
+    <div id="cart-items-container">
+      <%= render 'carts/cart_items_modal' %>
+    </div>
+    <div id="cart-modal-bottom">
+      <p>SUBTOTAL</p>
+      <p id="total-price-display"><%= humanized_money_with_symbol(@cart.total_price) %></p>
+      <%= link_to 'VIEW CART', cart_path(@cart), class: 'btn' %>
+    </div>
+  </div>
+</div>
