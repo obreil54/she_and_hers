@@ -15,7 +15,10 @@ Rails.application.routes.draw do
     patch :update_item_quantity, on: :member
     delete :remove_item, on: :member
     post :add_item, on: :member
+    get :cart_items_modal, on: :member
   end
+
+  resources :cart_items, only: [:update]
 
   get 'about', to: 'pages#about'
   get 'contact', to: 'pages#contact'

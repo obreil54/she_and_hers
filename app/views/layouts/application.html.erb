@@ -11,10 +11,11 @@
     <%= favicon_link_tag 'logo-black.jpeg' %>
   </head>
 
-  <body class="<%= content_for?(:body_class) ? yield(:body_class) : '' %>">
+  <body class="<%= content_for?(:body_class) ? yield(:body_class) : '' %>" data-controller="cart-overlay">
     <%= render 'shared/navbar' %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    <%= render 'carts/cart_overlay' %>
     <%= yield %>
     <%= render 'shared/footer' %>
   </body>

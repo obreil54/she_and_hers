@@ -1,13 +1,12 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="cart"
 export default class extends Controller {
-  static targets = ["count"]
-
   addItem(event) {
+    event.preventDefault();
+
     const form = event.target;
-    const formData = new FormData(form)
-    const url = event.target.action
+    const formData = new FormData(form);
+    const url = event.target.action;
 
     fetch(url, {
       method: "POST",
@@ -18,7 +17,36 @@ export default class extends Controller {
     })
     .then(response => response.json())
     .then((data) => {
-      this.countTarget.textContent = data.total_items;
+      const cartLinkElement = document.querySelector('[data-cart-target="link"]');
+      if (cartLinkElement) {
+        cartLinkElement.innerHTML = `CART (${data.total_items})`;
+      }
+
+      fetch((`/carts/${data.cart_id}/cart_items_modal`))
+        .then(response => response.text())
+        .then((html) => {
+          const cartItemsContainer = document.querySelector('#cart-items-container');
+          if (cartItemsContainer) {
+            cartItemsContainer.innerHTML = html;
+          }
+
+          const totalPriceElement = document.querySelector('#total-price-display');
+          if (totalPriceElement) {
+            totalPriceElement.innerHTML = `${data.total_price}`;
+          }
+
+          const cartOverlayController = this.application.getControllerForElementAndIdentifier(
+            document.body,
+            "cart-overlay"
+          );
+
+          if (cartOverlayController) {
+            cartOverlayController.show();
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching cart items:", error);
+        });
     })
     .catch((error) => {
       console.error("Error adding item to cart:", error);
