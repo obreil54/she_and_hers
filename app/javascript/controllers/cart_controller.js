@@ -43,6 +43,11 @@ export default class extends Controller {
           if (cartOverlayController) {
             cartOverlayController.show();
           }
+
+          const cartModalBottom = document.querySelector('#cart-modal-bottom');
+          if (cartModalBottom) {
+            cartModalBottom.classList.remove('d-none');
+          }
         })
         .catch((error) => {
           console.error("Error fetching cart items:", error);

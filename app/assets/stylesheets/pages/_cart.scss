@@ -1,0 +1,66 @@
+#cart-page {
+  min-height: 70vh;
+  background: white;
+
+  #cart-page-info {
+    width: 75%;
+  }
+
+  .cart-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    img {
+      width: 15%;
+    }
+
+    .quantity-input {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid black;
+    }
+
+    .quantity-field {
+      text-align: center;
+      border: none;
+      width: 30px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .quantity-input button {
+      width: 30px;
+      height: 30px;
+      font-size: 20px;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    .quantity-input button:hover {
+      background-color: #e0e0e0;
+    }
+
+    .quantity-input .increment,
+    .quantity-input .decrement {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quantity-field::-webkit-outer-spin-button,
+    .quantity-field::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .quantity-field {
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
+  }
+}

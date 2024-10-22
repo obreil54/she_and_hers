@@ -1,19 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
+// Connects to data-controller="cart-page"
 export default class extends Controller {
-  static targets = ["overlay", "cartLink"]
-
-  show(event) {
-    if (event) event.preventDefault();
-    this.overlayTarget.classList.add('active');
-    document.body.classList.add('cart-active');
-  }
-
-  hide() {
-    this.overlayTarget.classList.remove('active');
-    document.body.classList.remove('cart-active');
-  }
-
   updateQuantity(event) {
     const cartItemId = event.target.dataset.cartItemId;
     const newQuantity = event.target.value;
@@ -81,5 +69,45 @@ export default class extends Controller {
     if (pageInput) {
       pageInput.value = newQuantity;
     }
+  }
+
+  removeItem(event) {
+    event.preventDefault();
+    console.log("Stimulus controller triggered for item removal");
+
+    const cartItemId = event.target.dataset.cartItemId;
+    const url = event.target.dataset.url;
+
+    fetch(url, {
+      method: "DELETE",
+      headers: {
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+        "Content-Type": "application/json",
+      }
+    })
+    .then(response => response.json())
+    .then((data) => {
+      if (data.success) {
+        const pageItem = document.querySelector(`#cart-page [data-cart-item-id="${cartItemId}"]`);
+        if (pageItem) {
+          pageItem.remove();
+        }
+
+        const modalItem = document.querySelector(`#cart-overlay [data-cart-item-id="${cartItemId}"]`);
+        if (modalItem) {
+          modalItem.remove();
+        }
+
+        const cartLinkElement = document.querySelector('[data-cart-target="link"]');
+        if (cartLinkElement) {
+          cartLinkElement.innerHTML = `CART (${data.total_items})`;
+        }
+
+        console.log("Item removed successfully");
+      } else {
+        console.error("Failed to remove item");
+      }
+    })
+    .catch(error => console.error("Error removing item:", error));
   }
 }
