@@ -1,32 +1,27 @@
-<h1>Your Cart</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Product</th>
-      <th>Quantity</th>
-      <th>Price</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
+<div id="cart-page">
+  <div id="cart-page-info">
+    <h1>MY CART</h1>
     <% @cart.cart_items.each do |item| %>
-      <tr>
-        <td><%= item.product.name %></td>
-        <td>
-          <%= form_with url: update_item_quantity_cart_path(@cart), method: :patch do %>
-            <%= number_field_tag :quantity, item.quantity, min: 1 %>
-            <%= hidden_field_tag :product_id, item.product.id %>
-            <%= submit_tag 'Update' %>
-          <% end %>
-        </td>
-        <td><%= humanized_money_with_symbol(item.product.price * item.quantity) %></td>
-        <td>
-          <%= button_to 'Remove', remove_item_cart_path(@cart, product_id: item.product.id), method: :delete %>
-        </td>
-      </tr>
+      <div class="cart-card" data-controller="cart-page" data-cart-item-id="<%= item.id %>">
+        <%= image_tag item.product.primary_photo %>
+        <div class="cart-card-name">
+          <p><%= item.product.name.upcase %></p>
+          <p><%= item.size.upcase %></p>
+        </div>
+        <div class="quantity-input">
+          <button type="button" class="decrement" data-action="click->cart-page#decrementQuantity" data-cart-item-id="<%= item.id %>">-</button>
+          <%= number_field_tag :quantity, item.quantity, min: 1, max: 2, data: { action: 'change->cart-page#updateQuantity', cart_item_id: item.id }, class: "quantity-field", readonly: true %>
+          <button type="button" class="increment" data-action="click->cart-page#incrementQuantity" data-cart-item-id="<%= item.id %>">+</button>
+        </div>
+        <p><%= humanized_money_with_symbol(item.product.price) %></p>
+        <button type="button"
+                data-action="click->cart-page#removeItem"
+                data-cart-item-id="<%= item.id %>"
+                data-url="<%= cart_remove_item_path(@cart, item_id: item.id) %>"
+                class="btn btn-danger">
+          Remove
+        </button>
+      </div>
     <% end %>
-  </tbody>
-</table>
-
-<%= link_to 'Continue Shopping', products_path %>
+  </div>
+</div>

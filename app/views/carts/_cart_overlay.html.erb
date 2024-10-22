@@ -7,10 +7,18 @@
     <div id="cart-items-container">
       <%= render 'carts/cart_items_modal' %>
     </div>
-    <div id="cart-modal-bottom">
-      <p>SUBTOTAL</p>
-      <p id="total-price-display"><%= humanized_money_with_symbol(@cart.total_price) %></p>
-      <%= link_to 'VIEW CART', cart_path(@cart), class: 'btn' %>
-    </div>
+    <% if @cart.cart_items.empty? %>
+      <div id="cart-modal-bottom" class="d-none">
+        <p>SUBTOTAL</p>
+        <p id="total-price-display"><%= humanized_money_with_symbol(@cart.total_price) %></p>
+        <%= link_to 'VIEW CART', cart_path(@cart), class: 'btn' %>
+      </div>
+    <% else %>
+      <div id="cart-modal-bottom">
+        <p>SUBTOTAL</p>
+        <p id="total-price-display"><%= humanized_money_with_symbol(@cart.total_price) %></p>
+        <%= link_to 'VIEW CART', cart_path(@cart), class: 'btn' %>
+      </div>
+    <% end %>
   </div>
 </div>

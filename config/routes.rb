@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   resources :carts, only: [:show] do
     patch :update_item_quantity, on: :member
-    delete :remove_item, on: :member
+    delete 'remove_item/:item_id', to: 'carts#remove_item', as: :remove_item
     post :add_item, on: :member
     get :cart_items_modal, on: :member
   end
