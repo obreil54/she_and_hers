@@ -34,10 +34,8 @@ export default class extends Controller {
           cartLinkElement.innerHTML = `CART (${data.total_items})`;
         }
 
-        const totalPriceElement = document.querySelector('#total-price-display');
-        if (totalPriceElement) {
-          totalPriceElement.innerHTML = `${data.total_price}`;
-        }
+        this.updatePrices(data.total_price);
+
         this.syncQuantity(cartItemId, newQuantity);
         console.log("Quantity updated successfully");
       } else {
@@ -80,6 +78,23 @@ export default class extends Controller {
     const pageInput = document.querySelector(`#cart-page input[data-cart-item-id="${cartItemId}"]`);
     if (pageInput) {
       pageInput.value = newQuantity;
+    }
+  }
+
+  updatePrices(totalPrice) {
+    const totalPriceElement = document.querySelector('#summary-total p');
+    if (totalPriceElement) {
+      totalPriceElement.innerHTML = totalPrice;
+    }
+
+    const subtotalElement = document.querySelector('#summary-subtotal p');
+    if (subtotalElement) {
+      subtotalElement.innerHTML = totalPrice;
+    }
+
+    const totalModalPriceElement = document.querySelector('#total-price-display');
+    if (totalModalPriceElement) {
+      totalModalPriceElement.innerHTML = totalPrice;
     }
   }
 }
