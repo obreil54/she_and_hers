@@ -25,11 +25,13 @@ class CartsController < ApplicationController
   end
 
   def remove_item
-    @cart = Cart.find(params[:cart_id])
-    @cart_item = @cart.cart_items.find(params[:item_id])
+    @cart_item = @cart.cart_items.find_by(id: params[:item_id])
 
     if @cart_item&.destroy
-      render json: { success: true, total_items: @cart.cart_items.count }
+      total_price = @cart.total_price.format(symbol: true, no_cents: true)
+      total_items = @cart.cart_items.sum(:quantity)
+
+      render json: { success: true, total_items: total_items, total_price: total_price }
     else
       render json: { success: false }, status: :unprocessable_entity
     end

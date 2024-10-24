@@ -1,27 +1,40 @@
 <div id="cart-page">
   <div id="cart-page-info">
     <h1>MY CART</h1>
-    <% @cart.cart_items.each do |item| %>
-      <div class="cart-card" data-controller="cart-page" data-cart-item-id="<%= item.id %>">
-        <%= image_tag item.product.primary_photo %>
-        <div class="cart-card-name">
-          <p><%= item.product.name.upcase %></p>
-          <p><%= item.size.upcase %></p>
+    <div id="cart-page-cards">
+      <% @cart.cart_items.each do |item| %>
+        <div class="cart-card" data-controller="cart-page" data-cart-item-id="<%= item.id %>">
+          <%= image_tag item.product.primary_photo %>
+          <div class="cart-card-name">
+            <p><%= item.product.name.upcase %></p>
+            <p><%= item.size.upcase %></p>
+          </div>
+          <div class="quantity-input">
+            <button type="button" class="decrement" data-action="click->cart-page#decrementQuantity" data-cart-item-id="<%= item.id %>">-</button>
+            <%= number_field_tag :quantity, item.quantity, min: 1, max: 2, data: { action: 'change->cart-page#updateQuantity', cart_item_id: item.id }, class: "quantity-field", readonly: true %>
+            <button type="button" class="increment" data-action="click->cart-page#incrementQuantity" data-cart-item-id="<%= item.id %>">+</button>
+          </div>
+          <p><%= humanized_money_with_symbol(item.product.price) %></p>
+          <button type="button"
+                  data-action="click->cart-page#removeItem"
+                  data-cart-item-id="<%= item.id %>"
+                  data-url="<%= cart_remove_item_path(@cart, item_id: item.id) %>"
+                  class="btn btn-danger">
+            <i class="fa-regular fa-trash-can"></i>
+          </button>
         </div>
-        <div class="quantity-input">
-          <button type="button" class="decrement" data-action="click->cart-page#decrementQuantity" data-cart-item-id="<%= item.id %>">-</button>
-          <%= number_field_tag :quantity, item.quantity, min: 1, max: 2, data: { action: 'change->cart-page#updateQuantity', cart_item_id: item.id }, class: "quantity-field", readonly: true %>
-          <button type="button" class="increment" data-action="click->cart-page#incrementQuantity" data-cart-item-id="<%= item.id %>">+</button>
-        </div>
-        <p><%= humanized_money_with_symbol(item.product.price) %></p>
-        <button type="button"
-                data-action="click->cart-page#removeItem"
-                data-cart-item-id="<%= item.id %>"
-                data-url="<%= cart_remove_item_path(@cart, item_id: item.id) %>"
-                class="btn btn-danger">
-          Remove
-        </button>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div id="cart-summary">
+    <h2>ORDER SUMMARY</h2>
+    <div id="summary-subtotal">
+      <h2>SUBTOTAL</h2>
+      <p><%= humanized_money_with_symbol(@cart.total_price) %></p>
+    </div>
+    <div id="summary-total">
+      <h2>TOTAL</h2>
+      <p><%= humanized_money_with_symbol(@cart.total_price) %></p>
+    </div>
   </div>
 </div>
