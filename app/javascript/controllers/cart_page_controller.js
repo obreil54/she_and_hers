@@ -126,4 +126,13 @@ export default class extends Controller {
       totalModalPriceElement.innerHTML = totalPrice;
     }
   }
+
+  toggleNewAddressForm(event) {
+    const form = document.getElementById('new-address-form');
+    if (event.target.checked) {
+      form.style.display = 'block';
+    } else {
+      form.style.display = 'none';
+    }
+  }
 }

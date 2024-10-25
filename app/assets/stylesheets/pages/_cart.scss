@@ -3,10 +3,10 @@
   background: white;
   padding: 32px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 
   #cart-page-info {
-    width: 70%;
+    width: 60%;
 
     h1 {
       font-size: 1.2em;
@@ -95,6 +95,12 @@
       font-size: 1.2em;
     }
 
+    h3 {
+      font-size: 1.2em;
+      padding-bottom: 8px;
+      border-bottom: 1px solid grey;
+    }
+
     #summary-total, #summary-subtotal {
       display: flex;
       justify-content: space-between;
@@ -104,6 +110,40 @@
 
       p, h2 {
         margin: 0;
+      }
+    }
+
+    #address-select {
+      width: 100%;
+      text-align: center;
+      border: 1px solid black;
+      font-size: 1em;
+      margin-bottom: 8px;
+    }
+
+    #new-address-form, #guest-address-form {
+      width: 90%;
+      margin: 0 auto;
+
+      input {
+        width: 100%;
+        margin: 8px auto;
+        border: 1px solid black;
+      }
+    }
+
+    .btn {
+      background: none;
+      border: 1px solid black;
+      padding: 0 32px;
+      font-size: 1.2em;
+      transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+      color: black;
+      width: 100%;
+
+      &:hover {
+        background-color: black;
+        color: white;
       }
     }
   }
