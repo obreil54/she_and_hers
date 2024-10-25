@@ -1,9 +1,9 @@
-<div id="cart-page">
+<div id="cart-page" data-controller="cart-page">
   <div id="cart-page-info">
     <h1>MY CART</h1>
     <div id="cart-page-cards">
       <% @cart.cart_items.each do |item| %>
-        <div class="cart-card" data-controller="cart-page" data-cart-item-id="<%= item.id %>">
+        <div class="cart-card" data-cart-item-id="<%= item.id %>">
           <%= image_tag item.product.primary_photo %>
           <div class="cart-card-name">
             <p><%= item.product.name.upcase %></p>
@@ -26,15 +26,76 @@
       <% end %>
     </div>
   </div>
+
   <div id="cart-summary">
-    <h2>ORDER SUMMARY</h2>
+    <h3>ORDER SUMMARY</h3>
+
+    <h2>SHIPPING ADDRESS</h2>
+
+    <% if current_user %>
+      <div id="saved-addresses">
+        <select id="address-select" name="address_id">
+          <option value="" disabled selected>SELECT AN EXISTING ADDRESS</option>
+          <% current_user.addresses.each do |address| %>
+            <option value="<%= address.id %>">
+              <%= "#{address.line1}, #{address.city}, #{address.country}" %>
+            </option>
+          <% end %>
+        </select>
+      </div>
+      <div>
+        <input type="checkbox" id="new-address-checkbox" data-action="click->cart-page#toggleNewAddressForm"> USE A NEW ADDRESS
+      </div>
+      <div id="new-address-form" style="display: none;">
+        <%= form_with model: @order, url: orders_path, method: :post, id: "address-form" do |f| %>
+          <%= f.text_field :address_line1, placeholder: "ADDRESS LINE 1" %>
+          <%= f.text_field :address_line2, placeholder: "ADDRESS LINE 2" %>
+          <%= f.text_field :city, placeholder: "CITY" %>
+          <%= f.text_field :state, placeholder: "STATE" %>
+          <%= f.text_field :postal_code, placeholder: "POSTAL CODE" %>
+          <%= f.text_field :country, placeholder: "COUNTRY" %>
+        <% end %>
+      </div>
+    <% else %>
+      <%= form_with model: @order, url: orders_path, method: :post, id: "guest-address-form" do |f| %>
+        <%= f.text_field :first_name, placeholder: "FIRST NAME" %>
+        <%= f.text_field :last_name, placeholder: "LAST NAME" %>
+        <%= f.text_field :email, placeholder: "EMAIL" %>
+        <%= f.text_field :address_line1, placeholder: "ADDRESS LINE 1" %>
+        <%= f.text_field :address_line2, placeholder: "ADDRESS LINE 2" %>
+        <%= f.text_field :city, placeholder: "CITY" %>
+        <%= f.text_field :state, placeholder: "STATE" %>
+        <%= f.text_field :postal_code, placeholder: "POSTAL CODE" %>
+        <%= f.text_field :country, placeholder: "COUNTRY" %>
+        <%= f.text_field :phone, placeholder: "PHONE" %>
+      <% end %>
+    <% end %>
+
     <div id="summary-subtotal">
       <h2>SUBTOTAL</h2>
       <p><%= humanized_money_with_symbol(@cart.total_price) %></p>
     </div>
+
     <div id="summary-total">
       <h2>TOTAL</h2>
       <p><%= humanized_money_with_symbol(@cart.total_price) %></p>
     </div>
+
+    <button
+      id="checkout-button"
+      class="btn"
+      data-controller="stripe-checkout"
+      data-stripe-checkout-target="button"
+      data-action="click->stripe-checkout#submitForm"
+      data-form-id-guest="guest-address-form"
+      data-form-id-new="address-form"
+      data-form-id-existing="address-select"
+      data-stripe-checkout-total-price-cents="<%= @cart.total_price.cents %>"
+    >
+      CHECKOUT
+    </button>
+
   </div>
 </div>
+
+<meta name="stripe-publishable-key" content="<%= Rails.configuration.stripe[:publishable_key] %>">

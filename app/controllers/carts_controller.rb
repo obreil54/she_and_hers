@@ -1,5 +1,9 @@
 class CartsController < ApplicationController
-  before_action :find_cart
+  def show
+    @cart = current_cart
+    @guest_checkout = current_user.nil?
+    @order = Order.new
+  end
 
   def cart_items_modal
     @cart = current_cart
@@ -52,23 +56,6 @@ class CartsController < ApplicationController
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.replace("cart-items-container", partial: "carts/cart_items_modal", locals: { cart: @cart }) }
       format.json { render json: { success: true } }
-    end
-  end
-
-  private
-
-  def find_cart
-    @cart = current_user ? current_user.cart : Cart.find_or_create_by(id: session[:cart_id])
-    session[:cart_id] ||= @cart.id
-  end
-
-  def current_cart
-    if current_user
-      current_user.cart || current_user.create_cart
-    else
-      Cart.find_or_create_by(id: session[:cart_id]) do |cart|
-        session[:cart_id] = cart.id
-      end
     end
   end
 end

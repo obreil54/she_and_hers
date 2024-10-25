@@ -9,6 +9,7 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%= favicon_link_tag 'logo-black.jpeg' %>
+    <script src="https://js.stripe.com/v3/"></script>
   </head>
 
   <body class="<%= content_for?(:body_class) ? yield(:body_class) : '' %>" data-controller="cart-overlay">

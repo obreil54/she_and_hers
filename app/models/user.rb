@@ -9,4 +9,5 @@ class User < ApplicationRecord
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   has_many :orders
   has_one :cart, dependent: :destroy
+  has_many :addresses, dependent: :destroy
 end

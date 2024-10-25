@@ -20,6 +20,10 @@ Rails.application.routes.draw do
 
   resources :cart_items, only: [:update]
 
+  resources :orders, only: [:create] do
+    get :success, on: :member
+  end
+
   get 'about', to: 'pages#about'
   get 'contact', to: 'pages#contact'
   get 'faq', to: 'pages#faq'
