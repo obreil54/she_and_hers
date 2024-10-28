@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   def create
+    p "Order params: #{order_params}"
     @cart = current_cart
     @order = Order.new(order_params)
     @order.order_items = @cart.cart_items.map { |item| OrderItem.new(product: item.product, quantity: item.quantity) }
@@ -64,11 +65,14 @@ class OrdersController < ApplicationController
 
   def success
     @order = Order.find(params[:id])
-    p "Current user: #{current_user}"
-    p "Answer: #{!current_user.addresses.exists?(address_line1: @order.address_line1, postal_code: @order.postal_code)}"
-    p "Order: #{@order}"
-    p "Order: #{@order.inspect}"
-    p "Order address: #{@order.address_line1}, #{@order.postal_code}"
+    if @order
+      @order.update(status: 'placed')
+
+      cart = current_cart
+      if cart
+        cart.cart_items.destroy_all
+      end
+    end
     if current_user && !current_user.addresses.exists?(address_line1: @order.address_line1, postal_code: @order.postal_code)
       current_user.addresses.create(
         address_line1: @order.address_line1,
@@ -79,7 +83,6 @@ class OrdersController < ApplicationController
         country: @order.country,
       )
     end
-    @order.update(status: 'placed')
   end
 
   private

@@ -33,16 +33,18 @@
     <h2>SHIPPING ADDRESS</h2>
 
     <% if current_user %>
-      <div id="saved-addresses">
-        <select id="address-select" name="address_id">
-          <option value="" disabled selected>SELECT AN EXISTING ADDRESS</option>
-          <% current_user.addresses.each do |address| %>
-            <option value="<%= address.id %>">
-              <%= "#{address.line1}, #{address.city}, #{address.country}" %>
-            </option>
-          <% end %>
-        </select>
-      </div>
+      <%= form_with model: @order, url: orders_path, method: :post, id: "existing-address-form" do |f| %>
+        <div id="saved-addresses">
+          <select id="address-select" name="order[address_id]">
+            <option value="" disabled selected>SELECT AN EXISTING ADDRESS</option>
+            <% current_user.addresses.each do |address| %>
+              <option value="<%= address.id %>">
+                <%= "#{address.address_line1}, #{address.city}, #{address.country}" %>
+              </option>
+            <% end %>
+          </select>
+        </div>
+      <% end %>
       <div>
         <input type="checkbox" id="new-address-checkbox" data-action="click->cart-page#toggleNewAddressForm"> USE A NEW ADDRESS
       </div>
@@ -53,7 +55,7 @@
           <%= f.text_field :city, placeholder: "CITY" %>
           <%= f.text_field :state, placeholder: "STATE" %>
           <%= f.text_field :postal_code, placeholder: "POSTAL CODE" %>
-          <%= f.text_field :country, placeholder: "COUNTRY" %>
+          <%= f.country_select :country, { include_blank: "COUNTRY" } %>
         <% end %>
       </div>
     <% else %>
@@ -66,7 +68,7 @@
         <%= f.text_field :city, placeholder: "CITY" %>
         <%= f.text_field :state, placeholder: "STATE" %>
         <%= f.text_field :postal_code, placeholder: "POSTAL CODE" %>
-        <%= f.text_field :country, placeholder: "COUNTRY" %>
+        <%= f.country_select :country, { include_blank: "COUNTRY" } %>
         <%= f.text_field :phone, placeholder: "PHONE" %>
       <% end %>
     <% end %>
@@ -89,7 +91,7 @@
       data-action="click->stripe-checkout#submitForm"
       data-form-id-guest="guest-address-form"
       data-form-id-new="address-form"
-      data-form-id-existing="address-select"
+      data-form-id-existing="existing-address-form"
       data-stripe-checkout-total-price-cents="<%= @cart.total_price.cents %>"
     >
       CHECKOUT
