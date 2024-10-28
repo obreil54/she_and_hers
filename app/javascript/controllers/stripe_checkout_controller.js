@@ -24,8 +24,6 @@ export default class extends Controller {
       formId = guestFormId;
     }
 
-    debugger;
-
     const form = document.getElementById(formId);
     if (!form) {
       console.error("Form not found.");
@@ -35,8 +33,6 @@ export default class extends Controller {
     const formData = new FormData(form);
 
     console.log(Object.fromEntries(formData.entries()));
-
-    debugger;
 
     const response = await fetch('/orders', {
       method: 'POST',

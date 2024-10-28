@@ -1,11 +1,12 @@
 <% content_for :body_class, "profile-page" %>
-<div id="profile-page">
+<div id="profile-page" data-controller="profile-links">
   <div id="profile-links">
-    <h1>PROFILE</h1>
-    <h1>ORDERS</h1>
+    <h1>WISHLIST</h1>
+    <h1 data-section="profile" data-action="click->profile-links#switch" data-profile-links-target="link" class="profile-link active">PROFILE</h1>
+    <h1 data-section="orders" data-action="click->profile-links#switch" data-profile-links-target="link" class="profile-link">ORDERS</h1>
     <%= button_to 'LOG OUT', destroy_user_session_path, method: :delete %>
   </div>
-  <div id="profile-info">
+  <div id="profile-info" data-profile-links-target="section" data-section="profile" class="profile-section">
     <div id="personal-info">
       <h1>PERSONAL INFO</h1>
       <p><b>FIRST NAME</b></p>
@@ -14,16 +15,59 @@
       <p><%= @user.last_name.upcase %></p>
       <p><b>EMAIL</b></p>
       <p><%= @user.email.upcase %></p>
-      <p><b>PASSWORD</b></p>
-      <p>********</p>
+      <p><b>PHONE</b></p>
+      <p><%= @user.phone if @user.phone.present? %></p>
       <%= link_to 'EDIT PROFILE', edit_user_registration_path %>
     </div>
-    <div id="payment-methods">
-      <h1>PAYMENT METHODS</h1>
-      <p>YOU CAN ADD YOUR PAYMENT METHOD DURING THE CHECKOUT PROCESS</p>
+    <div id="measurements">
+      <h1>YOUR MEASUREMENTS</h1>
     </div>
     <div id="address-book">
       <h1>ADDRESS BOOK</h1>
+      <% @addresses.each do |address| %>
+        <div class="address-card">
+          <p><%= address.address_line1.upcase %>, <%= address.address_line2.upcase + ", " if address.address_line2.present? %><%= address.city.upcase %></p>
+          <p><%= address.postal_code.upcase %></p>
+          <p><%= address.state.upcase if address.state.present? %></p>
+          <p><%= address.country.upcase %></p>
+        </div>
+      <% end %>
     </div>
+  </div>
+
+  <div id="order-info" data-profile-links-target="section" data-section="orders" class="profile-section" style="display: none;">
+    <% if @orders.present? %>
+      <% @orders.each do |order| %>
+        <div class="order-card">
+          <p><b>ORDER</b> <%= order.id.to_s.rjust(10, '0') %></p>
+          <p><%= order.status.upcase %></p>
+          <% order.order_items.each do |item| %>
+            <div class="profile-product-card">
+              <%= image_tag item.product.primary_photo %>
+              <div class="profile-product-info">
+                <h6><%= item.product.name.upcase %></h6>
+                <p>SIZE <%= item.size.upcase %></p>
+              </div>
+              <div class="profile-product-price">
+                <p><%= humanized_money_with_symbol(item.product.price) %></p>
+              </div>
+            </div>
+          <% end %>
+          <p><b>TRANSACTION DATE</b></p>
+          <p><%= order.created_at.strftime("%d/%m/%Y") %></p>
+          <p><b>DELIVERY ADDRESS</b></p>
+          <p><%= order.address_line1.upcase %>, <%= order.address_line2.upcase + ", " if order.address_line2.present? %><%= order.city.upcase %></p>
+          <p><%= order.postal_code.upcase %></p>
+          <p><%= order.state.upcase if order.state.present? %></p>
+          <p><%= order.country.upcase %></p>
+          <p><b>SUMMARY</b></p>
+          <p><b>TOTAL</b></p>
+          <p><%= humanized_money_with_symbol(order.total_price) %></p>
+        </div>
+      <% end %>
+    <% else %>
+      <p>YOU HAVEN'T PLACED ANY ORDERS YET</p>
+      <%= link_to "CONTINUE SHOPPING", products_path %>
+    <% end %>
   </div>
 </div>

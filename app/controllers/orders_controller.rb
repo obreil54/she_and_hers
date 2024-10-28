@@ -1,9 +1,11 @@
 class OrdersController < ApplicationController
+  require 'stripe'
+
   def create
     p "Order params: #{order_params}"
     @cart = current_cart
     @order = Order.new(order_params)
-    @order.order_items = @cart.cart_items.map { |item| OrderItem.new(product: item.product, quantity: item.quantity) }
+    @order.order_items = @cart.cart_items.map { |item| OrderItem.new(product: item.product, quantity: item.quantity, size: item.size) }
 
     if current_user
       @order.user = current_user
@@ -68,11 +70,24 @@ class OrdersController < ApplicationController
     if @order
       @order.update(status: 'placed')
 
+      session = Stripe::Checkout::Session.retrieve(@order.checkout_session_id)
+
+      if session.payment_intent
+        payment_intent = Stripe::PaymentIntent.retrieve(session.payment_intent)
+
+        if payment_intent.latest_charge
+          charge = Stripe::Charge.retrieve(payment_intent.latest_charge)
+          receipt_url = charge.receipt_url
+          @order.update(receipt_url: receipt_url) if receipt_url.present?
+        end
+      end
+
       cart = current_cart
       if cart
         cart.cart_items.destroy_all
       end
     end
+
     if current_user && !current_user.addresses.exists?(address_line1: @order.address_line1, postal_code: @order.postal_code)
       current_user.addresses.create(
         address_line1: @order.address_line1,
