@@ -5,49 +5,58 @@ export default class extends Controller {
 
   connect() {
     this.stripe = Stripe(this.getPublishableKey());
-    this.buttonTarget.addEventListener("click", () => this.redirectToCheckout());
   }
 
-  submitForm() {
+  async submitForm() {
     const guestFormId = this.buttonTarget.dataset.formIdGuest;
     const newAddressFormId = this.buttonTarget.dataset.formIdNew;
-    const addressSelect = document.getElementById(this.buttonTarget.dataset.formIdExisting);
+    const addressSelect = this.buttonTarget.dataset.formIdExisting;
 
     let formId;
-
-    if (addressSelect && addressSelect.value !== "") {
-      console.log("Here is the address select");
-      formId = guestFormId;
+    if (document.getElementById(addressSelect) && document.getElementById("address-select").value) {
+      console.log("Existing address selected.");
+      formId = addressSelect;
     } else if (document.getElementById(newAddressFormId) && document.getElementById(newAddressFormId).parentElement.style.display === "block") {
-      console.log("Here is the new address form");
+      console.log("New address form visible.");
       formId = newAddressFormId;
     } else {
-      console.log("Here is the guest form");
+      console.log("Guest form visible.");
       formId = guestFormId;
     }
 
+    debugger;
+
     const form = document.getElementById(formId);
-
-    if (form) {
-      form.submit();
-    } else {
+    if (!form) {
       console.error("Form not found.");
+      return;
     }
-  }
 
-  async redirectToCheckout() {
+    const formData = new FormData(form);
+
+    console.log(Object.fromEntries(formData.entries()));
+
+    debugger;
+
     const response = await fetch('/orders', {
       method: 'POST',
       headers: {
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
         'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        'Accept': 'application/json'
       },
       body: JSON.stringify({
-        order: {
-          total_amount_cents: this.data.get("totalPriceCents")
-        }
+        order: Object.fromEntries(
+          Array.from(formData.entries()).map(([key, value]) => [key.replace(/^order\[(.+)\]$/, "$1"), value])
+        ),
+        total_amount_cents: this.data.get("totalPriceCents")
       })
     });
+
+    if (!response.ok) {
+      console.error("Failed to create order.");
+      return;
+    }
 
     const session = await response.json();
     const { error } = await this.stripe.redirectToCheckout({ sessionId: session.id });
