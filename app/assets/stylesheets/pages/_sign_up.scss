@@ -1,7 +1,7 @@
 .sign-up-page {
   background-image: image-url('sign-up-background.JPG');
   background-size: cover;
-  background-position: center;
+  background-position: 50% 25%;
 }
 
 #sign-up-page {
@@ -14,11 +14,12 @@
   p, form {
     width: 29%;
     font-size: 1.2em;
+    color: white;
 
     input {
       background: none;
       border: none;
-      border-bottom: 1px solid black;
+      border-bottom: 1px solid white;
       font-size: 1em;
       padding: 0;
       color: white;
@@ -37,7 +38,7 @@
       display: flex;
 
       a {
-        color: black;
+        color: white;
 
         &:hover {
           font-weight: bolder;
@@ -53,19 +54,19 @@
       appearance: none;
       width: 20px;
       height: 20px;
-      border: 2px solid black;
+      border: 2px solid white;
       position: relative;
       cursor: pointer;
     }
 
     input[type="checkbox"]:checked {
-      background-color: black;
-      border-color: black;
+      background-color: white;
+      border-color: white;
     }
 
     input[type="checkbox"]:checked::after {
       content: "\2713";
-      color: white;
+      color: black;
       font-size: 16px;
       position: absolute;
       top: -2px;
@@ -79,16 +80,17 @@
 
     .btn {
       background: none;
-      border: 1px solid black;
+      border: 1px solid white;
       padding: 0 32px;
       font-size: 1em;
       transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-      color: black;
+      color: white;
       width: 75%;
 
       &:hover {
         background-color: black;
         color: white;
+        border: 1px solid black;
       }
     }
   }
@@ -98,7 +100,7 @@
     margin-top: 16px;
 
     a {
-      color: black;
+      color: white;
 
       &:hover {
         font-weight: bolder;

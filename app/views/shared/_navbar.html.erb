@@ -6,6 +6,8 @@
     <%= link_to 'HOME', root_path %>
     <%= link_to 'SHOP', products_path %>
     <%= link_to 'EXPLORE', explore_path %>
+    <%= link_to 'ABOUT', about_path %>
+    <%= link_to 'FAQ', faq_path %>
     <% cart_count = @cart.cart_items.sum(:quantity) %>
     <%= link_to "CART#{" (#{cart_count})" if cart_count > 0}".html_safe, "#", data: { cart_target: 'link', action: "click->cart-overlay#show" } %>
     <% if user_signed_in? %>

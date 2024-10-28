@@ -3,4 +3,11 @@ class Order < ApplicationRecord
   belongs_to :user, optional: true
   has_many :order_items, dependent: :destroy
   accepts_nested_attributes_for :order_items
+
+  def total_price
+    total = order_items.joins(:product).sum do |item|
+      item.product.price_cents * item.quantity
+    end
+    Money.new(total, 'GBP')
+  end
 end

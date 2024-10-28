@@ -1,8 +1,40 @@
-<h1>Thank you for your purchase!</h1>
-
-<p>Your order has been successfully placed.</p>
-
-<p>Order ID: <%= @order.id %></p>
-<p>Total Amount: <%= @order.total_amount_cents / 100.0 %> USD</p>
-
-<%= link_to 'Back to Shop', root_path, class: 'btn btn-primary' %>
+<div id="success-page">
+  <div id="success-left">
+    <h1>THANK YOU!</h1>
+    <div id="order-info">
+      <div id="order-info-left">
+        <p><b>ORDER NUMBER</b> <%= @order.id.to_s.rjust(10, '0') %></p>
+        <p>YOUR ORDER IS CONFIRMED AND YOU WILL BE RECEIVING AN EMAIL CONFIRMATION SHORTLY</p>
+        <a href="<%= @order.receipt_url %>" target="_blank">VIEW RECEIPT</a>
+      </div>
+      <div id="order-info-right">
+        <p><b>SHIP TO</b></p>
+        <p><%= @order.first_name.upcase %> <%= @order.last_name.upcase %></p>
+        <p><%= @order.address_line1.upcase %>, <%= @order.address_line2.upcase + ", " if @order.address_line2.present? %> <%= @order.city.upcase %></p>
+        <p><%= @order.postal_code.upcase %></p>
+        <p><%= @order.state.upcase %></p>
+        <p><%= @order.country.upcase %></p>
+        <p><%= @order.phone %></p>
+      </div>
+    </div>
+  </div>
+  <div id="success-right">
+    <div id="order-summary">
+      <h2>ORDER SUMMARY</h2>
+      <% @order.order_items.each do |item| %>
+        <div class="success-card">
+          <%= image_tag item.product.primary_photo %>
+            <div class="success-card-info">
+              <p><%= item.product.name.upcase %></p>
+              <p><%= item.size.upcase %></p>
+              <p><%= humanized_money_with_symbol(item.product.price) %></p>
+            </div>
+        </div>
+      <% end %>
+      <div id="success-total">
+        <p>SUBTOTAL</p>
+        <p><%= humanized_money_with_symbol(@order.total_price) %></p>
+      </div>
+    </div>
+  </div>
+</div>

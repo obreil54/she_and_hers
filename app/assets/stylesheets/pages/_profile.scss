@@ -1,7 +1,7 @@
 .profile-page {
   background-image: image-url('profile-background.JPG');
   background-size: cover;
-  background-position: center;
+  background-position: 50% 70%;
 }
 
 #profile-page {
@@ -16,18 +16,22 @@
   h1 {
     font-size: 2.3em;
     font-weight: bolder;
+  }
 
-    &:hover {
-      cursor: pointer;
-      text-decoration: underline;
-    }
+  #profile-links h1.active {
+    text-decoration: underline;
   }
 
   #profile-links {
     display: flex;
     justify-content: space-between;
-    width: 50%;
+    width: 70%;
     align-items: center;
+
+    h1:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
 
     button {
       background: none;
@@ -56,7 +60,7 @@
       margin-bottom: 16px;
     }
 
-    #personal-info, #payment-methods, #address-book {
+    #personal-info, #measurements, #address-book {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -78,6 +82,75 @@
 
         &:hover {
           font-weight: bolder;
+        }
+      }
+
+      .address-card {
+        width: 80%;
+        border: 1px solid white;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  #order-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 32px;
+
+    p {
+      font-size: 1.3em;
+    }
+
+    a {
+      font-size: 1.3em;
+      color: white;
+
+
+      &:hover {
+        font-weight: bolder;
+      }
+    }
+
+    .order-card {
+      width: 30%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 32px;
+      border-bottom: 1px solid white;
+
+      p, h6 {
+        font-size: 1.2em;
+        margin-bottom: 4px;
+      }
+
+      b {
+        font-size: 1.05em;
+      }
+
+      .profile-product-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 8px;
+
+        .profile-product-info p {
+          font-size: 0.9em;
+        }
+
+        img {
+          width: 25%;
+          object-fit: cover;
         }
       }
     }
