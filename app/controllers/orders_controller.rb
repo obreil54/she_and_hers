@@ -5,7 +5,13 @@ class OrdersController < ApplicationController
     p "Order params: #{order_params}"
     @cart = current_cart
     @order = Order.new(order_params)
-    @order.order_items = @cart.cart_items.map { |item| OrderItem.new(product: item.product, quantity: item.quantity, size: item.size) }
+    @cart.cart_items.each do |item|
+      p "Cart Item: #{item.inspect}"
+    end
+    @cart.cart_items.each do |item|
+      @order.order_items.build(product: item.product, quantity: item.quantity, size: item.size)
+    end
+    p "Order Items after mapping: #{@order.order_items.inspect}"
 
     if current_user
       @order.user = current_user
@@ -28,7 +34,9 @@ class OrdersController < ApplicationController
       assign_address(@order, params[:order])
     end
 
-    @order.total_amount_cents = @cart.total_price.cents
+    @order.shipping_cost_cents = (params[:order][:shipping_cost].to_f * 100).to_i if params[:order][:shipping_cost].present?
+    total_amount_cents = @cart.total_price.cents + (@order.shipping_cost_cents || 0)
+    @order.total_amount_cents = total_amount_cents
     @order.status = 'pending'
 
     if @order.save
@@ -46,7 +54,18 @@ class OrdersController < ApplicationController
             },
             quantity: item.quantity,
           }
-        },
+        } + [
+          {
+            price_data: {
+              currency: 'gbp',
+              product_data: {
+                name: 'Shipping',
+              },
+              unit_amount: @order.shipping_cost_cents,
+            },
+            quantity: 1,
+          }
+        ],
         mode: 'payment',
         success_url: success_order_url(@order),
         customer_email: @order.email,
@@ -61,7 +80,8 @@ class OrdersController < ApplicationController
         format.json { render json: { id: session.id } }
       end
     else
-      render :new, alert: "Error creating order"
+      p @order.errors.full_messages # Add this line to see any validation issues
+      render json: { error: "Error creating order: #{@order.errors.full_messages.join(', ')}" }, status: :unprocessable_entity
     end
   end
 
@@ -103,7 +123,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:email, :first_name, :last_name, :total_amount_cents, :address_line1, :address_line2, :city, :state, :postal_code, :country, :phone)
+    params.require(:order).except(:authenticity_token).permit(:email, :first_name, :last_name, :total_amount_cents, :address_line1, :address_line2, :city, :state, :postal_code, :country, :phone, :shipping_cost)
   end
 
   def assign_address(order, source)

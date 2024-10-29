@@ -31,6 +31,10 @@ export default class extends Controller {
     }
 
     const formData = new FormData(form);
+    const shippingRateSelect = document.getElementById("shipping-rate-select");
+    const selectedShippingRate = shippingRateSelect.options[shippingRateSelect.selectedIndex].value;
+    formData.append("order[shipping_cost]", selectedShippingRate);
+
 
     console.log(Object.fromEntries(formData.entries()));
 

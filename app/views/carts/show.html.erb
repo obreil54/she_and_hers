@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div id="cart-summary">
+  <div id="cart-summary" data-controller="cart-shipping">
     <h3>ORDER SUMMARY</h3>
 
     <h2>SHIPPING ADDRESS</h2>
@@ -50,37 +50,48 @@
       </div>
       <div id="new-address-form" style="display: none;">
         <%= form_with model: @order, url: orders_path, method: :post, id: "address-form" do |f| %>
-          <%= f.text_field :address_line1, placeholder: "ADDRESS LINE 1" %>
+          <%= f.text_field :address_line1, placeholder: "ADDRESS LINE 1*" %>
           <%= f.text_field :address_line2, placeholder: "ADDRESS LINE 2" %>
-          <%= f.text_field :city, placeholder: "CITY" %>
+          <%= f.text_field :city, placeholder: "CITY*" %>
           <%= f.text_field :state, placeholder: "STATE" %>
-          <%= f.text_field :postal_code, placeholder: "POSTAL CODE" %>
-          <%= f.country_select :country, { include_blank: "COUNTRY" } %>
+          <%= f.text_field :postal_code, placeholder: "POSTAL CODE*" %>
+          <%= f.country_select :country, { include_blank: "COUNTRY*" } %>
         <% end %>
       </div>
     <% else %>
       <%= form_with model: @order, url: orders_path, method: :post, id: "guest-address-form" do |f| %>
-        <%= f.text_field :first_name, placeholder: "FIRST NAME" %>
-        <%= f.text_field :last_name, placeholder: "LAST NAME" %>
-        <%= f.text_field :email, placeholder: "EMAIL" %>
-        <%= f.text_field :address_line1, placeholder: "ADDRESS LINE 1" %>
+        <%= f.text_field :first_name, placeholder: "FIRST NAME*" %>
+        <%= f.text_field :last_name, placeholder: "LAST NAME*" %>
+        <%= f.text_field :email, placeholder: "EMAIL*" %>
+        <%= f.text_field :address_line1, placeholder: "ADDRESS LINE 1*" %>
         <%= f.text_field :address_line2, placeholder: "ADDRESS LINE 2" %>
-        <%= f.text_field :city, placeholder: "CITY" %>
+        <%= f.text_field :city, placeholder: "CITY*" %>
         <%= f.text_field :state, placeholder: "STATE" %>
-        <%= f.text_field :postal_code, placeholder: "POSTAL CODE" %>
-        <%= f.country_select :country, { include_blank: "COUNTRY" } %>
-        <%= f.text_field :phone, placeholder: "PHONE" %>
+        <%= f.text_field :postal_code, placeholder: "POSTAL CODE*" %>
+        <%= f.country_select :country, { include_blank: "COUNTRY*" } %>
+        <%= f.text_field :phone, placeholder: "PHONE*" %>
       <% end %>
     <% end %>
 
+    <div id="calculate-shipping">
+      <button type="button" class="btn" data-action="click->cart-shipping#calculateShippingRates">CALCULATE SHIPPING RATES</button>
+    </div>
+
     <div id="summary-subtotal">
-      <h2>SUBTOTAL</h2>
-      <p><%= humanized_money_with_symbol(@cart.total_price) %></p>
+      <div id="summary-subtotal-products">
+        <h2>SUBTOTAL</h2>
+        <p><%= humanized_money_with_symbol(@cart.total_price) %></p>
+      </div>
+
+      <div id="shipping-rates-container" style="display: none;">
+        <select id="shipping-rate-select" name="order[shipping_rate]" data-action="change->cart-shipping#updateTotal">
+        </select>
+      </div>
     </div>
 
     <div id="summary-total">
       <h2>TOTAL</h2>
-      <p><%= humanized_money_with_symbol(@cart.total_price) %></p>
+      <p id="total-price-display"><%= humanized_money_with_symbol(@cart.total_price) %></p>
     </div>
 
     <button

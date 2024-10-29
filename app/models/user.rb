@@ -8,11 +8,13 @@ class User < ApplicationRecord
   validates :terms_of_service, acceptance: { message: 'MUST BE ACCEPTED' }
   validates :first_name, presence: true
   validates :last_name, presence: true
+  validates :phone, presence: true
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   has_many :orders, dependent: :destroy
   has_one :cart, dependent: :destroy
   has_many :addresses, dependent: :destroy
   has_one :measurement, dependent: :destroy
+  validates :phone, format: { with: /\A[+\d\s()-]{7,}\z/, message: "must be a valid phone number" }
 
   private
 
