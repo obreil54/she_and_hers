@@ -32,4 +32,6 @@ Rails.application.routes.draw do
   get 'explore', to: 'pages#explore'
   get 'privacy', to: 'pages#privacy'
   get 'terms', to: 'pages#terms'
+
+  post 'shipping_rates', to: 'shipping_rates#create'
 end

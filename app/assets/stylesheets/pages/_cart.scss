@@ -101,7 +101,11 @@
       border-bottom: 1px solid grey;
     }
 
-    #summary-total, #summary-subtotal {
+    #calculate-shipping {
+      padding: 16px 0;
+    }
+
+    #summary-total {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -113,7 +117,18 @@
       }
     }
 
-    #address-select {
+    #summary-subtotal {
+      border-top: 1px solid grey;
+      padding: 16px 0;
+
+      #summary-subtotal-products {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+      }
+    }
+
+    #address-select, #shipping-rate-select {
       width: 100%;
       text-align: center;
       border: 1px solid black;

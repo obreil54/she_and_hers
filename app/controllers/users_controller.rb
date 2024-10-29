@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @addresses = @user.addresses
-    @orders = @user.orders.where.not(status: 'pending')
+    @orders = @user.orders.where.not(status: 'pending').order(created_at: :desc)
     @measurement = @user.measurement
   end
 end
