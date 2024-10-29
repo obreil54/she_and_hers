@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show]
 
+  resources :measurements, only: [:edit, :update]
+
   resources :products, only: [:index, :show, :new, :create]
 
   resources :carts, only: [:show] do

@@ -5,5 +5,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @addresses = @user.addresses
     @orders = @user.orders.where.not(status: 'pending')
+    @measurement = @user.measurement
   end
 end

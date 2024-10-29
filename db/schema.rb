@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_28_152152) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_29_104521) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -100,6 +100,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_28_152152) do
     t.index ["product_id"], name: "index_colors_products_on_product_id"
   end
 
+  create_table "measurements", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "chest"
+    t.integer "waist"
+    t.integer "high_hips"
+    t.integer "low_hips"
+    t.integer "thigh"
+    t.integer "torso"
+    t.integer "arm_length"
+    t.integer "shoulder_width"
+    t.integer "upper_arm_circumference"
+    t.integer "inseam"
+    t.integer "height"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_measurements_on_user_id"
+  end
+
   create_table "order_items", force: :cascade do |t|
     t.bigint "product_id", null: false
     t.bigint "order_id", null: false
@@ -165,6 +183,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_28_152152) do
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "products"
   add_foreign_key "carts", "users"
+  add_foreign_key "measurements", "users"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "users"
