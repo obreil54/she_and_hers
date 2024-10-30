@@ -10,6 +10,9 @@ class Order < ApplicationRecord
   validates :phone, presence: true, format: { with: /\A[+\d\s()-]{7,}\z/, message: "must be a valid phone number" }
   validates :checkout_session_id, uniqueness: true, allow_nil: true
 
+  validates :tracking_number, uniqueness: true, allow_nil: true
+  validates :tracking_status, presence: true, allow_nil: true
+
   def total_price
     total = order_items.joins(:product).sum do |item|
       item.product.price_cents * item.quantity

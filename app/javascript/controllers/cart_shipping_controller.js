@@ -80,12 +80,16 @@ export default class extends Controller {
     shippingRateSelect.appendChild(defaultOption);
 
     rates.forEach(rate => {
+      console.log("Rate:", rate);
       const option = document.createElement("option");
       option.value = rate.amount;
+      option.dataset.provider = rate.provider;
+      option.dataset.service_level = rate.service_level;
       option.textContent = `${rate.provider} (${rate.service_level || "Standard"}): ${rate.amount} ${rate.currency}`;
       shippingRateSelect.appendChild(option);
     });
   }
+
 
   updateTotal() {
     // Make sure shippingRateSelectTarget and totalPriceDisplayTarget are properly assigned

@@ -15,7 +15,7 @@ footer {
       color: black;
       text-decoration: none;
       margin-right: 32px;
-      font-size: 1.25em;
+      font-size: 1.05em;
       transition: font-weight 0.3s ease-in-out;
 
 
@@ -36,7 +36,7 @@ footer {
       background: none;
       border: 1px solid black;
       padding: 0 32px;
-      font-size: 1.25em;
+      font-size: 1.05em;
       transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 
       &:hover {
@@ -51,7 +51,7 @@ footer {
       padding: 0;
       margin-right: 32px;
       background: none;
-      font-size: 1.25em;
+      font-size: 1.05em;
 
       &:focus {
         outline: none;
@@ -60,7 +60,7 @@ footer {
 
     p {
       margin-bottom: 0;
-      font-size: 1.25em;
+      font-size: 1.05em;
     }
   }
 }
