@@ -42,7 +42,7 @@ class ShippingRatesController < ApplicationController
             provider: rate['provider'],
             amount: rate['amount'],
             currency: rate['currency'],
-            service_level: rate['servicelevel']['name']
+            service_level: rate['servicelevel']['name'],
           }
         end
 

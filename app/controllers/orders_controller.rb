@@ -1,13 +1,13 @@
 class OrdersController < ApplicationController
   require 'stripe'
+  require 'shippo'
 
   def create
     p "Order params: #{order_params}"
     @cart = current_cart
     @order = Order.new(order_params)
-    @cart.cart_items.each do |item|
-      p "Cart Item: #{item.inspect}"
-    end
+
+
     @cart.cart_items.each do |item|
       @order.order_items.build(product: item.product, quantity: item.quantity, size: item.size)
     end
@@ -40,6 +40,76 @@ class OrdersController < ApplicationController
     @order.status = 'pending'
 
     if @order.save
+      begin
+        shipment = Shippo::Shipment.create(
+          address_from: {
+            name: "Polina Oleynikova",
+            street1: "Hamilton House Queens Drive",
+            street2: "Queens Drive",
+            city: "Leatherhead",
+            state: "Surrey",
+            zip: "KT22 0PF",
+            country: "United Kingdom",
+            phone: "07818130656"
+          },
+          address_to: {
+            name: "#{@order.first_name} #{@order.last_name}",
+            street1: @order.address_line1,
+            street2: @order.address_line2,
+            city: @order.city,
+            state: @order.state,
+            zip: @order.postal_code,
+            country: @order.country,
+            phone: @order.phone
+          },
+          parcels: [{
+            length: "10",
+            width: "7",
+            height: "4",
+            distance_unit: "in",
+            weight: "2",
+            mass_unit: "lb"
+          }],
+          async: false
+        )
+
+        selected_provider = params[:order][:selected_provider]
+        selected_service_level = params[:order][:selected_service_level]
+        selected_amount = params[:order][:shipping_cost]
+        rate = shipment['rates'].find do |r|
+          r['provider'].to_s == selected_provider.to_s &&
+          r.dig('servicelevel', 'name').to_s == selected_service_level.to_s &&
+          r['amount'].to_s == selected_amount.to_s
+        end
+        p "Selected rate: #{rate.inspect}"
+
+        if rate
+          label = Shippo::Transaction.create(
+            rate: rate['object_id'],
+            async: false
+            )
+
+          p "Label response: #{label.inspect}"
+
+          if label.present? && label['tracking_number'].present?
+            p "Shipping label created: #{label.inspect}"
+            tracking_number = label['tracking_number']
+            p "Tracking number: #{tracking_number}"
+            @order.update(tracking_number: tracking_number, tracking_status: 'pre_transit')
+          else
+            p "Unable to generate shipping label or tracking number."
+          end
+        else
+          p "Selected rate not found in shipment rates."
+        end
+      rescue Shippo::Exceptions::APIError => e
+        logger.error "Shippo API Error: #{e.message}"
+      rescue Shippo::Exceptions::APIServerError => e
+        logger.error "Shippo API Server Error: #{e.message}"
+      rescue => e
+        logger.error "General Error while creating shipment: #{e.message}"
+      end
+
       session = Stripe::Checkout::Session.create(
         payment_method_types: ['card'],
         line_items: @order.order_items.map { |item|
@@ -74,6 +144,8 @@ class OrdersController < ApplicationController
         },
       )
 
+      p "Session: #{session.inspect}"
+      p "Session ID: #{session.id}"
       @order.update(checkout_session_id: session.id)
 
       respond_to do |format|
@@ -88,8 +160,6 @@ class OrdersController < ApplicationController
   def success
     @order = Order.find(params[:id])
     if @order
-      @order.update(status: 'placed')
-
       session = Stripe::Checkout::Session.retrieve(@order.checkout_session_id)
 
       if session.payment_intent
@@ -123,7 +193,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).except(:authenticity_token).permit(:email, :first_name, :last_name, :total_amount_cents, :address_line1, :address_line2, :city, :state, :postal_code, :country, :phone, :shipping_cost)
+    params.require(:order).except(:authenticity_token, :address_id).permit(:email, :first_name, :last_name, :total_amount_cents, :address_line1, :address_line2, :city, :state, :postal_code, :country, :phone, :shipping_cost)
   end
 
   def assign_address(order, source)

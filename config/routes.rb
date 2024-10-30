@@ -26,6 +26,13 @@ Rails.application.routes.draw do
     get :success, on: :member
   end
 
+  resources :webhooks, only: [] do
+    collection do
+      post :stripe
+      post :shippo
+    end
+  end
+
   get 'about', to: 'pages#about'
   get 'contact', to: 'pages#contact'
   get 'faq', to: 'pages#faq'
