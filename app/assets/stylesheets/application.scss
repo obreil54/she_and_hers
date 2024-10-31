@@ -31,3 +31,20 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+body.menu-open *:not(nav) {
+  display: none;
+}
+
+body.menu-open nav {
+  display: flex;
+}
+
+body.menu-open nav * {
+  display: flex;
+}
+
+body.menu-open {
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.5);
+}

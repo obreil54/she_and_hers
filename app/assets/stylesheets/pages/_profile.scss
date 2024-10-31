@@ -128,6 +128,7 @@
       justify-content: flex-start;
       margin-bottom: 32px;
       border-bottom: 1px solid white;
+      text-align: center;
 
       p, h6 {
         font-size: 1.2em;
@@ -151,6 +152,60 @@
         img {
           width: 25%;
           object-fit: cover;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px), (max-height: 768px) {
+  #profile-page {
+
+    #profile-links {
+      width: 100%;
+
+      h1, button {
+        font-size: 1.1em;
+        font-weight: bolder;
+      }
+    }
+
+    #profile-info {
+      flex-direction: column;
+
+      #personal-info, #measurements, #address-book {
+        width: 100%;
+        margin-bottom: 32px;
+
+        p, a {
+          font-size: 0.9em;
+        }
+
+        a {
+          margin-top: 8px;
+        }
+
+        h1 {
+          font-size: 1.1em;
+        }
+      }
+    }
+    #order-info {
+      padding: 0;
+
+      p, a {
+        font-size: 0.9em;
+      }
+
+      .order-card {
+        width: 100%;
+
+        p, h6 {
+          font-size: 0.9em;
+        }
+
+        .profile-product-card {
+          margin: 16px 0;
         }
       }
     }
