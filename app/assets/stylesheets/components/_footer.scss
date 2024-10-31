@@ -31,11 +31,14 @@ footer {
   }
 
   #footer-newsletter {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 
     button {
       background: none;
       border: 1px solid black;
-      padding: 0 32px;
+      padding: 0 28px;
       font-size: 1.05em;
       transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 
@@ -49,7 +52,7 @@ footer {
       border: none;
       border-bottom: 1px solid black;
       padding: 0;
-      margin-right: 32px;
+      padding-right: 32px;
       background: none;
       font-size: 1.05em;
 
@@ -61,6 +64,53 @@ footer {
     p {
       margin-bottom: 0;
       font-size: 1.05em;
+    }
+  }
+}
+
+@media (max-width: 768px), (max-height: 768px) {
+  footer {
+    height: 10vh !important;
+    padding: 0 16px;
+    width: 100%;
+
+    #footer-links a {
+      font-size: 0.7em;;
+    }
+
+    #footer-newsletter {
+      p {
+        font-size: 0.7em;;
+      }
+
+      div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        width: 100%;
+      }
+
+      input {
+        font-size: 0.7em;;
+        border-radius: 0;
+        margin-bottom: 4px;
+        width: 100%;
+        color: white;
+        margin-right: 0;
+        text-align: right;
+        padding: 0;
+      }
+
+      input::placeholder {
+        color: white;
+      }
+
+      button {
+        color: black;
+        font-size: 0.7em;;
+        padding: 0 16px;
+        text-align: center;
+      }
     }
   }
 }

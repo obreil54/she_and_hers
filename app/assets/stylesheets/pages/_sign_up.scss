@@ -9,12 +9,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 85vh;
+  min-height: 70vh;
 
   p, form {
     width: 29%;
     font-size: 1.2em;
     color: white;
+
+    b {
+      font-weight: normal;
+    }
 
     input {
       background: none;
@@ -105,6 +109,45 @@
       &:hover {
         font-weight: bolder;
       }
+    }
+  }
+}
+
+@media (max-width: 768px), (max-height: 768px) {
+  #sign-up-page {
+    min-height: 70vh;
+
+    p, form {
+      width: 100%;
+      padding: 0 16px;
+      font-size: 0.8em;
+
+      b {
+        font-size: 2em;
+        font-weight: normal;
+      }
+    }
+
+    .terms-conditions {
+      align-items: center;
+
+      input {
+        margin-right: 8px;
+        margin-bottom: 0px;
+      }
+
+      fieldset {
+        margin: 0 !important;
+      }
+    }
+
+    input {
+      margin-bottom: 24px;
+      border-radius: 0;
+    }
+
+    .btn {
+      margin-bottom: 0;
     }
   }
 }
