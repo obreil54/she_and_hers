@@ -26,6 +26,10 @@ Rails.application.routes.draw do
     get :success, on: :member
   end
 
+  resources :wishlists, only: [] do
+    post :toggle, on: :member
+  end
+
   resources :webhooks, only: [] do
     collection do
       post :stripe

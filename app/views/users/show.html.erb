@@ -1,7 +1,7 @@
 <% content_for :body_class, "profile-page" %>
 <div id="profile-page" data-controller="profile-links">
   <div id="profile-links">
-    <h1>WISHLIST</h1>
+    <h1 data-section="wishlist" data-action="click->profile-links#switch" data-profile-links-target="link" class="profile-link">WISHLIST</h1>
     <h1 data-section="profile" data-action="click->profile-links#switch" data-profile-links-target="link" class="profile-link active">PROFILE</h1>
     <h1 data-section="orders" data-action="click->profile-links#switch" data-profile-links-target="link" class="profile-link">ORDERS</h1>
     <%= button_to 'LOG OUT', destroy_user_session_path, method: :delete %>
@@ -21,17 +21,17 @@
     </div>
     <div id="measurements">
       <h1>YOUR MEASUREMENTS</h1>
-      <p><b>1. CHEST: <%= @measurement.chest.to_s + " CM" if @measurement.chest.present? %></b></p>
-      <p><b>2. WAIST: <%= @measurement.waist.to_s + " CM" if @measurement.waist.present? %></b></p>
-      <p><b>3. HIGH HIPS: <%= @measurement.high_hips.to_s + " CM" if @measurement.high_hips.present? %></b></p>
-      <p><b>4. LOW HIPS: <%= @measurement.low_hips.to_s + " CM" if @measurement.low_hips.present? %></b></p>
-      <p><b>5. THIGH: <%= @measurement.thigh.to_s + " CM" if @measurement.thigh.present? %></b></p>
-      <p><b>6. TORSO: <%= @measurement.torso.to_s + " CM" if @measurement.torso.present? %></b></p>
-      <p><b>7. ARM LENGTH: <%= @measurement.arm_length.to_s + " CM" if @measurement.arm_length.present? %></b></p>
-      <p><b>8. SHOULDER WIDTH: <%= @measurement.shoulder_width.to_s + " CM" if @measurement.shoulder_width.present? %></b></p>
-      <p><b>9. UPPER ARM CIRCUMFERENCE: <%= @measurement.upper_arm_circumference.to_s + " CM" if @measurement.upper_arm_circumference.present? %></b></p>
-      <p><b>10. INSEAM: <%= @measurement.inseam.to_s + " CM" if @measurement.inseam.present? %></b></p>
-      <p><b>11. HEIGHT: <%= @measurement.height.to_s + " CM" if @measurement.height.present? %></b></p>
+      <p><b>1. CHEST: <%= @measurement.chest.to_s + " CM" if @measurement.present? & @measurement.chest.present? %></b></p>
+      <p><b>2. WAIST: <%= @measurement.waist.to_s + " CM" if @measurement.present? & @measurement.waist.present? %></b></p>
+      <p><b>3. HIGH HIPS: <%= @measurement.high_hips.to_s + " CM" if @measurement.present? & @measurement.high_hips.present? %></b></p>
+      <p><b>4. LOW HIPS: <%= @measurement.low_hips.to_s + " CM" if @measurement.present? & @measurement.low_hips.present? %></b></p>
+      <p><b>5. THIGH: <%= @measurement.thigh.to_s + " CM" if @measurement.present? & @measurement.thigh.present? %></b></p>
+      <p><b>6. TORSO: <%= @measurement.torso.to_s + " CM" if @measurement.present? & @measurement.torso.present? %></b></p>
+      <p><b>7. ARM LENGTH: <%= @measurement.arm_length.to_s + " CM" if @measurement.present? & @measurement.arm_length.present? %></b></p>
+      <p><b>8. SHOULDER WIDTH: <%= @measurement.shoulder_width.to_s + " CM" if @measurement.present? & @measurement.shoulder_width.present? %></b></p>
+      <p><b>9. UPPER ARM CIRCUMFERENCE: <%= @measurement.upper_arm_circumference.to_s + " CM" if @measurement.present? & @measurement.upper_arm_circumference.present? %></b></p>
+      <p><b>10. INSEAM: <%= @measurement.inseam.to_s + " CM" if @measurement.present? & @measurement.inseam.present? %></b></p>
+      <p><b>11. HEIGHT: <%= @measurement.height.to_s + " CM" if @measurement.present? & @measurement.height.present? %></b></p>
       <%= link_to 'EDIT MEASUREMENTS', edit_measurement_path(current_user.measurement) %>
     </div>
     <div id="address-book">
@@ -81,5 +81,28 @@
       <p>YOU HAVEN'T PLACED ANY ORDERS YET</p>
       <%= link_to "CONTINUE SHOPPING", products_path %>
     <% end %>
+  </div>
+
+  <div id="wishlist" data-profile-links-target="section" data-section="wishlist" class="profile-section" style="display: none;">
+    <div class="wishlist-grid">
+      <% @wishlist.products.each do |product| %>
+        <%= link_to product_path(product), class: "wishlist-card" do %>
+          <%= image_tag product.primary_photo %>
+          <div class="wishlist-product-info">
+            <div>
+              <h6><%= product.name.upcase %></h6>
+              <p><%= humanized_money_with_symbol(product.price) %></p>
+            </div>
+            <button
+              data-controller="wishlist"
+              data-wishlist-product-id-value="<%= product.id %>"
+              data-action="click->wishlist#toggle"
+              class="wishlist-button">
+              <i class="<%= current_user.wishlist&.products&.include?(product) ? 'fa-solid fa-heart' : 'fa-regular fa-heart' %>"></i>
+            </button>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </div>

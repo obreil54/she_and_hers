@@ -2,6 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   after_create :create_measurement
+  after_create :create_wishlist
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -14,6 +15,7 @@ class User < ApplicationRecord
   has_one :cart, dependent: :destroy
   has_many :addresses, dependent: :destroy
   has_one :measurement, dependent: :destroy
+  has_one :wishlist, dependent: :destroy
   validates :phone, format: { with: /\A[+\d\s()-]{7,}\z/, message: "must be a valid phone number" }
 
   private
@@ -21,4 +23,9 @@ class User < ApplicationRecord
   def create_measurement
     Measurement.create(user: self)
   end
+
+  def create_wishlist
+    Wishlist.create(user: self)
+  end
+
 end

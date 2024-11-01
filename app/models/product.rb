@@ -6,6 +6,8 @@ class Product < ApplicationRecord
   has_one_attached :secondary_photo
   has_one_attached :tertiary_photo
   has_many_attached :other_photos
+  has_many :wishlist_products
+  has_many :wishlists, through: :wishlist_products
   validates :price, presence: true
   validates :description, presence: true
   validates :care_instructions, presence: true
