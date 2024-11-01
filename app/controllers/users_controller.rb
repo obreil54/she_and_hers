@@ -6,5 +6,6 @@ class UsersController < ApplicationController
     @addresses = @user.addresses
     @orders = @user.orders.where.not(status: 'pending').order(created_at: :desc)
     @measurement = @user.measurement
+    @wishlist = @user.wishlist
   end
 end
