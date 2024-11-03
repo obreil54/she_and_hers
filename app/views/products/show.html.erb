@@ -11,6 +11,8 @@
        ]'
       data-product-carousel-interval-value="5000"
       data-product-carousel-target="image">
+      <div class="carousel-circles" data-product-carousel-target="indicators">
+      </div>
     </div>
     <div class="product-main-info" style="background-image: url('<%= @product.secondary_photo.url %>')" data-controller="cart">
       <h3><b><%= @product.name.upcase %></b></h3>
@@ -110,7 +112,5 @@
         <p>ALL CUSTOM ORDERS WILL INCUR A FEE OF 20%.</p>
       </div>
     </div>
-  </div>
-  <div class="carousel-circles" data-product-carousel-target="indicators">
   </div>
 </div>

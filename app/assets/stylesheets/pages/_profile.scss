@@ -247,5 +247,12 @@
         }
       }
     }
+
+    #wishlist {
+      .wishlist-grid {
+        display: flex;
+        flex-direction: column;
+      }
+    }
   }
 }
