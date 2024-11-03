@@ -32,8 +32,8 @@ body {
   flex-direction: column;
 }
 
-body.menu-open *:not(nav) {
-  display: none;
+body.menu-open > *:not(nav):not(.cart-overlay) {
+  display: none !important;
 }
 
 body.menu-open nav {

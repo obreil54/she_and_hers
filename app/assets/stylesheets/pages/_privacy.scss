@@ -4,10 +4,23 @@
   align-items: flex-start;
   justify-content: flex-start;
   flex-grow: 1;
-  padding: 0 32px;
+  padding: 32px;
 
   h2 {
     font-size: 1.5em;
     font-weight: bolder;
+  }
+}
+
+@media (max-width: 768px) {
+  #privacy {
+    padding: 32px 0;
+
+    h2 {
+      font-size: 2em;
+    }
+    p {
+      padding: 16px 32px;
+    }
   }
 }

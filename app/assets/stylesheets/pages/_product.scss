@@ -11,6 +11,9 @@
     background-size: cover;
     min-height: 85vh;
     transition: background-image 1s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
   }
 
   .product-main-info {
@@ -155,7 +158,6 @@
   display: flex;
   justify-content: center;
   margin-bottom: 32px;
-  margin-left: 32px;
   width: 33.33%
 }
 
@@ -171,4 +173,28 @@
 
 .carousel-circle.active {
   background-color: #4F4F4F;
+}
+
+@media (max-width: 768px) {
+  .product-full {
+    flex-direction: column;
+    padding: 0;
+
+    .product-image, .product-main-info, .product-secondary-info {
+      width: 100% !important;
+    }
+
+    .product-image {
+      min-height: 65vh;
+    }
+
+    .product-main-info, .product-secondary-info {
+      background-image: none !important;
+
+      .product-sizes select, button {
+        color: black;
+      }
+    }
+  }
+
 }
