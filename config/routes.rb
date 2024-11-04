@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :measurements, only: [:edit, :update]
 
-  resources :products, only: [:index, :show, :new, :create]
+  resources :products, only: [:index, :show, :new, :create, :edit, :update, :destroy]
 
   resources :carts, only: [:show] do
     patch :update_item_quantity, on: :member
