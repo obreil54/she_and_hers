@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_cart
   helper_method :current_cart
-  before_action :check_access_code
 
   def current_cart
     if current_user
@@ -26,13 +25,5 @@ class ApplicationController < ActionController::Base
   def set_cart
     @cart = current_user ? current_user.cart || current_user.create_cart : Cart.find_by(id: session[:cart_id]) || Cart.create
     session[:cart_id] = @cart.id unless current_user
-  end
-
-  private
-
-  def check_access_code
-    unless session[:access_granted]
-      redirect_to access_code_path
-    end
   end
 end
