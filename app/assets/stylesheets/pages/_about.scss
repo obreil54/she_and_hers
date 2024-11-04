@@ -1,7 +1,7 @@
 .about-page{
-  background-image: image-url('background-temporary.png');
+  background-image: image-url('about-background.jpg');
   background-size: cover;
-  background-position: 50% 38%;
+  background-position: 50% 22%;
 }
 
 #about-hero {
@@ -16,6 +16,7 @@
     width: 50%;
     text-align: center;
     font-size: 1.25em;
+    color: white;
   }
 }
 

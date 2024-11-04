@@ -8,6 +8,8 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find(params[:id])
+    @image_urls = [@product.primary_photo, @product.secondary_photo, @product.tertiary_photo]
+    .compact.map(&:url) + @product.other_photos.map(&:url)
   end
 
   def new
@@ -28,12 +30,21 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
-    if @product.update(product_params)
+
+    if @product.update(product_params.except(:other_photos))
+      if params[:product][:other_photos].present?
+        params[:product][:other_photos].each do |photo|
+          @product.other_photos.attach(photo)
+        end
+      end
+
       redirect_to product_path(@product), notice: "Product updated successfully."
     else
       render :edit
     end
   end
+
+
 
   def destroy
     @product = Product.find(params[:id])

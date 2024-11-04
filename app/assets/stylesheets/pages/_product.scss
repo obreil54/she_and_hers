@@ -1,8 +1,6 @@
 .product-full {
   display: flex;
   justify-content: space-between;
-  padding: 32px;
-  margin-bottom: 16px;
   width: 100%;
 
   .product-image {
@@ -10,10 +8,10 @@
     background-position: center;
     background-size: cover;
     min-height: 85vh;
-    transition: background-image 1s ease-in-out;
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    transition: background-image 1s ease-in-out;
   }
 
   .product-main-info {
@@ -27,6 +25,7 @@
     background-size: cover;
     position: relative;
     padding: 32px;
+    transition: background-image 1s ease-in-out;
 
     h3 {
       margin-bottom: 16px;
@@ -132,6 +131,7 @@
     background-size: cover;
     position: relative;
     padding: 32px;
+    transition: background-image 1s ease-in-out;
 
     h3 {
       font-size: 1.25em;
@@ -158,7 +158,6 @@
   display: flex;
   justify-content: center;
   margin-bottom: 32px;
-  width: 33.33%
 }
 
 .carousel-circle {
