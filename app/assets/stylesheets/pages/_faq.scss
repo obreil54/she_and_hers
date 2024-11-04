@@ -45,4 +45,63 @@
   h3{
     font-weight: bolder;
   }
+
+  a {
+    color: black;
+  }
+
+  table {
+    width: 100%;
+    border: none !important;
+
+    td, th {
+      border: 1px solid grey;
+      font-weight: normal;
+    }
+  }
+}
+
+#latex-care {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  h3{
+    font-weight: bolder;
+    margin: 0 auto;
+  }
+
+  img {
+    width: 75px;
+    height: 75px;
+    margin-bottom: 16px;
+    margin-top: 8px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  p, li {
+    text-align: left;
+    margin-left: 32px;
+  };
+}
+
+@media (max-width: 768px) {
+  #faq-info {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .faq-card {
+    width: 100%;
+    padding: 32px;
+  }
+
+  #latex-care {
+    p, li {
+      margin-left: 8px;
+    }
+  }
 }
