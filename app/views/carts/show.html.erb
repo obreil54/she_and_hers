@@ -50,26 +50,26 @@
       </div>
       <div id="new-address-form" style="display: none;">
         <%= form_with model: @order, url: orders_path, method: :post, id: "address-form" do |f| %>
-          <%= f.text_field :address_line1, placeholder: "ADDRESS LINE 1*" %>
+          <%= f.text_field :address_line1, placeholder: "ADDRESS LINE 1*", required: true %>
           <%= f.text_field :address_line2, placeholder: "ADDRESS LINE 2" %>
-          <%= f.text_field :city, placeholder: "CITY*" %>
+          <%= f.text_field :city, placeholder: "CITY*", required: true %>
           <%= f.text_field :state, placeholder: "STATE" %>
-          <%= f.text_field :postal_code, placeholder: "POSTAL CODE*" %>
-          <%= f.country_select :country, { include_blank: "COUNTRY*" } %>
+          <%= f.text_field :postal_code, placeholder: "POSTAL CODE*", required: true %>
+          <%= f.country_select :country, { include_blank: "COUNTRY*" }, required: true %>
         <% end %>
       </div>
     <% else %>
       <%= form_with model: @order, url: orders_path, method: :post, id: "guest-address-form" do |f| %>
-        <%= f.text_field :first_name, placeholder: "FIRST NAME*" %>
-        <%= f.text_field :last_name, placeholder: "LAST NAME*" %>
-        <%= f.text_field :email, placeholder: "EMAIL*" %>
-        <%= f.text_field :address_line1, placeholder: "ADDRESS LINE 1*" %>
+        <%= f.text_field :first_name, placeholder: "FIRST NAME*", required: true %>
+        <%= f.text_field :last_name, placeholder: "LAST NAME*", required: true %>
+        <%= f.text_field :email, placeholder: "EMAIL*", required: true %>
+        <%= f.text_field :address_line1, placeholder: "ADDRESS LINE 1*", required: true %>
         <%= f.text_field :address_line2, placeholder: "ADDRESS LINE 2" %>
-        <%= f.text_field :city, placeholder: "CITY*" %>
+        <%= f.text_field :city, placeholder: "CITY*", required: true %>
         <%= f.text_field :state, placeholder: "STATE" %>
-        <%= f.text_field :postal_code, placeholder: "POSTAL CODE*" %>
-        <%= f.country_select :country, { include_blank: "COUNTRY*" } %>
-        <%= f.text_field :phone, placeholder: "PHONE*" %>
+        <%= f.text_field :postal_code, placeholder: "POSTAL CODE*", required: true %>
+        <%= f.country_select :country, { include_blank: "COUNTRY*" }, required: true %>
+        <%= f.text_field :phone, placeholder: "PHONE*", required: true %>
       <% end %>
     <% end %>
 

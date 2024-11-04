@@ -32,6 +32,11 @@ export default class extends Controller {
       return;
     }
 
+    if(!this.validateForm(form)) {
+      alert("Please fill in all required fields before calculating shipping rates.");
+      return;
+    }
+
     const formData = new FormData(form);
     console.log("Form data being sent:", Object.fromEntries(formData.entries())); // Debugging line
 
@@ -135,5 +140,18 @@ export default class extends Controller {
     } else {
       console.error("Total price display element not found.");
     }
+  }
+
+  validateForm(form) {
+    let isValid = true;
+    form.querySelectorAll("[required]").forEach((field) => {
+      if(!field.value.trim()) {
+        field.classList.add("is-invalid");
+        isValid = false;
+      } else {
+        field.classList.remove("is-invalid");
+      }
+    });
+    return isValid;
   }
 }
