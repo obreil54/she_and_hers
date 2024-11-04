@@ -4,24 +4,32 @@
       <i class="fa-solid fa-plus"></i>
     <% end %>
   <% end %>
+
   <div class="product-grid">
     <% @products.each do |product| %>
-      <%= link_to product_path(product), class: "product-card-link" do %>
-        <div class="product-card">
+      <div class="product-card">
+        <% if current_user&.admin? %>
+          <%= link_to edit_product_path(product), class: "edit-link" do %>
+            <i class="fa-solid fa-edit"></i>
+          <% end %>
+        <% end %>
+
+        <%= link_to product_path(product), class: "product-card-link" do %>
           <%= image_tag product.primary_photo %>
           <%= product.name.upcase %><br>
           <%= humanized_money_with_symbol(product.price) %>
-          <% if user_signed_in? %>
-            <button
-              data-controller="wishlist"
-              data-wishlist-product-id-value="<%= product.id %>"
-              data-action="click->wishlist#toggle"
-              class="wishlist-button">
-              <i class="<%= current_user.wishlist&.products&.include?(product) ? 'fa-solid fa-heart' : 'fa-regular fa-heart' %>"></i>
-            </button>
-          <% end %>
-        </div>
-      <% end %>
+        <% end %>
+
+        <% if user_signed_in? %>
+          <button
+            data-controller="wishlist"
+            data-wishlist-product-id-value="<%= product.id %>"
+            data-action="click->wishlist#toggle"
+            class="wishlist-button">
+            <i class="<%= current_user.wishlist&.products&.include?(product) ? 'fa-solid fa-heart' : 'fa-regular fa-heart' %>"></i>
+          </button>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </div>

@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!, only: [:index]
+  before_action :authorize_admin, only: [:new, :create, :edit, :update, :destroy]
 
   def index
     @products = Product.all
@@ -14,9 +15,30 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.create(product_params)
-    @product.save
-    redirect_to products_path
+    @product = Product.new(product_params)
+    if @product.save
+      redirect_to products_path, notice: "Product created successfully."
+    else
+      render :new
+    end
+  end
+  def edit
+    @product = Product.find(params[:id])
+  end
+
+  def update
+    @product = Product.find(params[:id])
+    if @product.update(product_params)
+      redirect_to product_path(@product), notice: "Product updated successfully."
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @product = Product.find(params[:id])
+    @product.destroy
+    redirect_to products_path, notice: "Product deleted successfully."
   end
 
   private
@@ -30,6 +52,12 @@ class ProductsController < ApplicationController
       :primary_photo,
       :secondary_photo,
       :tertiary_photo,
-      other_photos: [])
+      :weight,
+      other_photos: []
+    )
+  end
+
+  def authorize_admin
+    redirect_to root_path, alert: "You are not authorized to perform this action." unless current_user&.admin?
   end
 end
