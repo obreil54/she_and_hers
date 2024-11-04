@@ -147,6 +147,10 @@
         border-bottom: 1px solid black;
         height: 32px;
       }
+
+      .is-invalid {
+        border: 1px solid red;
+      }
     }
 
     .btn {

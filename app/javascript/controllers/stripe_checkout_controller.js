@@ -30,8 +30,17 @@ export default class extends Controller {
       return;
     }
 
+    if(!this.validateForm(form)) {
+      alert("Please fill in all required fields before checking out.");
+      return;
+    }
+
     const formData = new FormData(form);
     const shippingRateSelect = document.getElementById("shipping-rate-select");
+    if (!shippingRateSelect || !shippingRateSelect.value) {
+      alert("Please select a shipping rate.");
+      return;
+    }
     const selectedShippingRate = shippingRateSelect.options[shippingRateSelect.selectedIndex].value;
     console.log("Selected shipping rate:", shippingRateSelect.options[shippingRateSelect.selectedIndex]);
     formData.append("order[shipping_cost]", selectedShippingRate);
@@ -70,5 +79,18 @@ export default class extends Controller {
 
   getPublishableKey() {
     return document.querySelector("meta[name='stripe-publishable-key']").content;
+  }
+
+  validateForm(form) {
+    let isValid = true;
+    form.querySelectorAll("[required]").forEach((field) => {
+      if(!field.value.trim()) {
+        field.classList.add("is-invalid");
+        isValid = false;
+      } else {
+        field.classList.remove("is-invalid");
+      }
+    });
+    return isValid;
   }
 }
