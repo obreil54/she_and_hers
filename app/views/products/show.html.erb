@@ -1,20 +1,11 @@
 <div id="product-page" data-controller="product-carousel">
   <div class="product-full">
     <div class="product-image"
-     data-product-carousel-images-value='[
-       "<%= @product.primary_photo.url if @product.primary_photo.present? %>",
-       "<%= @product.secondary_photo.url if @product.secondary_photo.present? %>",
-       "<%= @product.tertiary_photo.url if @product.tertiary_photo.present? %>"<%= ',' if @product.other_photos.present? %>
-        <% @product.other_photos.each_with_index do |photo, index| %>
-          "<%= photo.url %>"<%= ',' unless index == @product.other_photos.size - 1 %>
-        <% end %>
-       ]'
-      data-product-carousel-interval-value="5000"
+      data-product-carousel-images-value="<%= @image_urls.to_json %>"
       data-product-carousel-target="image">
-      <div class="carousel-circles" data-product-carousel-target="indicators">
-      </div>
+      <div class="carousel-circles" data-product-carousel-target="indicators"></div>
     </div>
-    <div class="product-main-info" style="background-image: url('<%= @product.secondary_photo.url %>')" data-controller="cart">
+    <div class="product-main-info" data-product-carousel-target="mainInfo" style="background-image: url('<%= @product.secondary_photo.url %>')" data-controller="cart">
       <h3><b><%= @product.name.upcase %></b></h3>
       <h4><%= humanized_money_with_symbol(@product.price) %></h4>
       <%= form_with url: add_item_cart_path(@cart), method: :post, data: { action: "submit->cart#addItem" } do %>
@@ -37,7 +28,7 @@
       <% end %>
       <p><%= @product.description.upcase %></p>
     </div>
-    <div class="product-secondary-info" style="background-image: url('<%= @product.tertiary_photo.url %>')" data-controller="product-secondary-info">
+    <div class="product-secondary-info" data-product-carousel-target="secondaryInfo" style="background-image: url('<%= @product.tertiary_photo.url %>')" data-controller="product-secondary-info">
       <h3 data-action="click->product-secondary-info#toggle" data-target-id="how-to-care-content">
         HOW TO CARE <i class="fa-solid fa-chevron-down"></i>
       </h3>

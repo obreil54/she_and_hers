@@ -1,7 +1,7 @@
 .contact-page{
-  background-image: image-url('background-temporary.png');
+  background-image: image-url('contact-background.jpg');
   background-size: cover;
-  background-position: 50% 38%;
+  background-position: 50% 25%;
 }
 
 #contact-hero {
@@ -15,15 +15,17 @@
     width: 50%;
     text-align: center;
     font-size: 1.25em;
+    color: white
   }
 
   h4 {
     font-size: 2em;
     font-weight: bolder;
+    color: white;
   }
 
   a {
-    color: black;
+    color: white;
     text-decoration: none;
     transition: font-weight 0.3s ease-in-out;
 

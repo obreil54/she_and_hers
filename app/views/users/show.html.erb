@@ -34,17 +34,6 @@
       <p><b>11. HEIGHT: <%= @measurement.height.to_s + " CM" if @measurement.present? & @measurement.height.present? %></b></p>
       <%= link_to 'EDIT MEASUREMENTS', edit_measurement_path(current_user.measurement) %>
     </div>
-    <div id="address-book">
-      <h1>ADDRESS BOOK</h1>
-      <% @addresses.each do |address| %>
-        <div class="address-card">
-          <p><%= address.address_line1.upcase %>, <%= address.address_line2.upcase + ", " if address.address_line2.present? %><%= address.city.upcase %></p>
-          <p><%= address.postal_code.upcase %></p>
-          <p><%= address.state.upcase if address.state.present? %></p>
-          <p><%= address.country.upcase %></p>
-        </div>
-      <% end %>
-    </div>
   </div>
 
   <div id="order-info" data-profile-links-target="section" data-section="orders" class="profile-section" style="display: none;">
@@ -84,25 +73,30 @@
   </div>
 
   <div id="wishlist" data-profile-links-target="section" data-section="wishlist" class="profile-section" style="display: none;">
-    <div class="wishlist-grid">
-      <% @wishlist.products.each do |product| %>
-        <%= link_to product_path(product), class: "wishlist-card" do %>
-          <%= image_tag product.primary_photo %>
-          <div class="wishlist-product-info">
-            <div>
-              <h6><%= product.name.upcase %></h6>
-              <p><%= humanized_money_with_symbol(product.price) %></p>
+    <% if @wishlist.products.present? %>
+      <div class="wishlist-grid">
+        <% @wishlist.products.each do |product| %>
+          <%= link_to product_path(product), class: "wishlist-card" do %>
+            <%= image_tag product.primary_photo %>
+            <div class="wishlist-product-info">
+              <div>
+                <h6><%= product.name.upcase %></h6>
+                <p><%= humanized_money_with_symbol(product.price) %></p>
+              </div>
+              <button
+                data-controller="wishlist"
+                data-wishlist-product-id-value="<%= product.id %>"
+                data-action="click->wishlist#toggle"
+                class="wishlist-button">
+                <i class="<%= current_user.wishlist&.products&.include?(product) ? 'fa-solid fa-heart' : 'fa-regular fa-heart' %>"></i>
+              </button>
             </div>
-            <button
-              data-controller="wishlist"
-              data-wishlist-product-id-value="<%= product.id %>"
-              data-action="click->wishlist#toggle"
-              class="wishlist-button">
-              <i class="<%= current_user.wishlist&.products&.include?(product) ? 'fa-solid fa-heart' : 'fa-regular fa-heart' %>"></i>
-            </button>
-          </div>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
+      </div>
+    <% else %>
+      <p>YOU DON'T HAVE ANYTHING ON YOUR WISHLIST YET</p>
+      <%= link_to "CONTINUE SHOPPING", products_path %>
+    <% end %>
   </div>
 </div>
