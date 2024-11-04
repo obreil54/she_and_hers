@@ -10,6 +10,8 @@ gem "sprockets-rails"
 
 gem 'rubygems-update', '>= 3.3.22'
 
+gem 'ffi', '1.16.3'
+
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 
