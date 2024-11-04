@@ -13,7 +13,7 @@ User.create!(
   last_name: 'Oleynikova',
   email: 'shers.studios@outlook.com',
   password: 'o!N?3zdp&roBE7br',
-  password_confirmation: 'password',
+  password_confirmation: 'o!N?3zdp&roBE7br',
   phone: '+1234567890',
   admin: true,
   terms_of_service: true
