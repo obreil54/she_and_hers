@@ -1,0 +1,8 @@
+<% content_for :body_class, "profile-edit-page" %>
+<div id="profile-edit-page">
+  <%= form_with url: verify_access_path, method: :post do %>
+    <%= label_tag :access_code, "ENTER ACCESS CODE" %>
+    <%= password_field_tag :access_code %>
+    <%= submit_tag "ENTER" %>
+  <% end %>
+</div>

@@ -11,8 +11,8 @@
 User.create!(
   first_name: 'Polina',
   last_name: 'Oleynikova',
-  email: 'admin@email.com',
-  password: 'password',
+  email: 'shers.studios@outlook.com',
+  password: 'o!N?3zdp&roBE7br',
   password_confirmation: 'password',
   phone: '+1234567890',
   admin: true,
