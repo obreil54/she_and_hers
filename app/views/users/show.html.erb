@@ -1,5 +1,5 @@
 <% content_for :body_class, "profile-page" %>
-<div id="profile-page" data-controller="profile-links">
+<div id="profile-page" data-controller="profile-links product-secondary-info">
   <div id="profile-links">
     <h1 data-section="wishlist" data-action="click->profile-links#switch" data-profile-links-target="link" class="profile-link">WISHLIST</h1>
     <h1 data-section="profile" data-action="click->profile-links#switch" data-profile-links-target="link" class="profile-link active">PROFILE</h1>
@@ -33,6 +33,35 @@
       <p><b>10. INSEAM: <%= @measurement.inseam.to_s + " CM" if @measurement.present? & @measurement.inseam.present? %></b></p>
       <p><b>11. HEIGHT: <%= @measurement.height.to_s + " CM" if @measurement.present? & @measurement.height.present? %></b></p>
       <%= link_to 'EDIT MEASUREMENTS', edit_measurement_path(current_user.measurement) %>
+      <h3 data-action="click->product-secondary-info#toggle" data-target-id="how-to-measure-content">
+        HOW TO MEASURE <i class="fa-solid fa-chevron-down"></i>
+      </h3>
+    </div>
+  </div>
+  <div id="how-to-measure-content" data-product-secondary-info-target="content" class="d-none">
+    <h6><b>MEASUREMENT GUIDE</b></h6>
+    <p>TO ENSURE YOUR GARMENT FITS PERFECTLY, PLEASE FOLLOW THE INSTRUCTIONS BELOW CAREFULLY. YOU'LL NEED A MEASURING TAPE AND A MIRROR FOR ACCURACY. IT'S BEST TO WEAR MINIMAL CLOTHING WHILE MEASURING TO GET THE MOST PRECISE RESULTS.</p>
+    <div id="measurement-instructions">
+      <%= image_tag('measurement_guide.png', alt: 'Measurement Guide') %>
+      <div>
+        <p><b>1. CHEST:</b> MEASURE AROUND THE FULLEST PART OF YOUR CHEST, KEEPING THE TAPE STRAIGHT ACROSS YOUR BACK.</p>
+        <p><b>2. WAIST:</b> MEASURE AROUND THE NARROWEST PART OF YOUR WAIST (JUST ABOVE THE BELLY BUTTON).</p>
+        <p><b>3. HIGH HIPS:</b> MEASURE AROUND THE UPPER PART OF YOUR HIPS, USUALLY ABOUT 10-15 CM (4-6 IN) BELOW YOUR WAIST.</p>
+        <p><b>4. LOW HIPS:</b> MEASURE AROUND THE WIDEST PART OF YOUR HIPS AND BUTTOCKS, ABOUT 20-22CM (8-9 IN) BELOW YOUR WAIST.</p>
+        <p><b>5. THIGH:</b> MEASURE AROUND THE FULLEST PART OF YOUR THIGH, JUST BELOW THE CROTCH AREA.</p>
+        <p><b>6. TORSO:</b> MEASURE FROM THE TOP OF YOUR SHOULDER (NEAR THE NECK) DOWN TO YOUR WAISTLINE.</p>
+        <p><b>7. ARM LENGTH:</b> MEASURE FROM THE TIP OF YOUR SHOULDER TO YOUR WRIST WITH A SLIGHTLY BENT ARM.</p>
+        <p><b>8. SHOULDER WIDTH:</b> MEASURE ACROSS THE TOP OF YOUR BACK FROM ONE SHOULDER TIP TO THE OTHER.</p>
+        <p><b>9. UPPER ARM:</b> MEASURE AROUND THE WIDEST PART OF YOUR ARM, BETWEEN SHOULDER AND ELBOW.</p>
+        <p><b>10. INSEAM:</b> MEASURE FROM THE CROTCH TO THE BOTTOM OF YOUR LEG, WHERE YOU'D LIKE THE HEM TO FALL.</p>
+        <p><b>11. HEIGHT:</b> STAND STRAIGHT AND MEASURE FOM THE TOP OF YOUR HEAD TO THE FLOOR.</p>
+        <p><i>QUICK TIPS:</i></p>
+        <ul>
+          <li>DOUBLE-CHECK YOUR MEASUREMENTS BEFORE SUBMITTING.</li>
+          <li>STAND NATURALLY WITHOUT TENSING YOUR BODY.</li>
+          <li>IF UNSURE, ROUND UP SLIGHTLY FOR A MORE COMFORTABLE FIT.</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -41,7 +70,20 @@
       <% @orders.each do |order| %>
         <div class="order-card">
           <p><b>ORDER</b> <%= order.id.to_s.rjust(10, '0') %></p>
-          <p><%= order.status.upcase %></p>
+          <% relevant_tracking_statuses = ["TRANSIT", "OUT FOR DELIVERY", "DELIVERED", "RETURN TO SENDER", "AVAILABLE FOR PICKUP"] %>
+
+          <% if relevant_tracking_statuses.include?(order.tracking_status) %>
+            <p><%= order.tracking_status.upcase %></p>
+          <% else %>
+            <p><%= order.status.upcase %></p>
+          <% end %>
+          <% if order.tracking_number.present? %>
+            <p>
+              <a href="https://goshippo.com/track/?id=<%= order.tracking_number %>" target="_blank" rel="noopener noreferrer">
+                TRACK
+              </a>
+            </p>
+          <% end %>
           <% order.order_items.each do |item| %>
             <div class="profile-product-card">
               <%= image_tag item.product.primary_photo %>
@@ -50,7 +92,7 @@
                 <p>SIZE <%= item.size.upcase %></p>
               </div>
               <div class="profile-product-price">
-                <p><%= humanized_money_with_symbol(item.product.price) %></p>
+                <p><%= humanized_money_with_symbol(item.item_price) %></p>
               </div>
             </div>
           <% end %>
@@ -62,8 +104,16 @@
           <p><%= order.state.upcase if order.state.present? %></p>
           <p><%= order.country.upcase %></p>
           <p><b>SUMMARY</b></p>
+          <div id="profile-order-subtotal">
+            <p><%= "SUBTOTAL (#{order.order_items.count})" %></p>
+            <p><%= humanized_money_with_symbol(order.total_price) %></p>
+          </div>
+          <div id="profile-order-shipping">
+            <p><%= "SHIPPING" %></p>
+            <p><%= humanized_money_with_symbol(order.shipping_cost) %></p>
+          </div>
           <p><b>TOTAL</b></p>
-          <p><%= humanized_money_with_symbol(order.total_price) %></p>
+          <p><%= humanized_money_with_symbol(order.total_price + order.shipping_cost) %></p>
         </div>
       <% end %>
     <% else %>

@@ -11,6 +11,9 @@ export default class extends Controller {
   switch(event) {
     event.preventDefault();
 
+    const measurementInstructions = document.getElementById("how-to-measure-content")
+    measurementInstructions.classList.add("d-none");
+
     const sectionToShow = event.currentTarget.dataset.section;
 
     this.linkTargets.forEach(link => link.classList.remove("active"));

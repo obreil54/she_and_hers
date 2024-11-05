@@ -16,4 +16,5 @@ class Product < ApplicationRecord
   validates :secondary_photo, presence: true
   validates :tertiary_photo, presence: true
   validates :weight, presence: true
+  validates :one_size, inclusion: { in: [true, false] }
 end

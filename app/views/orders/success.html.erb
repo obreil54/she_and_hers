@@ -31,9 +31,19 @@
             </div>
         </div>
       <% end %>
+      <div id="success-subtotal">
+        <div>
+          <p>SUBTOTAL</p>
+          <p><%= humanized_money_with_symbol(@order.total_price) %></p>
+        </div>
+        <div>
+          <p>SHIPPING</p>
+          <p><%= humanized_money_with_symbol(@order.shipping_cost) %></p>
+        </div>
+      </div>
       <div id="success-total">
-        <p>SUBTOTAL</p>
-        <p><%= humanized_money_with_symbol(@order.total_price) %></p>
+        <p>TOTAL</p>
+        <p><%= humanized_money_with_symbol(@order.total_price + @order.shipping_cost) %></p>
       </div>
     </div>
   </div>

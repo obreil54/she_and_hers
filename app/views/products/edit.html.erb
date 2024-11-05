@@ -49,6 +49,11 @@
       <%= form.file_field :other_photos, multiple: true %>
     </div>
 
+    <div class="field">
+      <%= form.label :one_size, "One Size" %><br>
+      <%= form.check_box :one_size %>
+    </div>
+
     <div class="actions">
       <%= form.submit "Update Product" %>
     </div>

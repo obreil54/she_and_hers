@@ -18,15 +18,19 @@
       <%= form_with url: add_item_cart_path(@cart), method: :post, data: { action: "submit->cart#addItem" } do %>
         <div class="product-sizes">
           <select id="size-select" name="size" required data-custom-size-target="sizeSelect" data-action="change->custom-size#handleSizeChange">
-            <option value="" disabled selected>SELECT SIZE</option>
-            <option value="2XS">2XS</option>
-            <option value="XS">XS</option>
-            <option value="S">S</option>
-            <option value="M">M</option>
-            <option value="L">L</option>
-            <option value="XL">XL</option>
-            <option value="2XL">2XL</option>
-            <option value="CUSTOM">CUSTOM</option>
+            <% if @product.one_size? %>
+              <option value="ONE SIZE" selected>ONE SIZE</option>
+            <% else %>
+              <option value="" disabled selected>SELECT SIZE</option>
+              <option value="2XS">2XS</option>
+              <option value="XS">XS</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="2XL">2XL</option>
+              <option value="CUSTOM">CUSTOM</option>
+            <% end %>
           </select>
           <i class="fa-solid fa-chevron-down"></i>
         </div>
