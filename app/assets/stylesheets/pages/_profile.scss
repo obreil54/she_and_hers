@@ -2,6 +2,8 @@
   background-image: image-url('profile-background.JPG');
   background-size: cover;
   background-position: 50% 70%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 #profile-page {
@@ -296,6 +298,9 @@
       }
     }
     #order-info {
+
+      text-align: center;
+
       padding: 0;
 
       p, a {
@@ -316,6 +321,12 @@
     }
 
     #wishlist {
+      text-align: center;
+
+      p, a {
+        font-size: 0.9em;
+      }
+
       .wishlist-grid {
         display: flex;
         flex-direction: column;
