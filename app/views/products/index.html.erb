@@ -16,19 +16,23 @@
 
         <%= link_to product_path(product), class: "product-card-link" do %>
           <%= image_tag product.primary_photo %>
-          <%= product.name.upcase %><br>
-          <%= humanized_money_with_symbol(product.price) %>
+          <div class="product-card-info">
+            <div>
+              <%= product.name.upcase %><br>
+              <%= humanized_money_with_symbol(product.price) %>
+            </div>
+            <% if user_signed_in? %>
+              <button
+                data-controller="wishlist"
+                data-wishlist-product-id-value="<%= product.id %>"
+                data-action="click->wishlist#toggle"
+                class="wishlist-button">
+                <i class="<%= current_user.wishlist&.products&.include?(product) ? 'fa-solid fa-heart' : 'fa-regular fa-heart' %>"></i>
+              </button>
+            <% end %>
+          </div>
         <% end %>
 
-        <% if user_signed_in? %>
-          <button
-            data-controller="wishlist"
-            data-wishlist-product-id-value="<%= product.id %>"
-            data-action="click->wishlist#toggle"
-            class="wishlist-button">
-            <i class="<%= current_user.wishlist&.products&.include?(product) ? 'fa-solid fa-heart' : 'fa-regular fa-heart' %>"></i>
-          </button>
-        <% end %>
       </div>
     <% end %>
   </div>

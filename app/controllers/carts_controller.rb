@@ -21,7 +21,7 @@ class CartsController < ApplicationController
       @cart.cart_items.create(product: product, quantity: 1, size: size)
     end
 
-    total_price = @cart.total_price.format(symbol: true, no_cents: true)
+    total_price = @cart.total_price.format(symbol: true, no_cents: false)
 
     respond_to do |format|
       format.json { render json: { total_items: @cart.cart_items.sum(:quantity), total_price: total_price, cart_id: @cart.id } }
@@ -32,7 +32,7 @@ class CartsController < ApplicationController
     @cart_item = @cart.cart_items.find_by(id: params[:item_id])
 
     if @cart_item&.destroy
-      total_price = @cart.total_price.format(symbol: true, no_cents: true)
+      total_price = @cart.total_price.format(symbol: true, no_cents: false)
       total_items = @cart.cart_items.sum(:quantity)
 
       render json: { success: true, total_items: total_items, total_price: total_price }

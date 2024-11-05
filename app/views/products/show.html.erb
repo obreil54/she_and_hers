@@ -5,12 +5,19 @@
       data-product-carousel-target="image">
       <div class="carousel-circles" data-product-carousel-target="indicators"></div>
     </div>
-    <div class="product-main-info" data-product-carousel-target="mainInfo" style="background-image: url('<%= @product.secondary_photo.url %>')" data-controller="cart">
+    <div class="product-main-info"
+        data-product-carousel-target="mainInfo"
+        style="background-image: url('<%= @product.secondary_photo.url %>')"
+        data-controller="cart custom-size"
+        data-custom-size-logged-in="<%= user_signed_in? %>"
+        data-custom-size-has-measurements="<%= current_user&.has_measurements? %>">
       <h3><b><%= @product.name.upcase %></b></h3>
-      <h4><%= humanized_money_with_symbol(@product.price) %></h4>
+      <h4 data-custom-size-target="price" data-base-price="<%= @product.price %>">
+        £<%= humanized_money_with_symbol(@product.price).sub("£", "") %>
+      </h4>
       <%= form_with url: add_item_cart_path(@cart), method: :post, data: { action: "submit->cart#addItem" } do %>
         <div class="product-sizes">
-          <select id="size-select" name="size" required>
+          <select id="size-select" name="size" required data-custom-size-target="sizeSelect" data-action="change->custom-size#handleSizeChange">
             <option value="" disabled selected>SELECT SIZE</option>
             <option value="2XS">2XS</option>
             <option value="XS">XS</option>
@@ -19,14 +26,18 @@
             <option value="L">L</option>
             <option value="XL">XL</option>
             <option value="2XL">2XL</option>
-            <option value="2XL">CUSTOM</option>
+            <option value="CUSTOM">CUSTOM</option>
           </select>
           <i class="fa-solid fa-chevron-down"></i>
         </div>
+        <p id="guest-message" class="d-none"><b>PLEASE <%= link_to "CREATE AN ACCOUNT", new_user_registration_path %> TO ENTER YOUR MEASUREMENTS</b></p>
+        <p id="missing-measurements-message" class="d-none"><b>PLEASE <%= link_to "ENTER YOUR MEASUREMENTS", edit_measurement_path(current_user.measurement) %> TO PROCEED WITH YOUR CUSTOM ORDER</b></p>
         <%= hidden_field_tag :product_id, @product.id %>
-        <button type="submit">ADD TO CART</button>
+        <div data-custom-size-target="measurementMessage" class="d-none"></div>
+        <button type="submit" data-custom-size-target="addButton">ADD TO CART</button>
       <% end %>
       <p><%= @product.description.upcase %></p>
+      <span data-custom-size-target="price" data-base-price="<%= @product.price %>" class="d-none">£<%= @product.price %></span>
     </div>
     <div class="product-secondary-info" data-product-carousel-target="secondaryInfo" style="background-image: url('<%= @product.tertiary_photo.url %>')" data-controller="product-secondary-info">
       <h3 data-action="click->product-secondary-info#toggle" data-target-id="how-to-care-content">
