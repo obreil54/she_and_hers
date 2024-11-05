@@ -2,6 +2,9 @@ class OrdersController < ApplicationController
   require 'stripe'
   require 'shippo'
 
+  SMALL_BOX = { length: 30, width: 22, height: 5, weight: 100, max_products: 2, max_weight: 320 }
+  LARGE_BOX = { length: 44.9, width: 33.7, height: 7.9, weight: 150, max_weight: 1300 }
+
   def create
     p "Order params: #{order_params}"
     @cart = current_cart
@@ -40,6 +43,8 @@ class OrdersController < ApplicationController
 
     if @order.save
       begin
+        parcel = select_parcel(@order.order_items)
+
         shipment = Shippo::Shipment.create(
           address_from: {
             name: "Polina Oleynikova",
@@ -61,14 +66,7 @@ class OrdersController < ApplicationController
             country: @order.country,
             phone: @order.phone
           },
-          parcels: [{
-            length: "10",
-            width: "7",
-            height: "4",
-            distance_unit: "in",
-            weight: "2",
-            mass_unit: "lb"
-          }],
+          parcels: [parcel],
           async: false
         )
 
@@ -193,6 +191,28 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).except(:authenticity_token, :address_id).permit(:email, :first_name, :last_name, :total_amount_cents, :address_line1, :address_line2, :city, :state, :postal_code, :country, :phone, :shipping_cost)
+  end
+
+  def select_parcel(order_items)
+    total_product_weight = order_items.sum { |item| item.product.weight * item.quantity }
+    box = SMALL_BOX
+
+    if order_items.size <= SMALL_BOX[:max_products] && (total_product_weight + SMALL_BOX[:weight] <= SMALL_BOX[:max_weight])
+      total_weight = total_product_weight + SMALL_BOX[:weight]
+      box = SMALL_BOX
+    else
+      total_weight = total_product_weight + LARGE_BOX[:weight]
+      box = LARGE_BOX
+    end
+
+    {
+      length: box[:length],
+      width: box[:width],
+      height: box[:height],
+      distance_unit: "cm",
+      weight: total_weight.to_s,
+      mass_unit: "g"
+    }
   end
 
   def assign_address(order, source)

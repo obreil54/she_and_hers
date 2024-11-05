@@ -56,6 +56,8 @@
     width: 100%;
     margin-top: 32px;
 
+
+
     h1 {
       margin-bottom: 16px;
     }
@@ -95,6 +97,42 @@
         align-items: center;
         margin-bottom: 16px;
       }
+
+      h3 {
+        font-size: 1.3em;
+        margin-top: 16px;
+        text-decoration: underline;
+
+        i {
+          text-decoration: underline;
+        }
+
+        &:hover {
+          font-weight: bolder;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  #how-to-measure-content {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 32px;
+
+    #measurement-instructions {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      img {
+        width: 40%;
+        object-fit: cover;
+        margin-right: 16px;
+      }
     }
   }
 
@@ -130,9 +168,19 @@
       border-bottom: 1px solid white;
       text-align: center;
 
+      #profile-order-subtotal, #profile-order-shipping {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+
       p, h6 {
         font-size: 1.2em;
         margin-bottom: 4px;
+
+        a {
+          font-size: 1em;
+        }
       }
 
       b {
@@ -271,6 +319,24 @@
       .wishlist-grid {
         display: flex;
         flex-direction: column;
+      }
+    }
+
+    #how-to-measure-content {
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 16px;
+
+      #measurement-instructions {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        img {
+          width: 100%;
+          object-fit: cover;
+          margin: 0;
+        }
       }
     }
   }

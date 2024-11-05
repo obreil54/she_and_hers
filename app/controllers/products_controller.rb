@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
   before_action :authorize_admin, only: [:new, :create, :edit, :update, :destroy]
 
   def index
-    @products = Product.all
+    @products = Product.order(updated_at: :desc)
   end
 
   def show
@@ -64,6 +64,7 @@ class ProductsController < ApplicationController
       :secondary_photo,
       :tertiary_photo,
       :weight,
+      :one_size,
       other_photos: []
     )
   end

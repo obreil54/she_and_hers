@@ -54,23 +54,23 @@ class WebhooksController < ApplicationController
   def map_tracking_status(shippo_status)
     case shippo_status
     when 'UNKNOWN'
-      'unknown'
+      'UKNOWN'
     when 'PRE_TRANSIT'
-      'pre_transit'
+      'PRE TRANSIT'
     when 'TRANSIT'
-      'transit'
+      'TRANSIT'
     when 'DELIVERED'
-      'delivered'
+      'DELIVERED'
     when 'RETURN_TO_SENDER'
-      'return_to_sender'
+      'RETURN TO SENDER'
     when 'FAILURE'
-      'failure'
+      'FAILURE'
     when 'AVAILABLE_FOR_PICKUP'
-      'available_for_pickup'
+      'AVAILABLE FOR PICKUP'
     when 'OUT_FOR_DELIVERY'
-      'out_for_delivery'
+      'OUT FOR DELIVERY'
     else
-      'unknown'
+      'UNKNOWN'
     end
   end
 end

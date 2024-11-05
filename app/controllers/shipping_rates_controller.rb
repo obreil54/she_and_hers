@@ -1,12 +1,16 @@
 class ShippingRatesController < ApplicationController
   require 'shippo'
 
+  SMALL_BOX = { length: 30, width: 22, height: 5, weight: 100, max_products: 2, max_weight: 320 }
+  LARGE_BOX = { length: 44.9, width: 33.7, height: 7.9, weight: 150, max_weight: 1300 }
   def create
     address_to = build_address_to(params)
 
     logger.debug "Address to be used for shipment: #{address_to.inspect}"
 
     begin
+      parcel = select_parcel(current_cart.cart_items)
+
       shipment = Shippo::Shipment.create(
         address_from: {
           name: "Polina Oleynikova",
@@ -19,14 +23,7 @@ class ShippingRatesController < ApplicationController
           phone: "07818130656"
         },
         address_to: address_to,
-        parcels: [{
-          length: "10",
-          width: "7",
-          height: "4",
-          distance_unit: "in",
-          weight: "2",
-          mass_unit: "lb"
-        }],
+        parcels: [parcel],
         async: false
       )
 
@@ -64,6 +61,30 @@ class ShippingRatesController < ApplicationController
   end
 
   private
+
+  def select_parcel(cart_items)
+    total_product_weight = cart_items.sum { |item| item.product.weight * item.quantity }
+    box = SMALL_BOX
+
+    if cart_items.size <= SMALL_BOX[:max_products] && (total_product_weight + SMALL_BOX[:weight] <= SMALL_BOX[:max_weight])
+      p "Using small box"
+      total_weight = total_product_weight + SMALL_BOX[:weight]
+      box = SMALL_BOX
+    else
+      p "Using large box"
+      total_weight = total_product_weight + LARGE_BOX[:weight]
+      box = LARGE_BOX
+    end
+
+    {
+      length: box[:length],
+      width: box[:width],
+      height: box[:height],
+      distance_unit: "cm",
+      weight: total_weight.to_s,
+      mass_unit: "g"
+    }
+  end
 
   def build_address_to(params)
     p "Params: #{params.inspect}"
