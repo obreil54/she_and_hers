@@ -38,75 +38,12 @@ class OrdersController < ApplicationController
     end
 
     @order.shipping_cost_cents = (params[:order][:shipping_cost].to_f * 100).to_i if params[:order][:shipping_cost].present?
+    @order.selected_provider = params[:order][:selected_provider]
+    @order.selected_service_level = params[:order][:selected_service_level]
     @order.total_amount_cents = @order.total_price.cents + (@order.shipping_cost_cents || 0)
     @order.status = 'pending'
 
     if @order.save
-      begin
-        parcel = select_parcel(@order.order_items)
-
-        shipment = Shippo::Shipment.create(
-          address_from: {
-            name: "Polina Oleynikova",
-            street1: "Hamilton House Queens Drive",
-            street2: "Queens Drive",
-            city: "Leatherhead",
-            state: "Surrey",
-            zip: "KT22 0PF",
-            country: "United Kingdom",
-            phone: "07818130656"
-          },
-          address_to: {
-            name: "#{@order.first_name} #{@order.last_name}",
-            street1: @order.address_line1,
-            street2: @order.address_line2,
-            city: @order.city,
-            state: @order.state,
-            zip: @order.postal_code,
-            country: @order.country,
-            phone: @order.phone
-          },
-          parcels: [parcel],
-          async: false
-        )
-
-        selected_provider = params[:order][:selected_provider]
-        selected_service_level = params[:order][:selected_service_level]
-        selected_amount = params[:order][:shipping_cost]
-        rate = shipment['rates'].find do |r|
-          r['provider'].to_s == selected_provider.to_s &&
-          r.dig('servicelevel', 'name').to_s == selected_service_level.to_s &&
-          r['amount'].to_s == selected_amount.to_s
-        end
-        p "Selected rate: #{rate.inspect}"
-
-        if rate
-          label = Shippo::Transaction.create(
-            rate: rate['object_id'],
-            async: false
-            )
-
-          p "Label response: #{label.inspect}"
-
-          if label.present? && label['tracking_number'].present?
-            p "Shipping label created: #{label.inspect}"
-            tracking_number = label['tracking_number']
-            p "Tracking number: #{tracking_number}"
-            @order.update(tracking_number: tracking_number, tracking_status: 'pre_transit')
-          else
-            p "Unable to generate shipping label or tracking number."
-          end
-        else
-          p "Selected rate not found in shipment rates."
-        end
-      rescue Shippo::Exceptions::APIError => e
-        logger.error "Shippo API Error: #{e.message}"
-      rescue Shippo::Exceptions::APIServerError => e
-        logger.error "Shippo API Server Error: #{e.message}"
-      rescue => e
-        logger.error "General Error while creating shipment: #{e.message}"
-      end
-
       session = Stripe::Checkout::Session.create(
         payment_method_types: ['card'],
         line_items: @order.order_items.map { |item|
@@ -167,6 +104,73 @@ class OrdersController < ApplicationController
           receipt_url = charge.receipt_url
           @order.update(receipt_url: receipt_url) if receipt_url.present?
         end
+      end
+
+      begin
+        parcel = select_parcel(@order.order_items)
+        shipment = Shippo::Shipment.create(
+          address_from: {
+            name: "Polina Oleynikova",
+            street1: "Hamilton House Queens Drive",
+            street2: "Queens Drive",
+            city: "Leatherhead",
+            state: "Surrey",
+            zip: "KT22 0PF",
+            country: "United Kingdom",
+            phone: "07818130656"
+          },
+          address_to: {
+            name: "#{@order.first_name} #{@order.last_name}",
+            street1: @order.address_line1,
+            street2: @order.address_line2,
+            city: @order.city,
+            state: @order.state,
+            zip: @order.postal_code,
+            country: @order.country,
+            phone: @order.phone
+          },
+          parcels: [parcel],
+          async: false
+        )
+
+        selected_provider = @order.selected_provider
+        selected_service_level = @order.selected_service_level
+        selected_amount = @order.shipping_cost
+        p "Selected provider: #{selected_provider}"
+        p "Selected service level: #{selected_service_level}"
+        p "Selected amount: #{selected_amount}"
+        p "Rates: #{shipment['rates'].inspect}"
+        rate = shipment['rates'].find do |r|
+          r['provider'].to_s == selected_provider.to_s &&
+          r.dig('servicelevel', 'name').to_s == selected_service_level.to_s
+        end
+        p "Selected rate: #{rate.inspect}"
+
+        if rate
+          label = Shippo::Transaction.create(
+            rate: rate['object_id'],
+            async: false
+          )
+
+          p "Label response: #{label.inspect}"
+
+          if label.present? && label['tracking_number'].present?
+            p "Shipping label created: #{label.inspect}"
+            tracking_number = label['tracking_number']
+            p "Tracking number: #{tracking_number}"
+            @order.update(tracking_number: tracking_number, tracking_status: "PRE TRANSIT")
+          else
+            p "Unable to generate shipping label or tracking number."
+          end
+        else
+          p "Selected rate not found in shipment rates."
+        end
+      rescue Shippo::Exceptions::APIError => e
+        logger.error "Shippo API Error: #{e.message}"
+      rescue Shippo::Exceptions::APIServerError => e
+        logger.error "Shippo API Server Error: #{e.message}"
+      rescue => e
+        logger.error "General Error while creating shipment: #{e.message}"
       end
 
       cart = current_cart

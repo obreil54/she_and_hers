@@ -24,4 +24,12 @@
   p {
     width: 100% !important;
   }
+
+  .about-page{
+    background-image: image-url('about-background.jpg');
+    background-size: cover;
+    background-position: 50% 22%;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+  }
 }
