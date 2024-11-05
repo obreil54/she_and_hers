@@ -18,6 +18,10 @@ class User < ApplicationRecord
   has_one :wishlist, dependent: :destroy
   validates :phone, format: { with: /\A[+\d\s()-]{7,}\z/, message: "must be a valid phone number" }
 
+  def has_measurements?
+    measurement && measurement.attributes.except("id", "user_id", "created_at", "updated_at").values.all?(&:present?)
+  end
+
   private
 
   def create_measurement

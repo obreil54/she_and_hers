@@ -35,8 +35,7 @@ class OrdersController < ApplicationController
     end
 
     @order.shipping_cost_cents = (params[:order][:shipping_cost].to_f * 100).to_i if params[:order][:shipping_cost].present?
-    total_amount_cents = @cart.total_price.cents + (@order.shipping_cost_cents || 0)
-    @order.total_amount_cents = total_amount_cents
+    @order.total_amount_cents = @order.total_price.cents + (@order.shipping_cost_cents || 0)
     @order.status = 'pending'
 
     if @order.save
@@ -120,7 +119,7 @@ class OrdersController < ApplicationController
                 name: item.product.name,
                 images: [item.product.primary_photo.url],
               },
-              unit_amount: item.product.price_cents,
+              unit_amount: item.item_price.cents,
             },
             quantity: item.quantity,
           }

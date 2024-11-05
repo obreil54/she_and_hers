@@ -30,6 +30,9 @@ export default class extends Controller {
             cartItemsContainer.innerHTML = html;
           }
 
+          console.log("Data", data)
+          console.log("Total Price", data.total_price)
+
           const totalPriceElement = document.querySelector('#total-price-display');
           if (totalPriceElement) {
             totalPriceElement.innerHTML = `${data.total_price}`;

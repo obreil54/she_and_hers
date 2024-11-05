@@ -6,7 +6,7 @@
       <%= image_tag item.product.primary_photo %>
       <div class="modal-card-info">
         <p><%= item.product.name.upcase %></p>
-        <p><%= humanized_money_with_symbol(item.product.price) %></p>
+        <p><%= humanized_money_with_symbol(item.item_price) %></p>
         <div class="quantity-input">
           <button type="button" class="decrement" data-action="click->cart-overlay#decrementQuantity" data-cart-item-id="<%= item.id %>">-</button>
           <%= number_field_tag :quantity, item.quantity, min: 1, max: 2, data: { action: 'change->cart-overlay#updateQuantity', cart_item_id: item.id }, class: "quantity-field", readonly: true %>

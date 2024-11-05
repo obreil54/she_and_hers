@@ -14,9 +14,7 @@ class Order < ApplicationRecord
   validates :tracking_status, presence: true, allow_nil: true
 
   def total_price
-    total = order_items.joins(:product).sum do |item|
-      item.product.price_cents * item.quantity
-    end
+    total = order_items.sum { |item| item.item_price.cents * item.quantity }
     Money.new(total, 'GBP')
   end
 end

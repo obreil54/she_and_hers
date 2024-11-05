@@ -4,8 +4,8 @@ class Cart < ApplicationRecord
   has_many :products, through: :cart_items
 
   def total_price
-    total = cart_items.joins(:product).sum do |item|
-      item.product.price_cents * item.quantity
+    total = cart_items.sum do |item|
+      item.item_price.cents * item.quantity
     end
     Money.new(total, 'GBP')
   end
