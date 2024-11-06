@@ -5,24 +5,20 @@ class NewsletterController < ApplicationController
     if email.present?
       gibbon = Gibbon::Request.new
       list_id = ENV['MAILCHIMP_LIST_ID']
-      subscriber_id = Digest::MD5.hexdigest(email.downcase)
 
       begin
-        member = gibbon.lists(list_id).members(subscriber_id).retrieve
-        if member.body["status"] == "subscribed"
-          flash[:notice] = "You're already subscribed!"
-        else
-          gibbon.lists(list_id).members(subscriber_id).upsert(
-            body: {
-              email_address: email,
-              status: "subscribed"
-            }
-          )
-          flash[:notice] = "Thank you for subscribing!"
-          send_discount_code(email)
-        end
+        gibbon.lists(list_id).members.create(
+          body: {
+            email_address: email,
+            status: "subscribed"
+          }
+        )
+
+        flash[:notice] = "Thank you for subscribing!"
+        send_discount_code(email)
+
       rescue Gibbon::MailChimpError => e
-        flash[:alert] = "There was an error: #{e.message}"
+        flash[:alert] = "There was an error, if you already subscribed you will not be able to again."
       end
     else
       flash[:alert] = "Email address cannot be blank."
