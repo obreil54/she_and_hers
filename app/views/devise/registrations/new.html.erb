@@ -30,6 +30,12 @@
           <%= link_to 'PRIVACY POLICY', privacy_path, target: "_blank" %>
         </label>
       </div>
+      <div class="terms-conditions">
+        <%= f.input :newsletter, required: false, label: false %>
+        <label for="newsletter">
+          SIGN UP FOR NEWSLETTER AND EXCLUSIVE OFFFERS
+        </label>
+      </div>
     </div>
     <div class="form-actions">
       <%= f.button :submit, "SIGN UP" %>
