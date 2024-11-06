@@ -14,8 +14,17 @@
 
   <body class="<%= content_for?(:body_class) ? yield(:body_class) : '' %>" data-controller="cart-overlay">
     <%= render 'shared/navbar' %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% if notice.present? %>
+      <p class="notice" data-controller="flash" data-action="click->flash#close">
+        <%= notice.upcase %><span class="close" data-flash-target="close">&times;</span>
+      </p>
+    <% end %>
+
+    <% if alert.present? %>
+      <p class="alert" data-controller="flash" data-action="click->flash#close">
+        <%= alert.upcase %><span class="close" data-flash-target="close">&times;</span>
+      </p>
+    <% end %>
     <%= render 'carts/cart_overlay' %>
     <%= yield %>
     <%= render 'shared/footer' %>

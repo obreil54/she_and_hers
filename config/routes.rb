@@ -48,4 +48,5 @@ Rails.application.routes.draw do
   get 'terms', to: 'pages#terms'
 
   post 'shipping_rates', to: 'shipping_rates#create'
+  post 'newsletter/subscribe', to: 'newsletter#subscribe', as: 'subscribe_to_newsletter'
 end

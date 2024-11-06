@@ -9,9 +9,9 @@
   <div id="footer-newsletter">
     <p><b>NEWSLETTER</b></p>
     <p>SUBSCRIBE FOR 10% OFF YOUR FIRST ORDER</p>
-    <div>
-      <input type="text" placeholder="EMAIL">
-      <button>SUBSCRIBE</button>
-    </div>
+    <%= form_with url: subscribe_to_newsletter_path, method: :post, local: true do %>
+      <%= text_field_tag :email, nil, placeholder: "EMAIL" %>
+      <button type="submit">SUBSCRIBE</button>
+    <% end %>
   </div>
 </footer>

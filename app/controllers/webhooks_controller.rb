@@ -21,6 +21,7 @@ class WebhooksController < ApplicationController
       order = Order.find_by(checkout_session_id: session.id)
       if order
         order.update(status: 'placed')
+        OrderMailer.order_placed_email(order).deliver_later
       end
     when 'payment_intent.payment_failed'
       session = event.data.object
@@ -42,10 +43,17 @@ class WebhooksController < ApplicationController
 
       order = Order.find_by(tracking_number: tracking_number)
       if order
-        order.update(tracking_status: map_tracking_status(tracking_status))
+        new_status = map_tracking_status(tracking_status)
+        order.update(tracking_status: new_status)
+
+        case new_status
+        when 'OUT FOR DELIVERY'
+          OrderMailer.order_shipped_email(order).deliver_later
+        when 'DELIVERED'
+          OrderMailer.order_delivered_email(order).deliver_later
+        end
       end
     end
-
     render json: { message: 'Received' }, status: 200
   end
 

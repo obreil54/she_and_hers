@@ -60,6 +60,8 @@ gem "cloudinary"
 gem "money-rails"
 gem "stripe"
 gem "shippo"
+gem "mailchimp_transactional"
+gem "gibbon"
 
 group :development, :test do
   gem "dotenv-rails"
@@ -78,6 +80,7 @@ group :development do
   # gem "spring"
 
   gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
+  gem "letter_opener"
 end
 
 group :test do

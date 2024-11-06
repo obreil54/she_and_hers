@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #order-email {
+      font-family: Helvetica, sans-serif;
+      color: black;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    #order-email h1 {
+      color: black;
+      font-size: 50px;
+      margin-bottom: 16px;
+      margin-top: 8px;
+    }
+    #order-email h2 {
+      font-size: 32px;
+      color: black;
+      margin-bottom: 8px;
+      padding-top: 32px;
+      border-top: 1px solid grey;
+    }
+    #order-email h3 {
+      font-size: 24px;
+      color: black;
+      margin-bottom: 16px;
+    }
+    #order-email p {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+    .item-email-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      margin-top: 16px;
+      width: 500px;
+    }
+    .email-total, #email-order-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 16px;
+      padding: 16px 0;
+    }
+
+    #email-order-total{
+      border-top: 1px solid grey;
+      border-bottom: 1px solid grey;
+    }
+    #email-shipping {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+    #order-email #shop-logo {
+      width: 100%;
+    }
+    .item-email-card .card-image {
+      width: 150px !important;
+      height: auto;
+      margin-right: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div id="order-email">
+    <%= image_tag('https://res.cloudinary.com/dfdmkx4v6/image/upload/v1730908472/text-logo_y9ksli.png', alt: 'Text Logo', id: 'shop-logo') %>
+    <h3>Hello <%= @order.first_name %>!</h3>
+    <h1>Thank you for your order</h1>
+    <p>Your order <%= @order.id.to_s.rjust(10, '0') %> from Shers Studios has been received. Here are the details of your purchase.</p>
+    <div id="order-details">
+      <h2>Order details</h2>
+      <p>Order number: <%= @order.id.to_s.rjust(10, '0') %></p>
+      <p>Purchase date: <%= @order.created_at.strftime("%d/%m/%Y") %></p>
+      <% @order.order_items.each do |item| %>
+        <div class="item-email-card">
+          <%= image_tag item.product.primary_photo, class: "card-image" %>
+          <p><%= item.product.name %></p>
+          <p><%= humanized_money_with_symbol(item.item_price) %></p>
+        </div>
+      <% end %>
+      <div class="email-total">
+        <p><b>Order subtotal:</b></p>
+        <p><%= humanized_money_with_symbol(@order.total_price) %></p>
+      </div>
+      <div class="email-total">
+        <p><b>Shipping:</b></p>
+        <p><%= humanized_money_with_symbol(@order.shipping_cost) %></p>
+      </div>
+      <div id="email-order-total">
+        <p><b>Order Total:</b></p>
+        <p><%= humanized_money_with_symbol(@order.total_price + @order.shipping_cost) %></p>
+      </div>
+      <div id="email-shipping">
+        <p><b>Shipping address:</b></p>
+        <p><%= @order.address_line1 %></p>
+        <p><%= @order.address_line2 + ", " if @order.address_line2.present? %></p>
+        <p><%= @order.city %></p>
+        <p><%= @order.postal_code %></p>
+        <p><%= @order.state if @order.state.present? %></p>
+        <p><%= @order.country %></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
