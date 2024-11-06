@@ -43,7 +43,6 @@ class User < ApplicationRecord
     list_id = ENV['MAILCHIMP_LIST_ID']
 
     begin
-      # Directly subscribe the email to the list
       gibbon.lists(list_id).members.create(
         body: {
           email_address: email,
@@ -52,7 +51,6 @@ class User < ApplicationRecord
       )
       Rails.logger.info "User has been subscribed to the newsletter."
 
-      # Send discount code after successful subscription
       discount_code = DiscountCode.generate_unique_code(10)
       NewsletterMailer.thank_you_email(email, discount_code).deliver_later
     rescue Gibbon::MailChimpError => e
