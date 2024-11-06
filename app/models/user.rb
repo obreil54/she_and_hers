@@ -41,34 +41,22 @@ class User < ApplicationRecord
   def subscribe_to_newsletter
     gibbon = Gibbon::Request.new
     list_id = ENV['MAILCHIMP_LIST_ID']
-    subscriber_id = Digest::MD5.hexdigest(email.downcase)
 
     begin
-      member = gibbon.lists(list_id).members(subscriber_id).retrieve
-      if member.body["status"] == "subscribed"
-        Rails.logger.info "User is already subscribed to the newsletter."
-      else
-        gibbon.lists(list_id).members(subscriber_id).update(
-          body: { status: "subscribed" }
-        )
-        Rails.logger.info "User was re-subscribed to the newsletter."
-        discount_code = DiscountCode.generate_unique_code(10)
-        NewsletterMailer.thank_you_email(email, discount_code).deliver_later
-      end
+      # Directly subscribe the email to the list
+      gibbon.lists(list_id).members.create(
+        body: {
+          email_address: email,
+          status: "subscribed"
+        }
+      )
+      Rails.logger.info "User has been subscribed to the newsletter."
+
+      # Send discount code after successful subscription
+      discount_code = DiscountCode.generate_unique_code(10)
+      NewsletterMailer.thank_you_email(email, discount_code).deliver_later
     rescue Gibbon::MailChimpError => e
-      if e.status_code == 404
-        gibbon.lists(list_id).members(subscriber_id).upsert(
-          body: {
-            email_address: email,
-            status: "subscribed"
-          }
-        )
-        Rails.logger.info "User has been subscribed to the newsletter."
-        discount_code = DiscountCode.generate_unique_code(10)
-        NewsletterMailer.thank_you_email(email, discount_code).deliver_later
-      else
-        Rails.logger.error "Mailchimp Error: #{e.message}"
-      end
+      Rails.logger.error "Mailchimp Error: #{e.message}"
     end
   end
 end
