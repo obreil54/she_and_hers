@@ -5,6 +5,10 @@ class OrdersController < ApplicationController
   SMALL_BOX = { length: 30, width: 22, height: 5, weight: 100, max_products: 2, max_weight: 320 }
   LARGE_BOX = { length: 44.9, width: 33.7, height: 7.9, weight: 150, max_weight: 1300 }
 
+  def index
+    @orders = Order.where.not(status: 'pending').order(created_at: :desc)
+  end
+
   def create
     p "Order params: #{order_params}"
     @cart = current_cart

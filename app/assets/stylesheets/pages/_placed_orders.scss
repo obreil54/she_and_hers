@@ -1,0 +1,60 @@
+#placed-orders-page {
+  .order {
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 6px;
+    text-align: left;
+    font-size: 0.9em;
+  }
+
+  th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+
+  .order-items {
+    margin-top: 5px;
+  }
+
+  .order-items th {
+    background-color: #e0e0e0;
+  }
+
+  .measurements {
+    background-color: #f9f9f9;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    font-size: 0.85em;
+
+    h4 {
+      margin: 0 0 5px;
+      font-weight: bold;
+    }
+
+    ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      list-style-type: none;
+      padding: 0;
+      gap: 5px;
+    }
+
+    li {
+      padding: 2px 0;
+    }
+  }
+}
