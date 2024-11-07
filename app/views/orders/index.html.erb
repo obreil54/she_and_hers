@@ -1,0 +1,78 @@
+<div id="placed-orders-page">
+  <h1>Orders</h1>
+
+  <% @orders.each do |order| %>
+    <div class="order">
+      <table>
+        <thead>
+          <tr>
+            <th>Order Number</th>
+            <th>Status</th>
+            <th>Total Amount</th>
+            <th>Customer Name</th>
+            <th>Email</th>
+            <th>Tracking Number</th>
+            <th>Tracking Status</th>
+            <th>Created At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= order.id.to_s.rjust(10, '0') %></td>
+            <td><%= order.status %></td>
+            <td><%= number_to_currency(order.total_amount_cents / 100.0) %></td>
+            <td><%= "#{order.first_name} #{order.last_name}" %></td>
+            <td><%= order.email %></td>
+            <td><%= order.tracking_number || "N/A" %></td>
+            <td><%= order.tracking_status || "N/A" %></td>
+            <td><%= order.created_at.strftime("%d/%m/%Y") %></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="order-items">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Size</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% order.order_items.each do |item| %>
+            <tr>
+              <td><%= item.product.name %></td>
+              <td><%= item.quantity %></td>
+              <td><%= humanized_money_with_symbol(item.item_price) %></td>
+              <td><%= item.size || "N/A" %></td>
+            </tr>
+
+            <% if item.size == "CUSTOM" && order.user.measurement %>
+              <tr>
+                <td colspan="4">
+                  <div class="measurements">
+                    <h4>Measurements for <%= "#{order.first_name} #{order.last_name}" %></h4>
+                    <ul>
+                      <li>Chest: <%= order.user.measurement.chest %> cm</li>
+                      <li>Waist: <%= order.user.measurement.waist %> cm</li>
+                      <li>High Hips: <%= order.user.measurement.high_hips %> cm</li>
+                      <li>Low Hips: <%= order.user.measurement.low_hips %> cm</li>
+                      <li>Thigh: <%= order.user.measurement.thigh %> cm</li>
+                      <li>Torso: <%= order.user.measurement.torso %> cm</li>
+                      <li>Arm Length: <%= order.user.measurement.arm_length %> cm</li>
+                      <li>Shoulder Width: <%= order.user.measurement.shoulder_width %> cm</li>
+                      <li>Upper Arm Circumference: <%= order.user.measurement.upper_arm_circumference %> cm</li>
+                      <li>Inseam: <%= order.user.measurement.inseam %> cm</li>
+                      <li>Height: <%= order.user.measurement.height %> cm</li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>

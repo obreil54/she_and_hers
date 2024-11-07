@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
   resources :cart_items, only: [:update]
 
-  resources :orders, only: [:create] do
+  resources :orders, only: [:create, :index] do
     get :success, on: :member
   end
 

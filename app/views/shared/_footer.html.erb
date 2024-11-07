@@ -4,6 +4,9 @@
       <%= link_to 'CONTACT', contact_path %>
       <%= link_to 'T&C', terms_path %>
       <%= link_to 'PRIVACY', privacy_path %>
+      <% if current_user&.admin? %>
+        <%= link_to 'PLACED ORDERS', orders_path %>
+      <% end %>
     </div>
   </div>
   <div id="footer-newsletter">
