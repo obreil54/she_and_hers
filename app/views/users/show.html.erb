@@ -106,14 +106,20 @@
           <p><b>SUMMARY</b></p>
           <div id="profile-order-subtotal">
             <p><%= "SUBTOTAL (#{order.order_items.count})" %></p>
-            <p><%= humanized_money_with_symbol(order.total_price) %></p>
+            <p><%= humanized_money_with_symbol(order.discounted_total - order.shipping_cost) %></p>
           </div>
           <div id="profile-order-shipping">
             <p><%= "SHIPPING" %></p>
             <p><%= humanized_money_with_symbol(order.shipping_cost) %></p>
           </div>
+          <% if order.discount_code.present? %>
+            <div id="profile-order-discount">
+              <p><%= "DISCOUNT" %></p>
+              <p><%= "#{order.discount_code.discount_percentage}% OFF APPLIED" %></p>
+            </div>
+          <% end %>
           <p><b>TOTAL</b></p>
-          <p><%= humanized_money_with_symbol(order.total_price + order.shipping_cost) %></p>
+          <p><%= humanized_money_with_symbol(order.discounted_total) %></p>
         </div>
       <% end %>
     <% else %>

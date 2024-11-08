@@ -89,15 +89,21 @@
       <% end %>
       <div class="email-total">
         <p><b>Order subtotal:</b></p>
-        <p><%= humanized_money_with_symbol(@order.total_price) %></p>
+        <p><%= humanized_money_with_symbol(@order.discounted_total - @order.shipping_cost) %></p>
       </div>
       <div class="email-total">
         <p><b>Shipping:</b></p>
         <p><%= humanized_money_with_symbol(@order.shipping_cost) %></p>
       </div>
+      <% if @order.discount_code.present? %>
+        <div class="email-total">
+          <p><b>Discount:</b></p>
+          <p><%= "#{@order.discount_code.discount_percentage}% OFF APPLIED" %></p>
+        </div>
+      <% end %>
       <div id="email-order-total">
         <p><b>Order Total:</b></p>
-        <p><%= humanized_money_with_symbol(@order.total_price + @order.shipping_cost) %></p>
+        <p><%= humanized_money_with_symbol(@order.discounted_total) %></p>
       </div>
       <div id="email-shipping">
         <p><b>Shipping address:</b></p>

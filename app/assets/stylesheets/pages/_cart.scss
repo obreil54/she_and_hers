@@ -172,6 +172,35 @@
         color: white;
       }
     }
+
+    #discount-code-section {
+      width: 100%;
+
+      div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+
+
+        input {
+          width: 70%;
+          border: none;
+          border-bottom: 1px solid black;
+          margin-right: 8px;
+        }
+
+        button {
+          width: 30%;
+          font-size: 1em;
+          border-radius: 0;
+        }
+      }
+
+      #discount-message {
+        font-size: 1em;
+      }
+    }
   }
 }
 

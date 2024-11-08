@@ -20,7 +20,7 @@
           <tr>
             <td><%= order.id.to_s.rjust(10, '0') %></td>
             <td><%= order.status %></td>
-            <td><%= number_to_currency(order.total_amount_cents / 100.0) %></td>
+            <td><%= humanized_money_with_symbol(order.discounted_total) %></td>
             <td><%= "#{order.first_name} #{order.last_name}" %></td>
             <td><%= order.email %></td>
             <td><%= order.tracking_number || "N/A" %></td>

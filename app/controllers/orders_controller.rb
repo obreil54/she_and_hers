@@ -44,42 +44,53 @@ class OrdersController < ApplicationController
     @order.shipping_cost_cents = (params[:order][:shipping_cost].to_f * 100).to_i if params[:order][:shipping_cost].present?
     @order.selected_provider = params[:order][:selected_provider]
     @order.selected_service_level = params[:order][:selected_service_level]
-    @order.total_amount_cents = @order.total_price.cents + (@order.shipping_cost_cents || 0)
+    if params[:order][:discount_code].present?
+      discount_code = DiscountCode.find_by(code: params[:order][:discount_code], used: false)
+      if discount_code
+        @order.discount_code = discount_code
+      else
+        return render json: { error: "Invalid or used discount code" }, status: :unprocessable_entity
+      end
+    end
+
+    @order.total_amount_cents = @order.discounted_total.cents
     @order.status = 'pending'
 
     if @order.save
+      discount_percentage = @order.discount_code ? @order.discount_code.discount_percentage : 0
+      line_items = @order.order_items.map do |item|
+        discounted_price_cents = (item.item_price.cents * (1 - discount_percentage / 100.0)).to_i
+        {
+          price_data: {
+            currency: 'gbp',
+            product_data: {
+              name: item.product.name,
+              images: [item.product.primary_photo.url],
+            },
+            unit_amount: item.item_price.cents,
+          },
+          quantity: item.quantity,
+        }
+      end
+
+      if @order.shipping_cost_cents > 0
+        line_items << {
+          price_data: {
+            currency: 'gbp',
+            product_data: { name: 'Shipping' },
+            unit_amount: @order.shipping_cost_cents,
+          },
+          quantity: 1,
+        }
+      end
+
       session = Stripe::Checkout::Session.create(
         payment_method_types: ['card'],
-        line_items: @order.order_items.map { |item|
-          {
-            price_data: {
-              currency: 'gbp',
-              product_data: {
-                name: item.product.name,
-                images: [item.product.primary_photo.url],
-              },
-              unit_amount: item.item_price.cents,
-            },
-            quantity: item.quantity,
-          }
-        } + [
-          {
-            price_data: {
-              currency: 'gbp',
-              product_data: {
-                name: 'Shipping',
-              },
-              unit_amount: @order.shipping_cost_cents,
-            },
-            quantity: 1,
-          }
-        ],
+        line_items: line_items,
         mode: 'payment',
         success_url: success_order_url(@order),
         customer_email: @order.email,
-        metadata: {
-          order_id: @order.id,
-        },
+        metadata: { order_id: @order.id },
       )
 
       p "Session: #{session.inspect}"
@@ -90,7 +101,7 @@ class OrdersController < ApplicationController
         format.json { render json: { id: session.id } }
       end
     else
-      p @order.errors.full_messages # Add this line to see any validation issues
+      p @order.errors.full_messages
       render json: { error: "Error creating order: #{@order.errors.full_messages.join(', ')}" }, status: :unprocessable_entity
     end
   end
@@ -180,6 +191,10 @@ class OrdersController < ApplicationController
       cart = current_cart
       if cart
         cart.cart_items.destroy_all
+      end
+
+      if @order.discount_code
+        @order.discount_code.mark_as_used
       end
     end
 

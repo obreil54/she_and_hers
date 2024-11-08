@@ -47,6 +47,13 @@ export default class extends Controller {
     formData.append("order[selected_provider]", shippingRateSelect.options[shippingRateSelect.selectedIndex].dataset.provider);
     formData.append("order[selected_service_level]", shippingRateSelect.options[shippingRateSelect.selectedIndex].dataset.service_level);
 
+    const discountCodeInput = document.getElementById("discount-code-input");
+    const discountCode = discountCodeInput ? discountCodeInput.value.trim() : null;
+
+    if (discountCode) {
+      formData.append("order[discount_code]", discountCode);
+    }
+
     console.log(Object.fromEntries(formData.entries()));
 
     const response = await fetch('/orders', {

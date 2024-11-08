@@ -6,6 +6,8 @@ class DiscountCode < ApplicationRecord
 
   scope :unused, -> { where(used: false) }
 
+  has_many :orders
+
   def mark_as_used
     update(used: true)
   end

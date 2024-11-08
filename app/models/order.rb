@@ -2,6 +2,7 @@ class Order < ApplicationRecord
   monetize :total_amount_cents
   monetize :shipping_cost_cents
   belongs_to :user, optional: true
+  belongs_to :discount_code, optional: true
   has_many :order_items, dependent: :destroy
   accepts_nested_attributes_for :order_items
   validates :status, presence: true
@@ -18,5 +19,10 @@ class Order < ApplicationRecord
   def total_price
     total = order_items.sum { |item| item.item_price.cents * item.quantity }
     Money.new(total, 'GBP')
+  end
+
+  def discounted_total
+    total_with_shipping = total_price.cents + (shipping_cost_cents || 0)
+    Money.new(total_with_shipping, 'GBP')
   end
 end
