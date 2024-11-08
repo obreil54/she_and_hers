@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <div id="cart-summary" data-controller="cart-shipping">
+  <div id="cart-summary" data-controller="cart-shipping cart-discount-code">
     <h3>ORDER SUMMARY</h3>
 
     <h2>SHIPPING ADDRESS</h2>
@@ -84,18 +84,26 @@
     <div id="summary-subtotal">
       <div id="summary-subtotal-products">
         <h2>SUBTOTAL</h2>
-        <p><%= humanized_money_with_symbol(@cart.total_price) %></p>
+        <p data-cart-discount-code-target="subtotalPriceDisplay"><%= humanized_money_with_symbol(@cart.total_price)%></p>
+      </div>
+
+      <div id="discount-code-section">
+        <div>
+          <input type="text" id="discount-code-input" placeholder="Enter Discount Code" data-cart-discount-code-target="discountCodeInput">
+          <button type="button" class="btn" data-action="click->cart-discount-code#applyDiscountCode" data-cart-discount-code-target="applyButton">APPLY</button>
+        </div>
+        <p id="discount-message" style="display: none;" data-cart-discount-code-target="discountMessage"></p>
       </div>
 
       <div id="shipping-rates-container" style="display: none;">
-        <select id="shipping-rate-select" name="order[shipping_rate]" data-action="change->cart-shipping#updateTotal">
+        <select id="shipping-rate-select" name="order[shipping_rate]" data-action="change->cart-shipping#updateTotal change->cart-discount-code#adjustPrices">
         </select>
       </div>
     </div>
 
     <div id="summary-total">
       <h2>TOTAL</h2>
-      <p id="total-price-display"><%= humanized_money_with_symbol(@cart.total_price) %></p>
+      <p id="total-price-display" data-cart-discount-code-target="totalPriceDisplay"><%= humanized_money_with_symbol(@cart.total_price) %></p>
     </div>
 
     <button

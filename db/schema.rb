@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_06_141530) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_08_115548) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -161,6 +161,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_06_141530) do
     t.string "tracking_status"
     t.string "selected_provider"
     t.string "selected_service_level"
+    t.bigint "discount_code_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -218,6 +219,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_06_141530) do
   add_foreign_key "measurements", "users"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
+  add_foreign_key "orders", "discount_codes"
   add_foreign_key "orders", "users"
   add_foreign_key "wishlist_products", "products"
   add_foreign_key "wishlist_products", "wishlists"

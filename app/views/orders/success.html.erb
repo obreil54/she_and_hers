@@ -27,23 +27,29 @@
             <div class="success-card-info">
               <p><%= item.product.name.upcase %></p>
               <p><%= item.size.upcase %></p>
-              <p><%= humanized_money_with_symbol(item.product.price) %></p>
+              <p><%= humanized_money_with_symbol(item.item_price) %></p>
             </div>
         </div>
       <% end %>
       <div id="success-subtotal">
         <div>
           <p>SUBTOTAL</p>
-          <p><%= humanized_money_with_symbol(@order.total_price) %></p>
+          <p><%= humanized_money_with_symbol(@order.discounted_total - @order.shipping_cost) %></p>
         </div>
         <div>
           <p>SHIPPING</p>
           <p><%= humanized_money_with_symbol(@order.shipping_cost) %></p>
         </div>
+        <% if @order.discount_code.present? %>
+          <div>
+            <p>DISCOUNT</p>
+            <p><%= "#{@order.discount_code.discount_percentage}% OFF APPLIED" %></p>
+          </div>
+        <% end %>
       </div>
       <div id="success-total">
         <p>TOTAL</p>
-        <p><%= humanized_money_with_symbol(@order.total_price + @order.shipping_cost) %></p>
+        <p><%= humanized_money_with_symbol(@order.discounted_total) %></p>
       </div>
     </div>
   </div>

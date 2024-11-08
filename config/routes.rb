@@ -40,6 +40,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :discount_codes, only: [] do
+    get 'validate', on: :collection
+  end
+
   get 'about', to: 'pages#about'
   get 'contact', to: 'pages#contact'
   get 'faq', to: 'pages#faq'
