@@ -62,6 +62,7 @@ gem "stripe"
 gem "shippo"
 gem "mailchimp_transactional"
 gem "gibbon"
+gem "meta-tags"
 
 group :development, :test do
   gem "dotenv-rails"
