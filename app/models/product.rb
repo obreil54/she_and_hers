@@ -8,8 +8,8 @@ class Product < ApplicationRecord
   has_many_attached :other_photos
   has_many :wishlist_products
   has_many :wishlists, through: :wishlist_products
-  has_many :cart_items, dependent: :destroy
-  has_many :order_items, dependent: :destroy
+  has_many :cart_items
+  has_many :order_items
   validates :price, presence: true
   validates :description, presence: true
   validates :care_instructions, presence: true
