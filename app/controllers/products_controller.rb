@@ -3,11 +3,30 @@ class ProductsController < ApplicationController
   before_action :authorize_admin, only: [:new, :create, :edit, :update, :destroy]
 
   def index
+    set_meta_tags(
+      title: "Slow Fluid Sustainable Fashion | HandMade in UK",
+      description: "Shop designer latex dresses, skirts and tops. Limited edition clothing, ethically sourced and produced. Order your next favourite statement dress now!",
+      og: {
+        title: "Slow Fluid Sustainable Fashion | HandMade in UK",
+        description: "Shop designer latex dresses, skirts and tops. Limited edition clothing, ethically sourced and produced. Order your next favourite statement dress now!"
+      }
+    )
     @products = Product.order(updated_at: :desc)
   end
 
   def show
     @product = Product.find(params[:id])
+    first_sentence = @product.description.split('.').first
+    set_meta_tags(
+      title: "#{@product.name} - #{first_sentence.strip}",
+      description: @product.description,
+      image: @product.primary_photo.url,
+      og: {
+        title: "#{@product.name} - #{first_sentence.strip}",
+        description: @product.description,
+        image: @product.primary_photo.url
+      }
+    )
     @image_urls = [@product.primary_photo, @product.secondary_photo, @product.tertiary_photo]
     .compact.map(&:url) + @product.other_photos.map(&:url)
   end
@@ -19,7 +38,7 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     if @product.save
-      redirect_to products_path, notice: "Product created successfully."
+      redirect_to shop_path, notice: "Product created successfully."
     else
       render :new
     end
@@ -49,7 +68,7 @@ class ProductsController < ApplicationController
   def destroy
     @product = Product.find(params[:id])
     @product.destroy
-    redirect_to products_path, notice: "Product deleted successfully."
+    redirect_to shop_path, notice: "Product deleted successfully."
   end
 
   private
