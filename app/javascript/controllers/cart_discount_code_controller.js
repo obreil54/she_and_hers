@@ -6,9 +6,9 @@ export default class extends Controller {
 
   connect() {
     console.log("CartDiscountCodeController connected");
-    this.originalSubtotal = parseFloat(this.subtotalPriceDisplayTarget.textContent.replace(/[^\d.-]/g, ""));
     this.discountApplied = false;
     this.discountPercentage = 0;
+    this.discountedSubtotal = null;
   }
 
   applyDiscountCode() {
@@ -42,11 +42,12 @@ export default class extends Controller {
   }
 
   applyDiscount(discountPercentage) {
-    const discountAmount = (this.originalSubtotal * discountPercentage) / 100;
-    const newSubtotal = this.originalSubtotal - discountAmount;
-    this.subtotalPriceDisplayTarget.textContent = `£${newSubtotal.toFixed(2)}`;
+    const currentSubtotal = parseFloat(this.subtotalPriceDisplayTarget.textContent.replace(/[^\d.-]/g, ""));
+    const discountAmount = (currentSubtotal * discountPercentage) / 100;
+    this.discountedSubtotal = currentSubtotal - discountAmount;
+    this.subtotalPriceDisplayTarget.textContent = `£${this.discountedSubtotal.toFixed(2)}`;
 
-    this.updateTotal(newSubtotal);
+    this.updateTotal(this.discountedSubtotal);
   }
 
   updateTotal(subtotal) {
@@ -77,10 +78,9 @@ export default class extends Controller {
   }
 
   adjustPrices() {
-    if (this.discountApplied) {
-      this.applyDiscount(this.discountPercentage);
-    } else {
-      this.updateTotal(this.originalSubtotal);
-    }
+    const subtotal = this.discountApplied && this.discountedSubtotal !== null
+      ? this.discountedSubtotal
+      : parseFloat(this.subtotalPriceDisplayTarget.textContent.replace(/[^\d.-]/g, ""));
+    this.updateTotal(subtotal);
   }
 }

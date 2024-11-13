@@ -97,7 +97,6 @@ export default class extends Controller {
 
 
   updateTotal() {
-    // Make sure shippingRateSelectTarget and totalPriceDisplayTarget are properly assigned
     this.shippingRateSelectTarget = document.getElementById("shipping-rate-select");
     this.totalPriceDisplayTarget = document.querySelector('#summary-total p');
 
@@ -110,7 +109,6 @@ export default class extends Controller {
       return;
     }
 
-    // Get the selected shipping cost
     const selectedOption = this.shippingRateSelectTarget.options[this.shippingRateSelectTarget.selectedIndex];
     console.log("Selected option:", selectedOption);
 
@@ -118,7 +116,6 @@ export default class extends Controller {
     console.log("Shipping cost:", shippingCost);
 
 
-    // Extract cart subtotal from the total display and convert it to a number
     const subtotalText = document.querySelector("#summary-subtotal-products p").innerText;
     console.log("Subtotal text:", subtotalText);
     const subtotal = parseFloat(subtotalText.replace(/[^0-9.-]+/g, ""));
@@ -129,11 +126,9 @@ export default class extends Controller {
       return;
     }
 
-    // Calculate new total
     const newTotal = subtotal + shippingCost;
     console.log("New total:", newTotal);
 
-    // Update the total price in the DOM
     if (this.totalPriceDisplayTarget) {
       this.totalPriceDisplayTarget.innerHTML = `£${newTotal.toFixed(2)}`;
       console.log("Total price updated in DOM");
