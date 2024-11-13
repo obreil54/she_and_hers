@@ -7,7 +7,11 @@ class ProductsController < ApplicationController
       title: "Slow Fluid Sustainable Fashion | HandMade in UK",
       description: "Shop designer latex dresses, skirts and tops. Limited edition clothing, ethically sourced and produced. Order your next favourite statement dress now!",
       og: {
-        title: "Slow Fluid Sustainable Fashion | HandMade in UK",
+        title: "Shers Studios | Slow Fluid Sustainable Fashion | HandMade in UK",
+        description: "Shop designer latex dresses, skirts and tops. Limited edition clothing, ethically sourced and produced. Order your next favourite statement dress now!"
+      },
+      twitter: {
+        title: "Shers Studios | Slow Fluid Sustainable Fashion | HandMade in UK",
         description: "Shop designer latex dresses, skirts and tops. Limited edition clothing, ethically sourced and produced. Order your next favourite statement dress now!"
       }
     )
@@ -22,7 +26,12 @@ class ProductsController < ApplicationController
       description: @product.description,
       image: @product.primary_photo.url,
       og: {
-        title: "#{@product.name} - #{first_sentence.strip}",
+        title: "Shers Studios | #{@product.name} - #{first_sentence.strip}",
+        description: @product.description,
+        image: @product.primary_photo.url
+      },
+      twitter: {
+        title: "Shers Studios | #{@product.name} - #{first_sentence.strip}",
         description: @product.description,
         image: @product.primary_photo.url
       }
