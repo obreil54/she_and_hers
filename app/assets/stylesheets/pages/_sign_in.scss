@@ -57,6 +57,10 @@
     color: white;
   }
 
+  input:-webkit-autofill {
+    background: none !important;
+  }
+
   .form-actions {
     display: flex;
     justify-content: center;
@@ -93,6 +97,11 @@
 }
 
 @media (max-width: 768px) {
+  .sign-in-page {
+    background-size: 350%;
+    background-position: 55% 54%;
+  }
+
   #log-in-page {
     min-height: 70vh;
 
