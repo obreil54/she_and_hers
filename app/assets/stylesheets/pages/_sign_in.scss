@@ -58,7 +58,7 @@
   }
 
   input:-webkit-autofill {
-    background: none !important;
+    background-color: transparent !important;
   }
 
   .form-actions {
@@ -99,7 +99,7 @@
 @media (max-width: 768px) {
   .sign-in-page {
     background-size: 350%;
-    background-position: 55% 54%;
+    background-position: 55% 52%;
   }
 
   #log-in-page {
