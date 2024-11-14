@@ -27,6 +27,12 @@
         border-bottom: none;
       }
 
+      input:-webkit-autofill {
+        background-color: white !important;
+        color: black !important;
+        -webkit-text-fill-color: black !important;
+      }
+
       a {
         color: white;
         text-decoration: none;
@@ -55,10 +61,6 @@
 
   input::placeholder {
     color: white;
-  }
-
-  input:-webkit-autofill {
-    background-color: transparent !important;
   }
 
   .form-actions {
@@ -99,7 +101,7 @@
 @media (max-width: 768px) {
   .sign-in-page {
     background-size: 350%;
-    background-position: 55% 52%;
+    background-position: 55% 50%;
   }
 
   #log-in-page {
