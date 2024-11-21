@@ -1,0 +1,26 @@
+<h1>New Collaboration</h1>
+<%= form_with model: @collaboration, local: true do |form| %>
+  <div>
+    <%= form.label :name, "Name" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :description, "Description" %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :primary_image, "Primary Image" %>
+    <%= form.file_field :primary_image %>
+  </div>
+
+  <div>
+    <%= form.label :images, "Additional Images" %>
+    <%= form.file_field :images, multiple: true %>
+  </div>
+
+  <div>
+    <%= form.submit "Create Collaboration" %>
+  </div>
+<% end %>

@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   get '/shop', to: 'products#index', as: 'shop'
 
   resources :products, except: [:index]
+  resources :collaborations
+  resources :archives
 
   resources :carts, only: [:show] do
     patch :update_item_quantity, on: :member

@@ -1,0 +1,7 @@
+<div id="archives-page">
+  <% if current_user&.admin? %>
+    <%= link_to new_archive_path, class: "centered-link" do %>
+      <i class="fa-solid fa-plus"></i>
+    <% end %>
+  <% end %>
+</div>
