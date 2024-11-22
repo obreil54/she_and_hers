@@ -1,0 +1,42 @@
+<div id="archive-page">
+  <div id="archive-hero">
+    <div class="carousel" data-controller="carousel">
+      <button
+        class="carousel-button left-button"
+        data-action="carousel#previous"
+        data-carousel-target="leftButton"
+      >
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <div class="carousel-track-container">
+        <ul class="carousel-track" data-carousel-target="track">
+          <li class="carousel-slide" data-carousel-target="slide">
+            <img src="<%= url_for(@collaboration.primary_image) if @collaboration.primary_image.attached? %>" alt="Primary Image">
+          </li>
+          <% @collaboration.images.each do |image| %>
+            <li class="carousel-slide" data-carousel-target="slide">
+              <img src="<%= url_for(image) %>" alt="Additional Image">
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <button
+        class="carousel-button right-button"
+        data-action="carousel#next"
+        data-carousel-target="rightButton"
+      >
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+    <div id="archive-footer">
+      <h2 class="archive-name"><%= @collaboration.name.upcase %></h2>
+      <div class="archive-description">
+        <%= simple_format(@collaboration.description.upcase) %>
+      </div>    </div>
+  </div>
+  <% if current_user&.admin? %>
+    <%= link_to edit_collaboration_path(@collaboration), class: "edit-link" do %>
+      <i class="fa-solid fa-edit"></i>
+    <% end %>
+  <% end %>
+</div>

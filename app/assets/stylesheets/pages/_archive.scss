@@ -1,0 +1,154 @@
+#archive-page {
+
+  .edit-link {
+    color: black;
+    font-size: 2em;
+    text-align: center;
+    margin: 0 auto !important;
+  }
+}
+
+#archive-hero {
+  display: flex;
+  flex-direction: column; /* Stack the carousel and footer vertically */
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  position: relative;
+  overflow: hidden;
+  background-color: #f4f4f4; /* Optional background */
+  overflow: visible; /* Allow overflow */
+  margin-top: -15vh; /* Adjust this value to align with your navbar height */
+}
+
+.carousel {
+  width: 100%; /* Ensure carousel spans full width */
+  height: calc(100% - 60px); /* Leave space for the footer */
+  position: relative;
+}
+
+.carousel-track-container {
+  overflow: hidden;
+  width: 100%;
+  height: 100%; /* Match the height of the carousel */
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  height: 100%; /* Inherit height from parent container */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.carousel-slide {
+  flex: 0 0 calc(100% / 3); /* Show 3 slides at a time */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.carousel-slide img {
+  width: 100%; /* Ensure the image stretches to the full width of its container */
+  height: 100% !important; /* Ensure the image stretches to the full height (70vh in this case) */
+  object-fit: cover; /* Scale the image to fill the container, cropping if necessary */
+  display: block; /* Prevent extra whitespace caused by inline elements */
+}
+
+.carousel-button {
+  background-color: rgba(200, 200, 200, 0.2); /* Light transparent gray */
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  width: 70px; /* Increase width for thicker arrows */
+  height: 100%; /* Full height of the carousel */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  font-size: 2.5rem; /* Larger icon size */
+  border-radius: 0; /* Remove rounded corners */
+  transition: background-color 0.3s ease;
+}
+
+.carousel-button.left-button {
+  left: 0;
+}
+
+.carousel-button.right-button {
+  right: 0;
+}
+
+.carousel-button:hover {
+  background-color: rgba(100, 100, 100, 0.5); /* Darker transparent gray on hover */
+}
+
+#archive-footer {
+  background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent background for contrast */
+  color: white;
+  text-align: left;
+  width: 100%; /* Full width */
+  padding: 10px 20px;
+  position: absolute;
+  bottom: 0; /* Stick to the bottom of the carousel */
+  z-index: 1; /* Ensure it is above the carousel */
+}
+
+.archive-name {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bolder; /* Adjust size for name */
+}
+
+.archive-description {
+  margin: 5px 0 0;
+  font-size: 1rem; /* Adjust size for description */
+}
+
+@media (max-width: 768px) {
+  #archive-hero {
+    overflow: hidden; /* Allow overflow */
+    margin-top: 0; /* Adjust this value to align with your navbar height */
+  }
+
+  .carousel-slide {
+    flex: 0 0 calc(100% / 2); /* Show 2 slides at a time */
+  }
+
+  .carousel-button {
+    width: 50px; /* Slightly narrower buttons for smaller screens */
+    font-size: 2rem; /* Smaller arrow size */
+  }
+
+  #archive-footer {
+    position: static; /* Place footer below the carousel */
+    padding: 8px 16px; /* Adjust padding for smaller screens */
+    font-size: 1rem; /* Adjust font size for text */
+    color: black; /* Change text color for readability */
+    background-color: white;
+  }
+
+  .archive-name {
+    font-size: 1.2rem; /* Adjust font size */
+    font-weight: bold; /* Make the name bold for emphasis */
+    margin: 0 0 5px 0; /* Add spacing below the name */
+  }
+
+  .archive-description {
+    font-size: 1rem; /* Adjust description font size */
+    margin: 0; /* Remove extra margins */
+  }
+
+  #archive-hero {
+    flex-direction: column; /* Stack the carousel and footer vertically */
+    min-height: auto; /* Let the height adjust naturally */
+  }
+
+  .carousel {
+    height: 70vh; /* Allow the carousel height to shrink as needed */
+  }
+}

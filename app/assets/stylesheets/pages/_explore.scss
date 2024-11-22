@@ -40,3 +40,20 @@
     width: 27.5%
   }
 }
+
+@media (max-width: 768px) {
+  #explore-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 32px;
+    padding-bottom: 0;
+
+    a {
+      width: 100% !important;
+      margin-bottom: 32px !important;
+    }
+  }
+
+}

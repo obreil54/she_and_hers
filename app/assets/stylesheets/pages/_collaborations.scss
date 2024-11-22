@@ -1,3 +1,48 @@
 #collaborations-page {
   min-height: 70vh;
+
+  #collabs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    gap: 24px;
+    margin: 32px;
+
+    .collab-card {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 550px;
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      padding: 16px;
+      font-size: 1.2em;
+      transition: transform 0.3s ease-in-out;
+      text-decoration: none;
+
+      &:hover {
+        font-weight: bolder;
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #collaborations-page {
+
+    #collabs-grid {
+      grid-template-columns: repeat(2, minmax(150px, 1fr));
+      gap: 16px;
+      margin: 16px;
+
+      .collab-card {
+        height: 450px;
+        padding: 12px;
+        font-size: 1em;
+      }
+    }
+  }
 }

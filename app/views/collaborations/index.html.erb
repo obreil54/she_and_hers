@@ -4,4 +4,12 @@
       <i class="fa-solid fa-plus"></i>
     <% end %>
   <% end %>
+  <div id="collabs-grid">
+    <% @collaborations.each do |collab| %>
+      <% card_style = collab.primary_image.attached? ? "background-image: url('#{url_for(collab.primary_image)}');" : "" %>
+      <%= link_to collaboration_path(collab), class: "collab-card", style: card_style do %>
+        <%= collab.name.upcase %>
+      <% end %>
+    <% end %>
+  </div>
 </div>

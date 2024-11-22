@@ -1,3 +1,49 @@
 #archives-page {
   min-height: 70vh;
+
+  #archives-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin: 32px;
+
+    .archive-card {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 500px;
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      padding: 16px;
+      font-size: 1.2em;
+      transition: transform 0.3s ease-in-out;
+      text-decoration: none;
+
+      &:hover {
+        font-weight: bolder;
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+
+  #archives-page {
+
+    #archives-grid {
+      grid-template-columns: repeat(2, minmax(150px, 1fr));
+      gap: 16px;
+      margin: 16px;
+
+      .archive-card {
+        height: 450px;
+        padding: 12px;
+        font-size: 1em;
+      }
+    }
+  }
 }
