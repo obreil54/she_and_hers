@@ -4,4 +4,12 @@
       <i class="fa-solid fa-plus"></i>
     <% end %>
   <% end %>
+  <div id="archives-grid">
+    <% @archives.each do |archive| %>
+      <% card_style = archive.primary_image.attached? ? "background-image: url('#{url_for(archive.primary_image)}');" : "" %>
+      <%= link_to archive_path(archive), class: "archive-card", style: card_style do %>
+        <%= archive.name.upcase %>
+      <% end %>
+    <% end %>
+  </div>
 </div>

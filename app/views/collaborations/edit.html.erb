@@ -1,0 +1,40 @@
+<div id="edit-collab-page">
+  <h1>Edit Collaboration</h1>
+  <%= form_with model: @collaboration, local: true do |form| %>
+    <div>
+      <%= form.label :name, "Name" %>
+      <%= form.text_field :name, value: @collaboration.name %>
+    </div>
+
+    <div>
+      <%= form.label :description, "Description" %>
+      <%= form.text_area :description, value: @collaboration.description %>
+    </div>
+
+    <div>
+      <%= form.label :primary_image, "Primary Image" %>
+      <%= form.file_field :primary_image %>
+      <% if @collaboration.primary_image.attached? %>
+        <p>Current Primary Image:</p>
+        <%= image_tag @collaboration.primary_image, width: 200 %>
+      <% end %>
+    </div>
+
+    <div>
+      <%= form.label :images, "Additional Images" %>
+      <%= form.file_field :images, multiple: true %>
+      <% if @collaboration.images.attached? %>
+        <p>Current Additional Images:</p>
+        <div class="current-images">
+          <% @collaboration.images.each do |image| %>
+            <%= image_tag image, width: 100 %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div>
+      <%= form.submit "Update Collaboration" %>
+    </div>
+  <% end %>
+</div>

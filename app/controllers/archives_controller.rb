@@ -11,7 +11,7 @@ class ArchivesController < ApplicationController
     @archive = Archive.new(archive_params)
 
     if @archive.save
-      redirect_to archive_path(@archive), notice: "Archive created successfully."
+      redirect_to archives_path, notice: "Archive created successfully."
     else
       render :new, status: :unprocessable_entity
     end
@@ -28,9 +28,9 @@ class ArchivesController < ApplicationController
   def update
     @archive = Archive.find(params[:id])
 
-    if @archive.update(archive_params.except(:other_photos))
-      if params[:archive][:other_photos].present?
-        params[:archive][:other_photos].each do |photo|
+    if @archive.update(archive_params.except(:images))
+      if params[:archive][:images].present?
+        params[:archive][:images].each do |photo|
           @archive.other_photos.attach(photo)
         end
       end

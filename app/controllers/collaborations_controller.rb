@@ -1,6 +1,6 @@
 class CollaborationsController < ApplicationController
   def index
-    @collaborationss = Collaboration.all
+    @collaborations = Collaboration.all
   end
   def new
     @collaboration = Collaboration.new
@@ -10,7 +10,7 @@ class CollaborationsController < ApplicationController
     @collaboration = Collaboration.new(collaboration_params)
 
     if @collaboration.save
-      redirect_to collaboration_path(@collaboration), notice: "Collaboration created successfully."
+      redirect_to collaborations_path, notice: "Collaboration created successfully."
     else
       render :new, status: :unprocessable_entity
     end

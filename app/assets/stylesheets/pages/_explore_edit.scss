@@ -1,0 +1,71 @@
+#new-archive-page, #edit-archive-page, #new-collab-page, #edit-collab-page {
+  min-height: 70vh;
+
+  form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    div {
+      margin-bottom: 16px;
+
+      label {
+        display: block;
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      input[type="text"],
+      input[type="file"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+
+      textarea {
+        height: 100px;
+      }
+    }
+
+    .current-images {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+
+      img {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+}
