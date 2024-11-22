@@ -1,4 +1,6 @@
 class CollaborationsController < ApplicationController
+  before_action :authorize_admin, only: [:new, :create, :edit, :update, :destroy]
+
   def index
     @collaborations = Collaboration.all
   end
@@ -55,5 +57,9 @@ class CollaborationsController < ApplicationController
       :primary_image,
       images: []
     )
+  end
+
+  def authorize_admin
+    redirect_to root_path, alert: "You are not authorized to perform this action." unless current_user&.admin?
   end
 end
