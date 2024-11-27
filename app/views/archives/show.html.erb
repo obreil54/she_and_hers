@@ -1,6 +1,13 @@
-<div id="archive-page">
+<div id="archive-page" data-controller="carousel">
+  <div id="image-modal" class="modal" data-carousel-target="modal">
+    <div class="modal-content">
+      <span class="close-button" data-action="carousel#close">&times;</span>
+      <img id="modal-image" data-carousel-target="modalImage" src="" alt="Full Image">
+    </div>
+  </div>
+
   <div id="archive-hero">
-    <div class="carousel" data-controller="carousel">
+    <div class="carousel">
       <button
         class="carousel-button left-button"
         data-action="carousel#previous"
@@ -11,11 +18,15 @@
       <div class="carousel-track-container">
         <ul class="carousel-track" data-carousel-target="track">
           <li class="carousel-slide" data-carousel-target="slide">
-            <img src="<%= url_for(@archive.primary_image) if @archive.primary_image.attached? %>" alt="Primary Image">
+            <img src="<%= url_for(@archive.primary_image) if @archive.primary_image.attached? %>"
+                alt="Primary Image"
+                data-action="carousel#open">
           </li>
           <% @archive.images.each do |image| %>
             <li class="carousel-slide" data-carousel-target="slide">
-              <img src="<%= url_for(image) %>" alt="Additional Image">
+              <img src="<%= url_for(image) %>"
+                  alt="Additional Image"
+                  data-action="carousel#open">
             </li>
           <% end %>
         </ul>
@@ -32,11 +43,7 @@
       <h2 class="archive-name"><%= @archive.name.upcase %></h2>
       <div class="archive-description">
         <%= simple_format(@archive.description.upcase) %>
-      </div>    </div>
+      </div>
+    </div>
   </div>
-  <% if current_user&.admin? %>
-    <%= link_to edit_archive_path(@archive), class: "edit-link" do %>
-      <i class="fa-solid fa-edit"></i>
-    <% end %>
-  <% end %>
 </div>

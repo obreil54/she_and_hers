@@ -6,6 +6,62 @@
     text-align: center;
     margin: 0 auto !important;
   }
+
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 10;
+    left: 50%; /* Center horizontally */
+    top: calc(15vh + 10px); /* Start just below the navbar */
+    transform: translate(-50%, 0); /* Center horizontally */
+    max-width: 80%; /* Limit modal width to 90% of viewport width */
+    max-height: 70vh; /* Limit modal height to 90% of viewport height */
+    background-color: rgba(0, 0, 0, 0.9); /* Black background with opacity */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Prevent scrolling */
+    padding: 0; /* Remove padding */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+  }
+
+  .modal-content {
+    display: flex; /* Flexbox for centering */
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Full modal width */
+    height: 100%; /* Full modal height */
+    background: transparent; /* Transparent background for content */
+    margin: 0; /* Remove margins */
+    padding: 0; /* Remove padding */
+  }
+
+  #modal-image {
+    width: 100%; /* Allow the image to fill the modal width */
+    height: 100%; /* Allow the image to fill the modal height */
+    object-fit: contain; /* Ensure the image scales properly without distortion */
+    display: block; /* Prevent inline spacing issues */
+    max-width: 100%; /* Make sure image never overflows the width */
+    max-height: 100%; /* Ensure the image doesn't overflow the height */
+    border: none; /* Remove any default borders */
+  }
+
+  .close-button {
+    position: absolute;
+    top: 8px; /* Position near the top-right corner */
+    right: 8px;
+    color: white; /* High contrast */
+    font-size: 1.5rem; /* Medium size */
+    cursor: pointer;
+    z-index: 20; /* Keep it above modal content */
+    background: rgba(0, 0, 0, 0.6); /* Add contrast */
+    border-radius: 50%; /* Circular button */
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* Ensure no padding inside the button */
+  }
+
 }
 
 #archive-hero {
@@ -54,6 +110,7 @@
   height: 100% !important; /* Ensure the image stretches to the full height (70vh in this case) */
   object-fit: cover; /* Scale the image to fill the container, cropping if necessary */
   display: block; /* Prevent extra whitespace caused by inline elements */
+  cursor: pointer; /* Change cursor to pointer on hover */
 }
 
 .carousel-button {
