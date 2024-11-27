@@ -63,7 +63,6 @@ gem "shippo"
 gem "mailchimp_transactional"
 gem "gibbon"
 gem "meta-tags"
-gem "activestorage-cloudinary-service"
 
 group :development, :test do
   gem "dotenv-rails"
