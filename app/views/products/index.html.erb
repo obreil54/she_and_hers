@@ -1,13 +1,5 @@
 <div id="products-page">
-  <div id="modal-overlay" class="modal-overlay" data-controller="preorder-modal" data-preorder-modal-target="overlay">
-    <div class="modal-content">
-      <button class="close-modal" data-action="preorder-modal#close">✕</button>
-      <h6>PRE-ORDER NOW OPEN</h6>
-      <h6>AVAILABLE UNTIL 30TH OF NOVEMBER</h6>
-      <p>WELCOME TO THE LATEST CHAPTER OF SHERS STUDIOS - NAME THE UNNAMED. EACH PRIECE IN THIS COLLECTION IS AVAILABLE FOR PRE-ORDERS ONLY.</p>
-      <p>ONCE THE PRE-ORDER PERIOD CLOSES, PRODUCTION WILL BEGIN, WITH CRAFTING TIMES RANGING FROM 7 TO 30 WORKING DAYS, DEPENDING ON OUR CURRENT DEMAND.</p>
-    </div>
-  </div>
+
   <% if current_user&.admin? %>
     <%= link_to new_product_path, class: "centered-link" do %>
       <i class="fa-solid fa-plus"></i>
