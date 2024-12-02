@@ -46,11 +46,13 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     if @product.save
+      sync_with_google_merchant(@product)
       redirect_to shop_path, notice: "Product created successfully."
     else
       render :new
     end
   end
+
   def edit
     @product = Product.find(params[:id])
   end
@@ -65,13 +67,12 @@ class ProductsController < ApplicationController
         end
       end
 
+      sync_with_google_merchant(@product)
       redirect_to product_path(@product), notice: "Product updated successfully."
     else
       render :edit
     end
   end
-
-
 
   def destroy
     @product = Product.find(params[:id])
@@ -99,4 +100,26 @@ class ProductsController < ApplicationController
   def authorize_admin
     redirect_to root_path, alert: "You are not authorized to perform this action." unless current_user&.admin?
   end
+
+
+  def sync_with_google_merchant(product)
+    service = GoogleMerchantService.new
+
+    begin
+      # Check if the product exists in Google Merchant using the product's ID
+      google_product = service.find_product("online:en:GB:#{product.id}")
+
+      # If the product exists, update it. If not, insert a new product.
+      if google_product
+        service.update_product(product)
+        Rails.logger.info "Updated product #{product.name} in Google Merchant."
+      else
+        service.insert_product(product)
+        Rails.logger.info "Added product #{product.name} to Google Merchant."
+      end
+    rescue Google::Apis::Error => e
+      Rails.logger.error "Failed to sync product #{product.name} with Google Merchant: #{e.message}"
+    end
+  end
+
 end
