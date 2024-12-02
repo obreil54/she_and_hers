@@ -35,8 +35,13 @@
           <i class="fa-solid fa-chevron-down"></i>
         </div>
         <p id="guest-message" class="d-none"><b>PLEASE <%= link_to "CREATE AN ACCOUNT", new_user_registration_path %> TO ENTER YOUR MEASUREMENTS</b></p>
-        <p id="missing-measurements-message" class="d-none"><b>PLEASE <%= link_to "ENTER YOUR MEASUREMENTS", edit_measurement_path(current_user.measurement) %> TO PROCEED WITH YOUR CUSTOM ORDER</b></p>
-        <%= hidden_field_tag :product_id, @product.id %>
+        <p id="missing-measurements-message" class="d-none">
+          <% if current_user&.measurement %>
+            <b>PLEASE <%= link_to "ENTER YOUR MEASUREMENTS", edit_measurement_path(current_user.measurement) %> TO PROCEED WITH YOUR CUSTOM ORDER</b>
+          <% else %>
+            <b>PLEASE <%= link_to "CREATE AN ACCOUNT", new_user_registration_path %> TO ENTER YOUR MEASUREMENTS</b>
+          <% end %>
+        </p>        <%= hidden_field_tag :product_id, @product.id %>
         <div data-custom-size-target="measurementMessage" class="d-none"></div>
         <button type="submit" data-custom-size-target="addButton">ADD TO CART</button>
       <% end %>
