@@ -63,6 +63,8 @@ gem "shippo"
 gem "mailchimp_transactional"
 gem "gibbon"
 gem "meta-tags"
+gem 'google-apis-content_v2_1'
+gem 'googleauth'
 
 group :development, :test do
   gem "dotenv-rails"
