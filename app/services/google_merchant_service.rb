@@ -40,8 +40,6 @@ class GoogleMerchantService
   end
 
   def build_google_product(product)
-    p "Local Product: #{product.inspect}"
-
     google_item_id = "online:en:GB:#{product.id}"
     image_urls = [product.secondary_photo.url, product.tertiary_photo.url] + product.other_photos.map(&:url)
     sizes = ["2XS", "XS", "S", "M", "L", "XL", "2XL"]
@@ -67,7 +65,6 @@ class GoogleMerchantService
         sizes: ['one size'],
         color: product.color.name
       )
-      p "google_product: #{google_product.inspect}"
       return [google_product]
 
     else
