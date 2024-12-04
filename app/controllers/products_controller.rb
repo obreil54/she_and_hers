@@ -41,10 +41,17 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
+    @colors = Color.all
   end
 
   def create
     @product = Product.new(product_params)
+
+    if params[:product][:new_color].present?
+      color = Color.create(name: params[:product][:new_color])
+      @product.color = color
+    end
+
     if @product.save
       sync_with_google_merchant(@product)
       redirect_to shop_path, notice: "Product created successfully."
@@ -55,10 +62,16 @@ class ProductsController < ApplicationController
 
   def edit
     @product = Product.find(params[:id])
+    @colors = Color.all
   end
 
   def update
     @product = Product.find(params[:id])
+
+    if params[:product][:new_color].present?
+      color = Color.create(name: params[:product][:new_color])
+      @product.color = color
+    end
 
     if @product.update(product_params.except(:other_photos))
       if params[:product][:other_photos].present?
@@ -93,6 +106,7 @@ class ProductsController < ApplicationController
       :tertiary_photo,
       :weight,
       :one_size,
+      :color_id,
       other_photos: []
     )
   end
@@ -106,20 +120,29 @@ class ProductsController < ApplicationController
     service = GoogleMerchantService.new
 
     begin
-      # Check if the product exists in Google Merchant using the product's ID
-      google_product = service.find_product("online:en:GB:#{product.id}")
+      if product.one_size
+        google_product = service.find_product("online:en:GB:#{product.id}")
 
-      # If the product exists, update it. If not, insert a new product.
-      if google_product
-        service.update_product(product)
-        Rails.logger.info "Updated product #{product.name} in Google Merchant."
+        if google_product
+          service.update_product(product)
+          Rails.logger.info "Updated product #{product.name} in Google Merchant."
+        else
+          service.insert_product(product)
+          Rails.logger.info "Added product #{product.name} to Google Merchant."
+        end
       else
-        service.insert_product(product)
-        Rails.logger.info "Added product #{product.name} to Google Merchant."
+        google_product = service.find_product("online:en:GB:#{product.id} - 2XS")
+
+        if google_product
+          service.update_product(product)
+          Rails.logger.info "Updated product #{product.name} in Google Merchant."
+        else
+          service.insert_product(product)
+          Rails.logger.info "Added product #{product.name} to Google Merchant."
+        end
       end
     rescue Google::Apis::Error => e
       Rails.logger.error "Failed to sync product #{product.name} with Google Merchant: #{e.message}"
     end
   end
-
 end
