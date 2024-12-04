@@ -28,7 +28,6 @@
       <%= form.number_field :weight, step: 0.1, required: true %>
     </div>
 
-    <!-- Display existing photos with optional upload fields for replacements -->
     <div class="field">
       <%= form.label :primary_photo, "Primary Photo" %><br>
       <%= form.file_field :primary_photo %> <!-- No required attribute -->
@@ -47,6 +46,16 @@
     <div class="field">
       <%= form.label :other_photos, "Additional Photos" %><br>
       <%= form.file_field :other_photos, multiple: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :color_id, "Color" %><br>
+      <%= form.collection_select :color_id, Color.all, :id, :name, prompt: "Select or add a color" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :new_color, "New Color" %><br>
+      <%= form.text_field :new_color, placeholder: "Enter a new color" %>
     </div>
 
     <div class="field">

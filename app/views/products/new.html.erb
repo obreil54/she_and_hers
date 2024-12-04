@@ -48,6 +48,16 @@
     </div>
 
     <div class="field">
+      <%= form.label :color_id, "Color" %><br>
+      <%= form.collection_select :color_id, Color.all, :id, :name, prompt: "Select or add a color" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :new_color, "New Color" %><br>
+      <%= form.text_field :new_color, placeholder: "Enter a new color" %>
+    </div>
+
+    <div class="field">
       <%= form.label :one_size, "One Size" %><br>
       <%= form.check_box :one_size %>
     </div>

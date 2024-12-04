@@ -1,7 +1,7 @@
 class Product < ApplicationRecord
   monetize :price_cents
   has_and_belongs_to_many :categories
-  has_and_belongs_to_many :colors
+  belongs_to :color
   has_one_attached :primary_photo
   has_one_attached :secondary_photo
   has_one_attached :tertiary_photo
@@ -19,4 +19,5 @@ class Product < ApplicationRecord
   validates :tertiary_photo, presence: true
   validates :weight, presence: true
   validates :one_size, inclusion: { in: [true, false] }
+  validates :color, presence: true
 end
