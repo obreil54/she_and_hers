@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
         description: "Shop designer latex dresses, skirts and tops. Limited edition clothing, ethically sourced and produced. Order your next favourite statement dress now!"
       }
     )
-    @products = Product.order(updated_at: :desc)
+    @products = Product.order(position: :asc)
   end
 
   def show
@@ -107,6 +107,7 @@ class ProductsController < ApplicationController
       :weight,
       :one_size,
       :color_id,
+      :position,
       other_photos: []
     )
   end

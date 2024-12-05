@@ -2,7 +2,7 @@ class ArchivesController < ApplicationController
   before_action :authorize_admin, only: [:new, :create, :edit, :update, :destroy]
 
   def index
-    @archives = Archive.all
+    @archives = Archive.order(position: :asc)
   end
 
   def new
@@ -56,6 +56,7 @@ class ArchivesController < ApplicationController
       :name,
       :description,
       :primary_image,
+      :position,
       images: []
     )
   end

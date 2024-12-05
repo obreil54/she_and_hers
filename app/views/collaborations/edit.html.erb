@@ -34,6 +34,11 @@
     </div>
 
     <div>
+      <%= form.label :position, "Display Order" %><br>
+      <%= form.number_field :position, value: @collaboration.position %>
+    </div>
+
+    <div>
       <%= form.submit "Update Collaboration" %>
     </div>
   <% end %>
