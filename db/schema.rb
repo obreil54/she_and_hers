@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_04_113154) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_05_140946) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,6 +60,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_04_113154) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position"
   end
 
   create_table "cart_items", force: :cascade do |t|
@@ -98,6 +99,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_04_113154) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position"
   end
 
   create_table "colors", force: :cascade do |t|
@@ -188,6 +190,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_04_113154) do
     t.integer "weight"
     t.boolean "one_size", default: false, null: false
     t.bigint "color_id"
+    t.integer "position"
     t.index ["color_id"], name: "index_products_on_color_id"
   end
 

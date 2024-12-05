@@ -62,6 +62,11 @@
       <%= form.check_box :one_size %>
     </div>
 
+    <div class="field">
+      <%= form.label :position, "Display Order" %><br>
+      <%= form.number_field :position, placeholder: "Enter a display order (e.g., 1)" %>
+    </div>
+
     <div class="actions">
       <%= form.submit "Create Product" %>
     </div>

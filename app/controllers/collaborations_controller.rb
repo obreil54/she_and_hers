@@ -2,7 +2,7 @@ class CollaborationsController < ApplicationController
   before_action :authorize_admin, only: [:new, :create, :edit, :update, :destroy]
 
   def index
-    @collaborations = Collaboration.all
+    @collaborations = Collaboration.order(position: :asc)
   end
   def new
     @collaboration = Collaboration.new
@@ -55,6 +55,7 @@ class CollaborationsController < ApplicationController
       :name,
       :description,
       :primary_image,
+      :position,
       images: []
     )
   end
