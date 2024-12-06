@@ -79,11 +79,11 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'smtp.mandrillapp.com',
+    address: 'smtp-relay.brevo.com',
     port: 587,
     domain: 'shersstudios.com',
-    user_name: 'Shers Studios',
-    password: ENV['MAILCHIMP_TRANSACTIONAL_API_KEY'],
+    user_name: ENV['BREVO_SMPT_LOGIN'],
+    password: ENV['BREVO_TRANSACTIONAL_API_KEY'],
     authentication: 'login',
     enable_starttls_auto: true
   }
