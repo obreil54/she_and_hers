@@ -65,6 +65,7 @@ gem "gibbon"
 gem "meta-tags"
 gem 'google-apis-content_v2_1'
 gem 'googleauth'
+gem 'brevo'
 
 group :development, :test do
   gem "dotenv-rails"

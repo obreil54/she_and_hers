@@ -3,22 +3,25 @@ class NewsletterController < ApplicationController
     email = params[:email]
 
     if email.present?
-      gibbon = Gibbon::Request.new
-      list_id = ENV['MAILCHIMP_LIST_ID']
+      list_id = ENV['BREVO_LIST_ID']
 
       begin
-        gibbon.lists(list_id).members.create(
-          body: {
-            email_address: email,
-            status: "subscribed"
-          }
-        )
+        # Initialize Brevo API client
+        api_instance = Brevo::ContactsApi.new
+        api_instance.api_client.config.api_key['api-key'] = ENV['BREVO_API_KEY']
+
+        # Add contact to Brevo list
+        api_instance.create_contact({
+          email: email,
+          listIds: [list_id.to_i]
+        })
 
         flash[:notice] = "Thank you for subscribing!"
         send_discount_code(email)
 
-      rescue Gibbon::MailChimpError => e
-        flash[:alert] = "There was an error, if you already subscribed you will not be able to again."
+      rescue Brevo::ApiError => e
+        Rails.logger.error "Brevo API Error: #{e.message}"
+        flash[:alert] = "There was an error. If you already subscribed, you will not be able to again."
       end
     else
       flash[:alert] = "Email address cannot be blank."

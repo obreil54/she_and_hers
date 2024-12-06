@@ -39,22 +39,29 @@ class User < ApplicationRecord
   end
 
   def subscribe_to_newsletter
-    gibbon = Gibbon::Request.new
-    list_id = ENV['MAILCHIMP_LIST_ID']
-
     begin
-      gibbon.lists(list_id).members.create(
-        body: {
-          email_address: email,
-          status: "subscribed"
-        }
-      )
+      # Initialize Brevo API client
+      api_instance = Brevo::ContactsApi.new
+      api_instance.api_client.config.api_key['api-key'] = ENV['BREVO_API_KEY']
+
+      # Define the list ID and contact details
+      list_id = ENV['BREVO_LIST_ID'] # Replace with your Brevo list ID
+      contact = {
+        email: email,
+        listIds: [list_id.to_i] # List ID must be an integer
+      }
+
+      # Add the contact to Brevo list
+      api_instance.create_contact(contact)
       Rails.logger.info "User has been subscribed to the newsletter."
 
+      # Generate a discount code and send thank-you email
       discount_code = DiscountCode.generate_unique_code(10)
       NewsletterMailer.thank_you_email(email, discount_code).deliver_later
-    rescue Gibbon::MailChimpError => e
-      Rails.logger.error "Mailchimp Error: #{e.message}"
+
+    rescue Brevo::ApiError => e
+      Rails.logger.error "Brevo API Error: #{e.message}"
     end
   end
+
 end
