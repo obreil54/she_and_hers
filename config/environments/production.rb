@@ -82,7 +82,7 @@ Rails.application.configure do
     address: 'smtp-relay.brevo.com',
     port: 587,
     domain: 'shersstudios.com',
-    user_name: ENV['BREVO_SMPT_LOGIN'],
+    user_name: ENV['BREVO_SMTP_LOGIN'],
     password: ENV['BREVO_TRANSACTIONAL_API_KEY'],
     authentication: 'login',
     enable_starttls_auto: true
