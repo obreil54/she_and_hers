@@ -54,13 +54,9 @@ class CollaborationsController < ApplicationController
   private
 
   def collaboration_params
-    params.require(:collaboration).permit(
-      :name,
-      :description,
-      :primary_image,
-      :position,
-      images: []
-    )
+    params.require(:collaboration).permit(:name, :description, :primary_image, :position, images: [], youtube_links: []).tap do |whitelisted|
+      whitelisted[:youtube_links] = params[:collaboration][:youtube_links].to_s.split("\n").map(&:strip)
+    end
   end
 
   def authorize_admin

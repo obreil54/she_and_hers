@@ -26,6 +26,18 @@
                   alt="Additional Image"
                   data-action="carousel#open">
             </li>
+
+          <% end %>
+          <% @collaboration.youtube_links.each do |youtube_link| %>
+            <li class="carousel-slide" data-carousel-target="slide">
+              <div class="youtube-embed-container" data-action="carousel#open" data-carousel-media="video">
+                <iframe src="https://www.youtube.com/embed/<%= youtube_link.split('v=').last %>"
+                        title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+              </div>
+            </li>
           <% end %>
         </ul>
       </div>
