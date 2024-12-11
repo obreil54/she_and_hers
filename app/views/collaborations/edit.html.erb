@@ -34,6 +34,11 @@
     </div>
 
     <div>
+      <%= form.label :youtube_links, "YouTube Links (one per line)" %>
+      <%= form.text_area :youtube_links, value: @collaboration.youtube_links.join("\n"), placeholder: "Enter YouTube links, one per line" %>
+    </div>
+
+    <div>
       <%= form.label :position, "Display Order" %><br>
       <%= form.number_field :position, value: @collaboration.position %>
     </div>

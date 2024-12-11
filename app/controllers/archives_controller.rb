@@ -55,13 +55,9 @@ class ArchivesController < ApplicationController
   private
 
   def archive_params
-    params.require(:archive).permit(
-      :name,
-      :description,
-      :primary_image,
-      :position,
-      images: []
-    )
+    params.require(:archive).permit(:name, :description, :primary_image, :position, images: [], youtube_links: []).tap do |whitelisted|
+      whitelisted[:youtube_links] = params[:archive][:youtube_links].to_s.split("\n").map(&:strip)
+    end
   end
 
   def authorize_admin
