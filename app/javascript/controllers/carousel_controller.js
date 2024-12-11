@@ -61,23 +61,35 @@ export default class extends Controller {
   }
 
   open(event) {
-    console.log("Open modal triggered");
-
     const imageUrl = event.currentTarget.src;
 
-    this.modalImageTarget.src = imageUrl;
+    const img = new Image();
+    img.src = imageUrl;
 
-    this.modalTarget.style.display = "block";
+    img.onload = () => {
+      const imageAspectRatio = img.width / img.height;
+
+
+      const maxWidth = window.innerWidth * 0.8;
+      const maxHeight = window.innerHeight * 0.7;
+      let modalWidth = maxWidth;
+      let modalHeight = maxWidth / imageAspectRatio;
+
+      if (modalHeight > maxHeight) {
+        modalHeight = maxHeight;
+        modalWidth = maxHeight * imageAspectRatio;
+      }
+
+      this.modalTarget.style.width = `${modalWidth}px`;
+      this.modalTarget.style.height = `${modalHeight}px`;
+      console.log(imageUrl);
+      this.modalTarget.style.backgroundImage = `url(${imageUrl})`;
+      this.modalTarget.style.display = "block";
+    };
   }
 
-  close(event) {
-    console.log("Close modal triggered");
-
-    if (!this.modalTarget) {
-      console.error("Modal target not found!");
-      return;
-    }
-
+  close() {
     this.modalTarget.style.display = "none";
   }
+
 }

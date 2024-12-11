@@ -31,9 +31,12 @@ class ArchivesController < ApplicationController
     @archive = Archive.find(params[:id])
 
     if @archive.update(archive_params.except(:images))
-      if params[:archive][:images].present?
-        params[:archive][:images].each do |photo|
-          @archive.other_photos.attach(photo)
+      valid_images = params[:archive][:images].reject(&:blank?)
+
+      if valid_images.any?
+        @archive.images.purge
+        valid_images.each do |photo|
+          @archive.images.attach(photo)
         end
       end
 
