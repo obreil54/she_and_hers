@@ -10,7 +10,13 @@ export default class extends Controller {
     this.slideWidth = this.slideTarget.getBoundingClientRect().width;
     this.totalSlides = this.slideTargets.length;
 
-    this.setSlidePositions();
+    if (this.totalSlides === 1) {
+      this.adjustForSingleSlide();
+    } else if (this.totalSlides === 2) {
+      this.adjustForTwoSlides();
+    } else {
+      this.setSlidePositions();
+    }
 
     this.rebindDynamicEvents();
 
@@ -21,6 +27,20 @@ export default class extends Controller {
         this.close();
       });
     }
+  }
+
+  adjustForSingleSlide() {
+    this.trackTarget.style.width = "100%";
+    this.slideTargets.forEach((slide) => {
+      slide.style.flex = "0 0 100%";
+    });
+  }
+
+  adjustForTwoSlides() {
+    this.trackTarget.style.width = "100%";
+    this.slideTargets.forEach((slide) => {
+      slide.style.flex = "0 0 50%";
+    });
   }
 
   setSlidePositions() {
