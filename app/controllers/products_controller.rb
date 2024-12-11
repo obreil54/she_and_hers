@@ -74,7 +74,8 @@ class ProductsController < ApplicationController
     end
 
     if @product.update(product_params.except(:other_photos))
-      if params[:product][:other_photos].present?
+      if params[:product][:other_photos].any?
+        @product.other_photos.purge
         params[:product][:other_photos].each do |photo|
           @product.other_photos.attach(photo)
         end

@@ -29,10 +29,13 @@ class CollaborationsController < ApplicationController
   def update
     @collaboration = Collaboration.find(params[:id])
 
-    if @collaboration.update(collaboration_params.except(:other_photos))
-      if params[:collaboration][:other_photos].present?
-        params[:collaboration][:other_photos].each do |photo|
-          @collaboration.other_photos.attach(photo)
+    if @collaboration.update(collaboration_params.except(:images))
+      valid_images = params[:collaboration][:images].reject(&:blank?)
+
+      if valid_images.any?
+        @collaboration.images.purge
+        valid_images.each do |photo|
+          @collaboration.images.attach(photo)
         end
       end
 

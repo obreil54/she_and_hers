@@ -1,134 +1,108 @@
 #archive-page {
 
-  .edit-link {
-    color: black;
-    font-size: 2em;
-    text-align: center;
-    margin: 0 auto !important;
-  }
-
   .modal {
-    display: none; /* Hidden by default */
+    display: none;
     position: fixed;
     z-index: 10;
-    left: 50%; /* Center horizontally */
-    top: calc(15vh + 10px); /* Start just below the navbar */
-    transform: translate(-50%, 0); /* Center horizontally */
-    max-width: 80%; /* Limit modal width to 90% of viewport width */
-    max-height: 70vh; /* Limit modal height to 90% of viewport height */
-    background-color: rgba(0, 0, 0, 0.9); /* Black background with opacity */
-    border-radius: 8px; /* Rounded corners */
-    overflow: hidden; /* Prevent scrolling */
-    padding: 0; /* Remove padding */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
-  }
-
-  .modal-content {
-    display: flex; /* Flexbox for centering */
-    justify-content: center;
-    align-items: center;
-    width: 100%; /* Full modal width */
-    height: 100%; /* Full modal height */
-    background: transparent; /* Transparent background for content */
-    margin: 0; /* Remove margins */
-    padding: 0; /* Remove padding */
-  }
-
-  #modal-image {
-    width: 100%; /* Allow the image to fill the modal width */
-    height: 100%; /* Allow the image to fill the modal height */
-    object-fit: contain; /* Ensure the image scales properly without distortion */
-    display: block; /* Prevent inline spacing issues */
-    max-width: 100%; /* Make sure image never overflows the width */
-    max-height: 100%; /* Ensure the image doesn't overflow the height */
-    border: none; /* Remove any default borders */
+    left: 50%;
+    top: 52.5%;
+    transform: translate(-50%, -50%);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 0;
+    margin: 0;
   }
 
   .close-button {
     position: absolute;
-    top: 8px; /* Position near the top-right corner */
-    right: 8px;
-    color: white; /* High contrast */
-    font-size: 1.5rem; /* Medium size */
+    top: 10px;
+    right: 10px;
+    color: white;
+    font-size: 1.5rem;
     cursor: pointer;
-    z-index: 20; /* Keep it above modal content */
-    background: rgba(0, 0, 0, 0.6); /* Add contrast */
-    border-radius: 50%; /* Circular button */
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
     width: 32px;
     height: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0; /* Ensure no padding inside the button */
+    z-index: 20;
+    padding: 0;
   }
 
+  .close-button:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
 }
+
 
 #archive-hero {
   display: flex;
-  flex-direction: column; /* Stack the carousel and footer vertically */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 70vh;
   position: relative;
   overflow: hidden;
-  background-color: #f4f4f4; /* Optional background */
-  overflow: visible; /* Allow overflow */
-  margin-top: -15vh; /* Adjust this value to align with your navbar height */
+  background-color: #f4f4f4;
+  overflow: visible;
+  margin-top: -15vh;
 }
 
 .carousel {
-  width: 100%; /* Ensure carousel spans full width */
-  height: calc(100% - 60px); /* Leave space for the footer */
+  width: 100%;
+  height: calc(100% - 60px);
   position: relative;
 }
 
 .carousel-track-container {
   overflow: hidden;
   width: 100%;
-  height: 100%; /* Match the height of the carousel */
+  height: 100%;
 }
 
 .carousel-track {
   display: flex;
   transition: transform 0.5s ease-in-out;
-  height: 100%; /* Inherit height from parent container */
+  height: 100%;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .carousel-slide {
-  flex: 0 0 calc(100% / 3); /* Show 3 slides at a time */
+  flex: 0 0 calc(100% / 3);
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 .carousel-slide img {
-  width: 100%; /* Ensure the image stretches to the full width of its container */
-  height: 100% !important; /* Ensure the image stretches to the full height (70vh in this case) */
-  object-fit: cover; /* Scale the image to fill the container, cropping if necessary */
-  display: block; /* Prevent extra whitespace caused by inline elements */
-  cursor: pointer; /* Change cursor to pointer on hover */
+  width: 100%;
+  height: 100% !important;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
 }
 
 .carousel-button {
-  background-color: rgba(200, 200, 200, 0.2); /* Light transparent gray */
+  background-color: rgba(200, 200, 200, 0.2);
   color: white;
   border: none;
   cursor: pointer;
   padding: 0;
   position: absolute;
   top: 0;
-  width: 70px; /* Increase width for thicker arrows */
-  height: 100%; /* Full height of the carousel */
+  width: 70px;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2;
-  font-size: 2.5rem; /* Larger icon size */
-  border-radius: 0; /* Remove rounded corners */
+  font-size: 2.5rem;
+  border-radius: 0;
   transition: background-color 0.3s ease;
 }
 
@@ -141,71 +115,72 @@
 }
 
 .carousel-button:hover {
-  background-color: rgba(100, 100, 100, 0.5); /* Darker transparent gray on hover */
+  background-color: rgba(100, 100, 100, 0.5);
 }
 
 #archive-footer {
-  background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent background for contrast */
+  background-color: rgba(0, 0, 0, 0.1);
   color: white;
   text-align: left;
-  width: 100%; /* Full width */
+  width: 100%;
   padding: 10px 20px;
   position: absolute;
-  bottom: 0; /* Stick to the bottom of the carousel */
-  z-index: 1; /* Ensure it is above the carousel */
+  bottom: 0;
+  z-index: 1;
 }
 
 .archive-name {
   margin: 0;
   font-size: 1.2rem;
-  font-weight: bolder; /* Adjust size for name */
+  font-weight: bolder;
 }
 
 .archive-description {
   margin: 5px 0 0;
-  font-size: 1rem; /* Adjust size for description */
+  font-size: 1rem;
+  width: 55%;
 }
 
 @media (max-width: 768px) {
   #archive-hero {
-    overflow: hidden; /* Allow overflow */
-    margin-top: 0; /* Adjust this value to align with your navbar height */
+    overflow: hidden;
+    margin-top: 0;
   }
 
   .carousel-slide {
-    flex: 0 0 calc(100% / 2); /* Show 2 slides at a time */
+    flex: 0 0 calc(100% / 2);
   }
 
   .carousel-button {
-    width: 50px; /* Slightly narrower buttons for smaller screens */
-    font-size: 2rem; /* Smaller arrow size */
+    width: 50px;
+    font-size: 2rem;
   }
 
   #archive-footer {
-    position: static; /* Place footer below the carousel */
-    padding: 8px 16px; /* Adjust padding for smaller screens */
-    font-size: 1rem; /* Adjust font size for text */
-    color: black; /* Change text color for readability */
+    position: static;
+    padding: 8px 16px;
+    font-size: 1rem;
+    color: black;
     background-color: white;
   }
 
   .archive-name {
-    font-size: 1.2rem; /* Adjust font size */
-    font-weight: bold; /* Make the name bold for emphasis */
-    margin: 0 0 5px 0; /* Add spacing below the name */
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0 0 5px 0;
   }
 
   .archive-description {
-    font-size: 1rem; /* Adjust description font size */
-    margin: 0; /* Remove extra margins */
+    font-size: 1rem;
+    margin: 0;
   }
 
   #archive-hero {
-    flex-direction: column; /* Stack the carousel and footer vertically */
-    min-height: auto; /* Let the height adjust naturally */
+    flex-direction: column;
+    min-height: auto;
   }
 
   .carousel {
-    height: 70vh; /* Allow the carousel height to shrink as needed */
+    height: 70vh;
   }
 }
