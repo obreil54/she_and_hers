@@ -82,5 +82,4 @@ This project was developed solely by **Ilya Obretetskiy**, working closely with 
 
 ## 📖 Licensing
 
-This project is **open-source**, intended to serve as a portfolio piece showcasing custom development skills.
-
+This project is available in a **public GitHub repository** to showcase my development skills as part of my portfolio. However, it also functions as a live e-commerce platform for a real company, **Shers Studios**, and serves as their primary online shop.
