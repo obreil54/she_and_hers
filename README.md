@@ -1,6 +1,6 @@
 # Shers Studios
 
-A custom-built e-commerce platform for **Shers Studios**, a sustainable slow fashion brand. The website serves as both an online shop and a representation of the brand’s ethos, offering unique features such as custom garment ordering and seamless integration with third-party services.
+A custom-built e-commerce platform for **Shers Studios**, an independent slow fashion brand. The website serves as both an online shop and a representation of the brand’s ethos, offering unique features such as custom garment ordering and seamless integration with third-party services.
 
 ## 📋 Project Overview
 
