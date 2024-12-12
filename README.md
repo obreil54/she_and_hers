@@ -16,7 +16,7 @@ Shers Studios' website provides a tailored solution for sustainable fashion enth
 - **Shopping Functionality**: Supports both guest and registered user checkouts.
 - **Custom Measurement Orders**: Allows users to order custom-made garments based on measurements they provide.
 - **Automated Order Management**: Integration with **Stripe** and **Shippo** to handle payment, shipping rates, labels, and tracking.
-- **Mobile Responsiveness**: Optimized for all devices to ensure a seamless browsing experience.
+- **Mobile Responsiveness**: Optimized for desktop and mobile devices to ensure a seamless browsing experience.
 - **Google Merchant Integration**: Automates product updates for increased visibility.
 - **Newsletter Signups**: Increased subscriptions from 27 to over 1,000 within weeks using Brevo.
 
@@ -29,6 +29,7 @@ The website is live and accessible at [www.shersstudios.com](https://www.shersst
 - PostgreSQL
 
 ### Frontend:
+- HTML
 - SCSS
 - JavaScript (via Stimulus/Hotwire)
 
@@ -59,7 +60,7 @@ The website is live and accessible at [www.shersstudios.com](https://www.shersst
 
 - **SEO and Mobile-Ready**: 
   - Enhanced discoverability via SEO.
-  - Fully responsive design for all devices.
+  - Fully responsive design for mobile and desktop devices.
 
 ## 🌐 Live Application
 
@@ -70,7 +71,6 @@ The project is deployed on Heroku and is live at [www.shersstudios.com](https://
 ### Outcomes:
 - Delivered a fully custom platform addressing client needs.
 - Significantly increased newsletter subscriptions, growing from 27 to over 1,000 within weeks.
-- Automated previously manual processes, saving time and improving efficiency for the client.
 
 ### Future Plans:
 - Implement admin tools for editing static text and styling changes (e.g., font colors).
