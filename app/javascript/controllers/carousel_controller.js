@@ -90,8 +90,8 @@ export default class extends Controller {
       const imageAspectRatio = img.width / img.height;
 
 
-      const maxWidth = window.innerWidth * 0.8;
-      const maxHeight = window.innerHeight * 0.7;
+      const maxWidth = window.innerWidth * 0.95;
+      const maxHeight = window.innerHeight * 0.95;
       let modalWidth = maxWidth;
       let modalHeight = maxWidth / imageAspectRatio;
 

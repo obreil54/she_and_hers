@@ -27,9 +27,19 @@
             </li>
           <% end %>
           <% @archive.youtube_links.each do |youtube_link| %>
+            <%
+              # Extract video ID dynamically
+              video_id = if youtube_link.include?('youtube.com/shorts')
+                          youtube_link.split('shorts/').last
+                        elsif youtube_link.include?('v=')
+                          youtube_link.split('v=').last.split('&').first
+                        else
+                          youtube_link.split('/').last
+                        end
+            %>
             <li class="carousel-slide" data-carousel-target="slide">
               <div class="youtube-embed-container" data-action="carousel#open" data-carousel-media="video">
-                <iframe src="https://www.youtube.com/embed/<%= youtube_link.split('v=').last %>"
+                <iframe src="https://www.youtube.com/embed/<%= video_id %>"
                         title="YouTube video player"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
