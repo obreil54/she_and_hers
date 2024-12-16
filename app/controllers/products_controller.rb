@@ -71,23 +71,18 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
 
-    # Handle new color creation
     if params[:product][:new_color].present?
       new_color = Color.create!(name: params[:product][:new_color])
       params[:product][:color_id] = new_color.id # Ensure the new color is used in the update
     end
 
-    # Update the product, excluding other_photos
     if @product.update(product_params.except(:other_photos))
-      # Handle other photos
       if params[:product][:other_photos].present?
-        @product.other_photos.purge
         params[:product][:other_photos].each do |photo|
           @product.other_photos.attach(photo)
         end
       end
 
-      # Sync with Google Merchant and redirect
       sync_with_google_merchant(@product)
       redirect_to product_path(@product), notice: "Product updated successfully."
     else
