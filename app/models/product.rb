@@ -21,6 +21,6 @@ class Product < ApplicationRecord
   validates :one_size, inclusion: { in: [true, false] }
   validates :color, presence: true
 
-  STATUSES = %w[available unavailable sold_out sale ready_to_ship].freeze
+  STATUSES = %w[available unavailable sold_out sale ready_to_ship hidden].freeze
   validates :status, inclusion: { in: STATUSES }
 end
