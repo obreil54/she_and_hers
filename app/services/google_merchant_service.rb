@@ -43,7 +43,7 @@ class GoogleMerchantService
     google_item_id = "online:en:GB:#{product.id}"
     image_urls = [product.secondary_photo.url, product.tertiary_photo.url] + product.other_photos.map(&:url)
     sizes = ["2XS", "XS", "S", "M", "L", "XL", "2XL"]
-    availability = %w[unavailable sold_out].include?(product.status) ? "out_of_stock" : "in_stock"
+    availability = %w[unavailable sold_out hidden].include?(product.status) ? "out_of_stock" : "in_stock"
 
 
     if product.one_size

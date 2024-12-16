@@ -15,11 +15,9 @@
       <h4 data-custom-size-target="price" data-base-price="<%= @product.price %>">
         £<%= humanized_money_with_symbol(@product.price).sub("£", "") %>
       </h4>
-      <% if @product.status == "sold_out" %>
-        <!-- Disabled button for sold-out products -->
-        <button type="button" class="disabled" disabled>SOLD OUT</button>
+      <% if %w[sold_out unavailable].include?(@product.status) %>
+        <button type="button" class="disabled" disabled><%= @product.status.humanize.upcase %></button>
       <% else %>
-        <!-- Form for adding to cart -->
         <%= form_with url: add_item_cart_path(@cart), method: :post, data: { action: "submit->cart#addItem" } do %>
           <div class="product-sizes">
             <select id="size-select" name="size" required data-custom-size-target="sizeSelect" data-action="change->custom-size#handleSizeChange">

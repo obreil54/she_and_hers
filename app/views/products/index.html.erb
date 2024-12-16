@@ -19,7 +19,7 @@
           <div class="product-image-container">
             <%= image_tag product.primary_photo %>
 
-            <% if %w[ready_to_ship sale sold_out].include?(product.status) %>
+            <% if %w[ready_to_ship sale sold_out unavailable].include?(product.status) %>
               <div class="status-strip">
                 <%= product.status.humanize.upcase %>
               </div>
