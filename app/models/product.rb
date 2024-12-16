@@ -20,4 +20,7 @@ class Product < ApplicationRecord
   validates :weight, presence: true
   validates :one_size, inclusion: { in: [true, false] }
   validates :color, presence: true
+
+  STATUSES = %w[available unavailable sold_out sale ready_to_ship].freeze
+  validates :status, inclusion: { in: STATUSES }
 end

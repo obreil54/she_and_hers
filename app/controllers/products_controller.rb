@@ -14,8 +14,11 @@ class ProductsController < ApplicationController
         description: "Shop designer latex dresses, skirts and tops. Limited edition clothing, ethically sourced and produced. Order your next favourite statement dress now!"
       }
     )
-    @products = Product.order(position: :asc)
-  end
+    if current_user&.admin?
+      @products = Product.order(position: :asc)
+    else
+      @products = Product.where.not(status: "unavailable").order(position: :asc)
+    end  end
 
   def show
     @product = Product.find(params[:id])
@@ -109,6 +112,7 @@ class ProductsController < ApplicationController
       :one_size,
       :color_id,
       :position,
+      :status,
       other_photos: []
     )
   end

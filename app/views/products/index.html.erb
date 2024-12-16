@@ -16,7 +16,15 @@
         <% end %>
 
         <%= link_to product_path(product), class: "product-card-link" do %>
-          <%= image_tag product.primary_photo %>
+          <div class="product-image-container">
+            <%= image_tag product.primary_photo %>
+
+            <% if %w[ready_to_ship sale sold_out].include?(product.status) %>
+              <div class="status-strip">
+                <%= product.status.humanize.upcase %>
+              </div>
+            <% end %>
+          </div>
           <div class="product-card-info">
             <div>
               <%= product.name.upcase %><br>
