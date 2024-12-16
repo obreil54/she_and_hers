@@ -75,6 +75,24 @@
     align-items: flex-end;
   }
 
+  .product-image-container {
+    position: relative;
+  }
+
+  .status-strip {
+    position: absolute;
+    bottom: 16px;
+    left: 0;
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    opacity: 0.9;
+    z-index: 1;
+  }
+
 }
 
 .modal-overlay {

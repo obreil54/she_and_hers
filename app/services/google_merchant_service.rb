@@ -43,6 +43,8 @@ class GoogleMerchantService
     google_item_id = "online:en:GB:#{product.id}"
     image_urls = [product.secondary_photo.url, product.tertiary_photo.url] + product.other_photos.map(&:url)
     sizes = ["2XS", "XS", "S", "M", "L", "XL", "2XL"]
+    availability = %w[unavailable sold_out].include?(product.status) ? "out_of_stock" : "in_stock"
+
 
     if product.one_size
       google_product = Content::Product.new(
@@ -55,7 +57,7 @@ class GoogleMerchantService
         content_language: 'en',
         target_country: 'GB',
         price: Content::Price.new(value: product.price.amount.to_s, currency: 'GBP'),
-        availability: 'in stock',
+        availability: availability,
         condition: 'new',
         channel: 'online',
         offer_id: "shers_studios-#{product.id}",
@@ -80,7 +82,7 @@ class GoogleMerchantService
           content_language: 'en',
           target_country: 'GB',
           price: Content::Price.new(value: product.price.amount.to_s, currency: 'GBP'),
-          availability: 'in stock',
+          availability: availability,
           condition: 'new',
           channel: 'online',
           offer_id: "shers_studios-#{product.id}:#{size}",

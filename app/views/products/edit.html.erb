@@ -68,6 +68,14 @@
       <%= form.number_field :position, placeholder: "Enter a display order (e.g., 1)" %>
     </div>
 
+    <div class="field">
+      <%= form.label :status, "Product Status" %><br>
+      <%= form.select :status,
+            options_for_select(Product::STATUSES, @product.status),
+            prompt: "Select a status",
+            required: true %>
+    </div>
+
     <div class="actions">
       <%= form.submit "Update Product" %>
     </div>
