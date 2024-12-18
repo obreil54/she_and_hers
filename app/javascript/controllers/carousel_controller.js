@@ -27,6 +27,14 @@ export default class extends Controller {
         this.close();
       });
     }
+
+    this.startX = 0;
+    this.currentX = 0;
+    this.isSwiping = false;
+
+    this.trackTarget.addEventListener("touchstart", this.handleTouchStart.bind(this), { passive: true });
+    this.trackTarget.addEventListener("touchmove", this.handleTouchMove.bind(this), { passive: true });
+    this.trackTarget.addEventListener("touchend", this.handleTouchEnd.bind(this));
   }
 
   adjustForSingleSlide() {
@@ -50,9 +58,18 @@ export default class extends Controller {
   }
 
   moveToSlide(index) {
-    const amountToMove = -index * this.slideWidth;
+    if (index < 0) {
+      this.currentIndex = 0;
+    } else if (index >= this.totalSlides) {
+      this.currentIndex = this.totalSlides - 1;
+    } else {
+      this.currentIndex = index;
+    }
+
+    const amountToMove = -this.currentIndex * this.slideWidth;
     this.trackTarget.style.transform = `translateX(${amountToMove}px)`;
   }
+
 
   next() {
     if (this.currentIndex < this.totalSlides - 3) {
@@ -112,4 +129,32 @@ export default class extends Controller {
     this.modalTarget.style.display = "none";
   }
 
+  handleTouchStart(event) {
+    this.startX = event.touches[0].clientX;
+    this.isSwiping = true;
+  }
+
+  handleTouchMove(event) {
+    if (!this.isSwiping) return;
+
+    this.currentX = event.touches[0].clientX;
+  }
+
+  handleTouchEnd() {
+    if (!this.isSwiping) return;
+
+    const deltaX = this.startX - this.currentX;
+
+    const swipeThreshold = 50;
+
+    if (deltaX > swipeThreshold) {
+      this.next();
+    } else if (deltaX < -swipeThreshold) {
+      this.previous();
+    }
+
+    this.isSwiping = false;
+    this.startX = 0;
+    this.currentX = 0;
+  }
 }
