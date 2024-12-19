@@ -7,9 +7,39 @@
       <%= form.text_field :name, required: true %>
     </div>
 
-    <div class="field">
-      <%= form.label :price %><br>
-      <%= form.number_field :price, required: true %>
+    <div data-controller="status-toggle">
+      <div class="field">
+        <%= form.label :status, "Product Status" %><br>
+        <%= form.select :status,
+            Product::STATUSES,
+            { prompt: "Select a status" }, # This is the options hash for select
+            { required: true,              # This is the html_options hash
+              data: {
+                "status-toggle-target" => "statusSelect",
+                action: "change->status-toggle#toggleFields"
+              }
+            }
+        %>
+      </div>
+
+      <div data-status-toggle-target="regularPriceField">
+        <div class="field">
+          <%= form.label :price, "Price" %><br>
+          <%= form.number_field :price, required: true, step: 0.01 %>
+        </div>
+      </div>
+
+      <div data-status-toggle-target="salePriceFields" style="display:none;">
+        <div class="field">
+          <%= form.label :original_price, "Original Price" %><br>
+          <%= number_field_tag :original_price, (@product.price || 0), readonly: true, step: 0.01 %>
+        </div>
+
+        <div class="field">
+          <%= form.label :sale_price, "Sale Price" %><br>
+          <%= form.number_field :sale_price, step: 0.01 %>
+        </div>
+      </div>
     </div>
 
     <div class="field">
@@ -65,14 +95,6 @@
     <div class="field">
       <%= form.label :position, "Display Order" %><br>
       <%= form.number_field :position, placeholder: "Enter a display order (e.g., 1)" %>
-    </div>
-
-    <div class="field">
-      <%= form.label :status, "Product Status" %><br>
-      <%= form.select :status,
-            options_for_select(Product::STATUSES, @product.status),
-            prompt: "Select a status",
-            required: true %>
     </div>
 
     <div class="actions">

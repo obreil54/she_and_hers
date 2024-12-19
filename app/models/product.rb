@@ -1,5 +1,9 @@
 class Product < ApplicationRecord
   monetize :price_cents
+  monetize :original_price_cents, allow_nil: true
+
+  attr_accessor :sale_price
+
   has_and_belongs_to_many :categories
   belongs_to :color
   has_one_attached :primary_photo
@@ -10,6 +14,7 @@ class Product < ApplicationRecord
   has_many :wishlists, through: :wishlist_products
   has_many :cart_items
   has_many :order_items
+
   validates :price, presence: true
   validates :description, presence: true
   validates :care_instructions, presence: true
@@ -23,4 +28,25 @@ class Product < ApplicationRecord
 
   STATUSES = %w[available unavailable sold_out sale ready_to_ship hidden].freeze
   validates :status, inclusion: { in: STATUSES }
+
+  before_save :handle_sale_price
+
+  private
+
+  def handle_sale_price
+    return unless will_save_change_to_status?
+
+    if status == "sale"
+      self.original_price_cents ||= price_cents
+
+      if sale_price.present?
+        self.price_cents = (sale_price.to_f * 100).to_i
+      end
+    else
+      if original_price_cents.present?
+        self.price_cents = original_price_cents
+        self.original_price_cents = nil
+      end
+    end
+  end
 end

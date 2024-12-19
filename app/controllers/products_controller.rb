@@ -49,7 +49,6 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
-
     if params[:product][:new_color].present?
       color = Color.create(name: params[:product][:new_color])
       @product.color = color
@@ -86,6 +85,7 @@ class ProductsController < ApplicationController
       sync_with_google_merchant(@product)
       redirect_to product_path(@product), notice: "Product updated successfully."
     else
+      @colors = Color.all
       render :edit
     end
   end
@@ -102,6 +102,7 @@ class ProductsController < ApplicationController
     params.require(:product).permit(
       :name,
       :price,
+      :sale_price,
       :description,
       :care_instructions,
       :primary_photo,
