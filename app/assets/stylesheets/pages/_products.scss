@@ -73,6 +73,18 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+
+    #prices {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+
+      #original-price {
+        text-decoration: line-through;
+        color: grey;
+        margin-right: 4px;
+      }
+    }
   }
 
   .product-image-container {
