@@ -20,8 +20,6 @@ Shers Studios' website provides a tailored solution for sustainable fashion enth
 - **Google Merchant Integration**: Automates product updates for increased visibility.
 - **Newsletter Signups**: Increased subscriptions from 27 to over 1,000 within weeks using Brevo.
 
-The website is live and accessible at [www.shersstudios.com](https://www.shersstudios.com/).
-
 ## 💻 Technologies Used
 
 ### Backend:
@@ -64,7 +62,7 @@ The website is live and accessible at [www.shersstudios.com](https://www.shersst
 
 ## 🌐 Live Application
 
-The project is deployed on Heroku and is live at [www.shersstudios.com](https://www.shersstudios.com/).
+The project was deployed on Heroku.
 
 ## 🏆 Outcomes and Future Plans
 
@@ -72,14 +70,6 @@ The project is deployed on Heroku and is live at [www.shersstudios.com](https://
 - Delivered a fully custom platform addressing client needs.
 - Significantly increased newsletter subscriptions, growing from 27 to over 1,000 within weeks.
 
-### Future Plans:
-- Implement admin tools for editing static text and styling changes (e.g., font colors).
-- Introduce additional dynamic features to enhance site customization.
-
 ## 🧑‍💻 Development Process
 
 This project was developed solely by **Ilya Obretetskiy**, working closely with the founder of Shers Studios. Following an **Object-Oriented Programming** approach, the collaboration translated the brand’s ideas and designs into a functional and elegant platform.
-
-## 📖 Licensing
-
-This project is available in a **public GitHub repository** to showcase my development skills as part of my portfolio. However, it also functions as a live e-commerce platform for a real company, **Shers Studios**, and serves as their primary online shop.
